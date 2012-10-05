@@ -1,0 +1,202 @@
+﻿<Window Width="600" Height="350" Opacity="1" SupportLayeredWindow="False" BorderBrush="#6666FF" 
+        MinWidth="50" MinHeight="50" Margin="0" Padding="0" RoundSize="2" Author="汪荣(QQ:386666951)" 
+        Name="Window" Text="Sharpui界面引擎演示"  Location="200,200">
+
+    <Window.Resources>
+    </Window.Resources>
+
+    <StackLayout VerticalAlignment="Stretch" Name="MainContainer" HorizontalAlignment="Stretch" Orientation="Vertical">
+        <CaptionBar Background="{x:Null}" VerticalAlignment="Top" Name="Cap" HorizontalAlignment="Stretch" Height="40">
+            <CaptionBar.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    <Setter Property="Font" Value="{fttitle}" />
+                    <Setter Property="Foreground" Value="#FFFFFF" />
+                    <Setter Property="Padding" Value="4,-4,0,0" />
+                    <Setter Property="Margin" Value="0,0,0,0" />
+                </Style>
+                <Style TargetType="SystemCloseButton" BasedOn="{x:Type SystemCloseButton}">
+                    <Setter Property="Margin" Value="0,0,2,0" />
+                </Style>
+            </CaptionBar.Resources>
+            <Button Name="SysMenu" Style="{TitleMenu}" />
+        </CaptionBar>
+
+        <!-- 测试内容区域(应用TabControl，布局撑满剩余空间) -->
+        <TabControl Name="TestTab" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TabItem MinHeight="24" Header="基本控件演示" IsSelected="True" >
+                <StackLayout Wrapper="TabContent" Name="BaseCtrl" Orientation="Vertical">
+                    <StackPanel Name="Item1Top" Background="#BBEEEEEE" HorizontalAlignment="Stretch" >
+                        <!-- 菜单条演示 -->
+                        <Menu Name="MainMenu" Orientation="Horizontal" Margin="4" >
+                            <MenuItem Text="文件" >
+                                <MenuItem Text="退出" />
+                            </MenuItem>
+                            <MenuItem Text="视图" >
+                                <MenuItem Text="显示工具栏" />
+                            </MenuItem>
+                            <MenuItem Text="编辑" Orientation="Vertical" >
+                                <MenuItem Text="复制" />
+                                <MenuItem Text="粘贴" />
+                            </MenuItem>
+                            <MenuItem Text="帮助" >
+                                <MenuItem Text="搜索" />
+                                <MenuItem Text="检查更新" />
+                            </MenuItem>
+                        </Menu>
+                        <!-- 选择框 -->
+
+                        <StackPanel Name="CheckInfo" Margin="4,2,0,0" Width="120" Height="24">
+                            <CheckButton Text="关机" />
+                            <CheckButton Text="开机启动" />
+                        </StackPanel>
+
+                        <!-- 分组选择框 -->
+                        <StackPanel Name="CheckInfo" Margin="4,2,0,0" Width="120" Height="24">
+                            <RadioButton Text="关机" Group="grp" />
+                            <RadioButton Text="开机启动" Group="grp" />
+                        </StackPanel>
+                        <!-- 按钮测试 -->
+                        <Button Name="SkinBtn" Text="点击换肤" HorizontalAlignment="Stretch" Margin="4" Height="26" Padding="8,2,8,2"/>
+                    </StackPanel>
+
+                    <StackLayout Margin="4,6,0,0" HorizontalAlignment="Stretch" >
+                        <!-- 输入框测试 -->
+                        <TextBox Name="TextName" Text="请输入搜索条件..." Width="150" Height="22" />
+                        <TextBlock Name="lb_pwd" Text="  密码: " VerticalAlignment="Center" />
+                        <!-- 密码框测试 -->
+                        <PasswordBox Name="Pwd" PasswordChar="@" Width="150" Height="22" />
+                        <!-- 组合框测试 -->
+                        <ComboBox Name="Cmb" Height="22" Margin="4,0,4,0" HorizontalAlignment="Stretch" >
+                            <ComboBoxItem Text="IsMouseOver" />
+                            <ComboBoxItem Text="IsMouseDown" IsSelected="True" />
+                            <ComboBoxItem Text="IsFocused" />
+                            <ComboBoxItem Text="IsDisabled" />
+                            <ComboBoxItem Text="IsSelected" />
+                        </ComboBox>
+                    </StackLayout>
+
+                    <StackLayout Margin="4,6,0,0" HorizontalAlignment="Stretch" >
+                        <!-- 进度条测试 -->
+                        <ProgressBar Name="pb" Height="10" Width="150"/>
+                        <Slider Name="sld" Width="150"/>
+                    </StackLayout>
+
+                    <StackLayout Name="TreeId" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                        <TreeView Name="Tree01" Width="180" VerticalAlignment="Stretch" Margin="4" >
+                            <TreeViewItem Header="2012演唱会专辑" />
+                            <TreeViewItem Header="经典歌曲收集" >
+                                <TreeViewItem Header="经典对唱" />
+                                <TreeViewItem Header="经典说唱" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="其它分类" />
+                        </TreeView>
+
+                        <ListView Width="280" VerticalAlignment="Stretch" Margin="4" >
+                            <ListViewItem Content="2012演唱会专辑" />
+                            <ListViewItem Content="经典歌曲收集" >
+                            </ListViewItem>
+                            <ListViewItem Content="其它分类" />
+                        </ListView>
+                        
+                        <ListBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4" >
+                            <ListBoxItem Text="ListBox控件(可加入任意类型子项)" />
+                            <ListBoxItem Height="50">
+                                <TreeView>
+                                    <TreeViewItem Header="2012演唱会专辑" />
+                                    <TreeViewItem Header="经典歌曲收集" >
+                                        <TreeViewItem Header="经典对唱" />
+                                        <TreeViewItem Header="经典说唱" />
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="其它分类" />
+                                </TreeView>
+                            </ListBoxItem>
+                            <ListBoxItem Text="谁的眼泪在飞" />
+                            <ListBoxItem Text="一千零一夜" />
+                            <ListBoxItem Text="你是我的药" />
+                            <ListBoxItem Text="红尘往事" />
+                            <ListBoxItem Text="等你说爱我" />
+                        </ListBox>
+                    </StackLayout>
+                </StackLayout>
+            
+        </TabItem>
+            <TabItem Header="布局演示" IsSelected="True" >
+                <Panel Wrapper="TabContent" Name="LayPanel" >
+                    <!-- StackLayout布局（相对于StackPanel增加对Stretch解析，少了滚动） -->
+                    <StackLayout VerticalAlignment="Stretch" Background="#EEEEEEEE" Width="116" Orientation="Vertical" >
+                        <Button Name="Btn21" Text="StackLayout布局" Width="110" Height="38"/>
+                        <Button Name="Btn22" Text="StackLayout布局" Width="110" Height="38" VerticalAlignment="Stretch" />
+                        <Button Name="Btn23" Text="StackLayout布局" Width="110" Height="38" />
+                    </StackLayout>
+                    
+                    <StackLayout Name="LayCtrl" Orientation="Vertical" Margin="120,0,0,0" 
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+
+                        <!-- StackLayout布局（相对于StackPanel增加对Stretch解析，少了滚动） -->
+                        <StackLayout HorizontalAlignment="Stretch" Background="#EEEEEEEE" >
+                            <Button Name="Btn21" Text="StackLayout布局" Width="120" Height="38"/>
+                            <Button Name="Btn22" Text="StackLayout布局" Width="120" Height="38"/>
+                            <Button Name="Btn23" Text="StackLayout布局" Width="120" Height="38" HorizontalAlignment="Stretch" />
+                        </StackLayout>
+
+                        <!-- StackPanel布局 -->
+                        <StackPanel HorizontalAlignment="Stretch"  Background="#EE9999FF" >
+                            <Button Name="Btn1" Text="StackPanel布局" Width="120" Height="38"/>
+                            <Button Name="Btn2" Text="StackPanel布局" Width="120" Height="38"/>
+                            <Button Name="Btn3" Text="StackPanel布局" Width="120" Height="38" HorizontalAlignment="Stretch" />
+                        </StackPanel>
+
+                        <!-- Panel布局，位置由Margin决定 -->
+                        <Panel HorizontalAlignment="Stretch" Height="100">
+                            <Button Name="Btn4" Text="Panel布局" Width="80" Height="38"/>
+                            <Button Name="Btn4" Text="Panel布局" Margin="90,0,0,0"  Width="80" Height="38"/>
+                            <Button Name="Btn4" Text="Panel布局" Margin="50,45,0,0" Width="80" Height="38"/>
+                        </Panel>
+                        <!-- 流式布局(固定大小，从左到右以此排列，一行满时，自动换行) -->
+                        <WrapPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#EE9999FF" >
+                            <Button Name="Btn11" Text="WrapPanel布局" Width="80" Height="38"/>
+                            <Button Name="Btn12" Text="WrapPanel布局" Width="80" Height="38"/>
+                            <Button Name="Btn13" Text="WrapPanel布局" Width="80" Height="38" HorizontalAlignment="Stretch" />
+                            <Button Name="Btn14" Text="WrapPanel布局" Width="80" Height="38"/>
+                            <Button Name="Btn15" Text="WrapPanel布局" Width="80" Height="38"/>
+                            <Button Name="Btn16" Text="WrapPanel布局" Width="80" Height="38"/>
+                        </WrapPanel>
+
+                    </StackLayout>
+                </Panel>
+            </TabItem>
+            <TabItem Header="组合控件演示">
+
+                <Panel Wrapper="TabContent" Name="ComCtrl" >
+                    <Button Name="ComBtn">
+                        <StackPanel Height="64" Width="220" Orientation="Vertical">
+                            <StackPanel Height="50" >
+                                <ImageBox Source="Images/Key.png" />
+                                <TextBlock Text="此Button由三个控件组合而成" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <ProgressBar Height="8" HorizontalAlignment="Stretch" Margin="2" />
+                        </StackPanel>
+                    </Button>
+
+                    <StackPanel Margin="230,0,0,0" Height="26" Width="200" Background="{searchbk}" >
+                        <StackPanel.Resources>
+                            <ImageBrush x:Key="searchbk" Source="images/main_search_bg.png" Opacity="1" ViewCorner="4" />
+                            <Style TargetType="TextBox" >
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="Background" Value="{x:Null}" />
+                                <Setter Property="Padding" Value="2" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBox Cursor="" Margin="4,0,0,0" Width="160" Height="20" VerticalAlignment="Center" />
+                        <Button Name="SouSuo" Style="{Sousuo}" />
+                    </StackPanel>
+
+                    <TextBox Name="txttest" Padding="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  MultiLine="True" ReadOnly="False" Margin="4,80,4,4" />
+                </Panel>
+            </TabItem>
+        </TabControl>
+
+    </StackLayout>
+</Window>
