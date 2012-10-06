@@ -42,6 +42,7 @@
 #include <sui/textbox.h>
 #include <sui/passwordbox.h>
 #include <sui/listbox.h>
+#include <sui/messagebox.h>
 #include <sui/imagebox.h>
 #include <sui/listview.h>
 #include <sui/treeview.h>

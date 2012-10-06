@@ -71,7 +71,7 @@ void MainFrame::OnTreeItemSelect(ui::TreeViewItem* pItem)
 {
     suic::String text = pItem->GetText();
 
-    MessageBox(NULL, text.c_str(), _T("Info"), MB_OK);
+    ui::MsgBox::Show(_T("ÌבÊ¾"), text);
 }
 
 void MainFrame::OnTestAni(suic::ElementPtr pElem)

@@ -274,12 +274,11 @@ void ComboBox::OnInitialized()
     const suic::String COMBOBOXTEXTBOX = _T("ComboBox.TextBox");
     suic::StylePtr style = FindResource(COMBOBOXTEXTBOX);
 
-    if (!style)
+    if (style)
     {
-        style = FindResource(suic::TEXTBOX);
+        _textBox->SetStyle(style);
     }
 
-    _textBox->SetStyle(style);
     _textBox->SetOwner(this);
 
     style = FindResource(suic::COMBOBOXLISTBOX);

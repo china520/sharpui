@@ -42,6 +42,8 @@ public:
     Style();
     virtual ~Style();
 
+    StylePtr Clone();
+
     void SetSetter(SetterPtr val);
 
     SetterPtr GetSetter(const String& property);

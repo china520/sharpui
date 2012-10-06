@@ -515,6 +515,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\sui\MessageBox.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\sui\PasswordBox.h"
 				>
 			</File>
@@ -720,6 +724,10 @@
 			</File>
 			<File
 				RelativePath=".\src\MenuItemHelper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\MessageBox.cpp"
 				>
 			</File>
 			<File
