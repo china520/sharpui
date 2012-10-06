@@ -23,7 +23,7 @@
         </CaptionBar>
 
         <!-- 测试内容区域(应用TabControl，布局撑满剩余空间) -->
-        <TabControl Name="TestTab" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <TabControl Name="TestTab" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="2" >
             <TabItem MinHeight="24" Header="基本控件演示" IsSelected="True" >
                 <StackLayout Wrapper="TabContent" Name="BaseCtrl" Orientation="Vertical">
                     <StackPanel Name="Item1Top" Background="#BBEEEEEE" HorizontalAlignment="Stretch" >
@@ -83,8 +83,7 @@
                     </StackLayout>
 
                     <StackLayout Name="TreeId" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
-                        <TreeView Name="Tree01" Width="180" VerticalAlignment="Stretch" Margin="4" >
+                        <TreeView Name="Tree01" Width="180" VerticalAlignment="Stretch" Margin="0,4,0,2" >
                             <TreeViewItem Header="2012演唱会专辑" />
                             <TreeViewItem Header="经典歌曲收集" >
                                 <TreeViewItem Header="经典对唱" />
@@ -100,7 +99,7 @@
                             <ListViewItem Content="其它分类" />
                         </ListView>
                         
-                        <ListBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="4" >
+                        <ListBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2" >
                             <ListBoxItem Text="ListBox控件(可加入任意类型子项)" />
                             <ListBoxItem Height="50">
                                 <TreeView>
@@ -168,7 +167,6 @@
                 </Panel>
             </TabItem>
             <TabItem Header="组合控件演示">
-
                 <Panel Wrapper="TabContent" Name="ComCtrl" >
                     <Button Name="ComBtn">
                         <StackPanel Height="64" Width="220" Orientation="Vertical">
@@ -197,6 +195,11 @@
                 </Panel>
             </TabItem>
         </TabControl>
-
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
+                    Name="stb" Height="24" Margin="3,0,4,2" Background="#BBFFFFFF">
+            <TextBlock Name="QQ" Margin="4" Text="QQ技术支持群: 206378966" VerticalAlignment="Center" Foreground="#FF2222" />
+            <TextBlock Name="email" Margin="4" Text="邮箱: china0851@foxmail.com" VerticalAlignment="Center" />
+        </StackPanel>
     </StackLayout>
 </Window>
+
