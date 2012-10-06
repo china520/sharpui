@@ -173,7 +173,7 @@
                     <Button Name="ComBtn">
                         <StackPanel Height="64" Width="220" Orientation="Vertical">
                             <StackPanel Height="50" >
-                                <ImageBox Source="Images/Key.png" />
+                                <ImageBox Source="Images/default/Key.png" />
                                 <TextBlock Text="此Button由三个控件组合而成" VerticalAlignment="Center"/>
                             </StackPanel>
                             <ProgressBar Height="8" HorizontalAlignment="Stretch" Margin="2" />
@@ -182,7 +182,7 @@
 
                     <StackPanel Margin="230,0,0,0" Height="26" Width="200" Background="{searchbk}" >
                         <StackPanel.Resources>
-                            <ImageBrush x:Key="searchbk" Source="images/main_search_bg.png" Opacity="1" ViewCorner="4" />
+                            <ImageBrush x:Key="searchbk" Source="images/default/main_search_bg.png" Opacity="1" ViewCorner="4" />
                             <Style TargetType="TextBox" >
                                 <Setter Property="BorderThickness" Value="0" />
                                 <Setter Property="Background" Value="{x:Null}" />

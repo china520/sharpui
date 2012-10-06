@@ -1,0 +1,5 @@
+﻿<Application StartupUri="res/demonwindow.xml" Author="汪荣(QQ:386666951)" >
+    <Application.Resources>
+        <ResourceDictionary Source="res/default.xml" />
+    </Application.Resources>
+</Application>

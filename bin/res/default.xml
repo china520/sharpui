@@ -1,30 +1,29 @@
 ﻿<ResourceDictionary Author="汪荣(QQ:386666951)">
+    <ImageBrush x:Key="BorderMask" Source="images/default/mask.png" />
+    <ImageBrush x:Key="mainbkgnd" Source="images/default/bkg.jpg" ViewCorner="1278,798,0,0"  OpacityMask="#FFFFFF" Stretch="Fill" />
 
-    <ImageBrush x:Key="BorderMask" Source="images/mask.png" />
-    <ImageBrush x:Key="mainbkgnd" Source="images/bkg.jpg" ViewCorner="1278,798,0,0"  OpacityMask="#FFFFFF" Stretch="Fill" />
+    <ImageBrush x:Key="bkgnd" Source="images/default/bg.bmp" Opacity="1" ViewCorner="8" />
+    <ImageBrush x:Key="textbox_bk" Source="images/default/Edit.png" Opacity="1" ViewCorner="4" Stretch="Fill" />
 
-    <ImageBrush x:Key="bkgnd" Source="images/bg.bmp" Opacity="1" ViewCorner="8" />
-    <ImageBrush x:Key="textbox_bk" Source="images/Edit.png" Opacity="1" ViewCorner="4" Stretch="Fill" />
+    <ImageBrush x:Key="sousuo_n" Source="images/default/main_search_menu.png" Opacity="1" />
+    <ImageBrush x:Key="sousuo_h" Source="images/default/main_search_menu.png" Opacity="0.8" />
 
-    <ImageBrush x:Key="sousuo_n" Source="images/main_search_menu.png" Opacity="1" />
-    <ImageBrush x:Key="sousuo_h" Source="images/main_search_menu.png" Opacity="0.8" />
+    <ImageBrush x:Key="tooltip" Source="images/default/urltip_background.png" Opacity="1" ViewCorner="4" />
 
-    <ImageBrush x:Key="tooltip" Source="images/urltip_background.png" Opacity="1" ViewCorner="4" />
+    <ImageBrush x:Key="tabbkgnd" Source="images/default/tab_ctrl_bkground.png" Opacity="1" ViewCorner="0" />
+    <ImageBrush x:Key="menubkgnd" Source="images/default/menubg.png" ViewCorner="8" />
 
-    <ImageBrush x:Key="tabbkgnd" Source="images/tab_ctrl_bkground.png" Opacity="1" ViewCorner="0" />
-    <ImageBrush x:Key="menubkgnd" Source="images/menubg.png" ViewCorner="8" />
+    <ImageBrush x:Key="list_m" Source="images/default/list-m.bmp" ViewCorner="1" />
+    <ImageBrush x:Key="list_n" Source="images/default/list-n.bmp" ViewCorner="1" />
+    <ImageBrush x:Key="list_d" Source="images/default/list-d.bmp" ViewCorner="1" />
 
-    <ImageBrush x:Key="list_m" Source="images/list-m.bmp" ViewCorner="1" />
-    <ImageBrush x:Key="list_n" Source="images/list-n.bmp" ViewCorner="1" />
-    <ImageBrush x:Key="list_d" Source="images/list-d.bmp" ViewCorner="1" />
-
-    <ImageBrush x:Key="list_bk" Source="images/list-bk.bmp" ViewCorner="1" />
-    <ImageBrush x:Key="split_line" Source="images/split_line.png" Stretch="Uniform" />
+    <ImageBrush x:Key="list_bk" Source="images/default/list-bk.bmp" ViewCorner="1" />
+    <ImageBrush x:Key="split_line" Source="images/default/split_line.png" Stretch="Uniform" />
     
 
-    <ImageBrush x:Key="normal_tabitem" Source="images/TabButton1.png" ViewBox="0,0,100,35" ViewCorner="4" />
-    <ImageBrush x:Key="hot_tabitem" Source="images/TabButton1.png" ViewBox="0,105,100,140" ViewCorner="4" />
-    <ImageBrush x:Key="press_tabitem" Source="images/TabButton1.png" ViewBox="0,35,100,70" ViewCorner="4" />
+    <ImageBrush x:Key="normal_tabitem" Source="images/default/TabButton1.png" ViewBox="0,0,100,35" ViewCorner="4" />
+    <ImageBrush x:Key="hot_tabitem" Source="images/default/TabButton1.png" ViewBox="0,105,100,140" ViewCorner="4" />
+    <ImageBrush x:Key="press_tabitem" Source="images/default/TabButton1.png" ViewBox="0,35,100,70" ViewCorner="4" />
 
     <SolidColorBrush x:Key="Gradient01" Color="#EEEEEEEE" Opacity="1" />
     <SolidColorBrush x:Key="Gradient02" Color="#EEFFCCEE" Opacity="1" />
@@ -38,102 +37,102 @@
     </LinearGradientBrush>
 
     <!-- RadioButton资源定义 -->
-    <ImageBrush x:Key="Radio.Unchecked.n" Source="images/Radio.png" ViewBox="0,0,16,16" />
-    <ImageBrush x:Key="Radio.Unchecked.h" Source="images/Radio.png" ViewBox="16,0,32,16" />
-    <ImageBrush x:Key="Radio.Unchecked.p" Source="images/Radio.png" ViewBox="32,0,48,16" />
-    <ImageBrush x:Key="Radio.Unchecked.d" Source="images/Radio.png" ViewBox="48,0,60,16" />
+    <ImageBrush x:Key="Radio.Unchecked.n" Source="images/default/Radio.png" ViewBox="0,0,16,16" />
+    <ImageBrush x:Key="Radio.Unchecked.h" Source="images/default/Radio.png" ViewBox="16,0,32,16" />
+    <ImageBrush x:Key="Radio.Unchecked.p" Source="images/default/Radio.png" ViewBox="32,0,48,16" />
+    <ImageBrush x:Key="Radio.Unchecked.d" Source="images/default/Radio.png" ViewBox="48,0,60,16" />
 
-    <ImageBrush x:Key="Radio.Checked.n" Source="images/Radio.png" ViewBox="64,0,80,16" />
-    <ImageBrush x:Key="Radio.Checked.h" Source="images/Radio.png" ViewBox="80,0,96,16" />
-    <ImageBrush x:Key="Radio.Checked.p" Source="images/Radio.png" ViewBox="96,0,112,16" />
-    <ImageBrush x:Key="Radio.Checked.d" Source="images/Radio.png" ViewBox="112,0,128,16" />
+    <ImageBrush x:Key="Radio.Checked.n" Source="images/default/Radio.png" ViewBox="64,0,80,16" />
+    <ImageBrush x:Key="Radio.Checked.h" Source="images/default/Radio.png" ViewBox="80,0,96,16" />
+    <ImageBrush x:Key="Radio.Checked.p" Source="images/default/Radio.png" ViewBox="96,0,112,16" />
+    <ImageBrush x:Key="Radio.Checked.d" Source="images/default/Radio.png" ViewBox="112,0,128,16" />
 
     <!-- CheckButton资源定义 -->
-    <ImageBrush x:Key="Check.Unchecked.n" Source="images/checkbox.png" ViewBox="0,0,15,15" />
-    <ImageBrush x:Key="Check.Unchecked.h" Source="images/checkbox.png" ViewBox="15,0,30,15" />
-    <ImageBrush x:Key="Check.Unchecked.p" Source="images/checkbox.png" ViewBox="30,0,45,15" />
-    <ImageBrush x:Key="Check.Unchecked.d" Source="images/checkbox.png" ViewBox="45,0,60,15" />
+    <ImageBrush x:Key="Check.Unchecked.n" Source="images/default/checkbox.png" ViewBox="0,0,15,15" />
+    <ImageBrush x:Key="Check.Unchecked.h" Source="images/default/checkbox.png" ViewBox="15,0,30,15" />
+    <ImageBrush x:Key="Check.Unchecked.p" Source="images/default/checkbox.png" ViewBox="30,0,45,15" />
+    <ImageBrush x:Key="Check.Unchecked.d" Source="images/default/checkbox.png" ViewBox="45,0,60,15" />
 
-    <ImageBrush x:Key="Check.Checked.n" Source="images/checkbox.png" ViewBox="60,0,75,15" />
-    <ImageBrush x:Key="Check.Checked.h" Source="images/checkbox.png" ViewBox="75,0,90,15" />
-    <ImageBrush x:Key="Check.Checked.p" Source="images/checkbox.png" ViewBox="90,0,105,15" />
-    <ImageBrush x:Key="Check.Checked.d" Source="images/checkbox.png" ViewBox="105,0,120,15" />
+    <ImageBrush x:Key="Check.Checked.n" Source="images/default/checkbox.png" ViewBox="60,0,75,15" />
+    <ImageBrush x:Key="Check.Checked.h" Source="images/default/checkbox.png" ViewBox="75,0,90,15" />
+    <ImageBrush x:Key="Check.Checked.p" Source="images/default/checkbox.png" ViewBox="90,0,105,15" />
+    <ImageBrush x:Key="Check.Checked.d" Source="images/default/checkbox.png" ViewBox="105,0,120,15" />
 
     <!-- 垂直滚动条资源定义 -->
-    <ImageBrush x:Key="vscroll" Source="images/scrollbar.png" ViewBox="0,16,16,32" />
-    <ImageBrush x:Key="vscroll.track.thumb.n" Source="images/scrollbar.png" ViewCorner="2" ViewBox="0,126,16,142" />
-    <ImageBrush x:Key="vscroll.track.thumb.h" Source="images/scrollbar.png" ViewCorner="2" ViewBox="18,126,34,142" />
-    <ImageBrush x:Key="vscroll.track.thumb.p" Source="images/scrollbar.png" ViewCorner="2" ViewBox="36,126,52,142" />
+    <ImageBrush x:Key="vscroll" Source="images/default/scrollbar.png" ViewBox="0,16,16,32" />
+    <ImageBrush x:Key="vscroll.track.thumb.n" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="0,126,16,142" />
+    <ImageBrush x:Key="vscroll.track.thumb.h" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="18,126,34,142" />
+    <ImageBrush x:Key="vscroll.track.thumb.p" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="36,126,52,142" />
 
-    <ImageBrush x:Key="vscroll.track.page.n" Source="images/scrollbar.png" ViewCorner="2" ViewBox="0,161,16,177" />
-    <ImageBrush x:Key="vscroll.track.page.h" Source="images/scrollbar.png" ViewCorner="2" ViewBox="0,161,16,177" />
-    <ImageBrush x:Key="vscroll.track.page.p" Source="images/scrollbar.png" ViewCorner="2" ViewBox="0,161,16,177" />
+    <ImageBrush x:Key="vscroll.track.page.n" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="0,161,16,177" />
+    <ImageBrush x:Key="vscroll.track.page.h" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="0,161,16,177" />
+    <ImageBrush x:Key="vscroll.track.page.p" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="0,161,16,177" />
 
-    <ImageBrush x:Key="vscroll.toparrow" Source="images/scrollbar.png" ViewCorner="4" ViewBox="0,90,16,106" />
-    <ImageBrush x:Key="vscroll.bottomarrow" Source="images/scrollbar.png" ViewCorner="4" ViewBox="0,108,16,124" />
-    <ImageBrush x:Key="vscrollbar.bk" Source="images/scrollbar.png" ViewCorner="4" ViewBox="0,161,16,177" />
+    <ImageBrush x:Key="vscroll.toparrow" Source="images/default/scrollbar.png" ViewCorner="4" ViewBox="0,90,16,106" />
+    <ImageBrush x:Key="vscroll.bottomarrow" Source="images/default/scrollbar.png" ViewCorner="4" ViewBox="0,108,16,124" />
+    <ImageBrush x:Key="vscrollbar.bk" Source="images/default/scrollbar.png" ViewCorner="4" ViewBox="0,161,16,177" />
 
-    <ImageBrush x:Key="vscroll.track.glyph" Source="images/scrollbar.png" ViewCorner="4" ViewBox="0,144,16,160" />
+    <ImageBrush x:Key="vscroll.track.glyph" Source="images/default/scrollbar.png" ViewCorner="4" ViewBox="0,144,16,160" />
 
     <!-- 水平滚动条资源定义 -->
-    <ImageBrush x:Key="hscroll.track.thumb.n" Source="images/scrollbar.png" ViewCorner="2" ViewBox="0,36,16,52" />
-    <ImageBrush x:Key="hscroll.track.thumb.h" Source="images/scrollbar.png" ViewCorner="2" ViewBox="18,36,34,52" />
-    <ImageBrush x:Key="hscroll.track.thumb.p" Source="images/scrollbar.png" ViewCorner="2" ViewBox="36,36,52,52" />
+    <ImageBrush x:Key="hscroll.track.thumb.n" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="0,36,16,52" />
+    <ImageBrush x:Key="hscroll.track.thumb.h" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="18,36,34,52" />
+    <ImageBrush x:Key="hscroll.track.thumb.p" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="36,36,52,52" />
 
-    <ImageBrush x:Key="hscroll.track.page.n" Source="images/scrollbar.png" ViewCorner="2" ViewBox="0,72,16,88" />
-    <ImageBrush x:Key="hscroll.track.page.h" Source="images/scrollbar.png" ViewCorner="2" ViewBox="0,72,16,88" />
-    <ImageBrush x:Key="hscroll.track.page.p" Source="images/scrollbar.png" ViewCorner="2" ViewBox="0,72,16,88" />
+    <ImageBrush x:Key="hscroll.track.page.n" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="0,72,16,88" />
+    <ImageBrush x:Key="hscroll.track.page.h" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="0,72,16,88" />
+    <ImageBrush x:Key="hscroll.track.page.p" Source="images/default/scrollbar.png" ViewCorner="2" ViewBox="0,72,16,88" />
 
-    <ImageBrush x:Key="hscroll.leftarrow" Source="images/scrollbar.png" ViewCorner="4" ViewBox="0,0,16,16" />
-    <ImageBrush x:Key="hscroll.rightarrow" Source="images/scrollbar.png" ViewCorner="4" ViewBox="0,18,16,34" />
-    <ImageBrush x:Key="hscroll.bk" Source="images/scrollbar.png" ViewCorner="4" ViewBox="0,72,16,88" />
-    <ImageBrush x:Key="hscroll.track.glyph" Source="images/scrollbar.png" ViewCorner="4" ViewBox="0,54,16,70" />
+    <ImageBrush x:Key="hscroll.leftarrow" Source="images/default/scrollbar.png" ViewCorner="4" ViewBox="0,0,16,16" />
+    <ImageBrush x:Key="hscroll.rightarrow" Source="images/default/scrollbar.png" ViewCorner="4" ViewBox="0,18,16,34" />
+    <ImageBrush x:Key="hscroll.bk" Source="images/default/scrollbar.png" ViewCorner="4" ViewBox="0,72,16,88" />
+    <ImageBrush x:Key="hscroll.track.glyph" Source="images/default/scrollbar.png" ViewCorner="4" ViewBox="0,54,16,70" />
 
     <!-- 滑块条资源定义 -->
-    <ImageBrush x:Key="slider_bk" Source="images/Slider_bk.bmp" OpacityMask="#000000" ViewCorner="0,0,4,0" Stretch="UniformToFill" />
-    <ImageBrush x:Key="slider_drag" Source="images/SliderDrag.png" ViewBox="0" ViewCorner="0" Stretch="Uniform" />
+    <ImageBrush x:Key="slider_bk" Source="images/default/Slider_bk.bmp" OpacityMask="#000000" ViewCorner="0,0,4,0" Stretch="UniformToFill" />
+    <ImageBrush x:Key="slider_drag" Source="images/default/SliderDrag.png" ViewBox="0" ViewCorner="0" Stretch="Uniform" />
     
     <!-- TreeView扩展和收缩按钮资源定义 -->
-    <ImageBrush x:Key="Expanded" Source="images/tree_plus.gif" Stretch="Uniform" />
-    <ImageBrush x:Key="Collapsed" Source="images/tree_minus.gif" Stretch="Uniform" />
+    <ImageBrush x:Key="Expanded" Source="images/default/tree_plus.gif" Stretch="Uniform" />
+    <ImageBrush x:Key="Collapsed" Source="images/default/tree_minus.gif" Stretch="Uniform" />
 
-    <ImageBrush x:Key="save_res" Source="images/save.png" ViewBox="0" ViewCorner="0" Stretch="Uniform" />
+    <ImageBrush x:Key="save_res" Source="images/default/save.png" ViewBox="0" ViewCorner="0" Stretch="Uniform" />
 
     <!-- ProgressBar资源定义 -->
-    <ImageBrush x:Key="progress_background" Source="images/progress_background_icon.png" ViewCorner="4,2,4,2" />
-    <ImageBrush x:Key="progress_foreground" Source="images/progress_foreground_icon.png" ViewCorner="4,2,4,2" Stretch="Fill" />
+    <ImageBrush x:Key="progress_background" Source="images/default/progress_background_icon.png" ViewCorner="4,2,4,2" />
+    <ImageBrush x:Key="progress_foreground" Source="images/default/progress_foreground_icon.png" ViewCorner="4,2,4,2" Stretch="Fill" />
 
     <!-- 组合框资源定义 -->
-    <ImageBrush x:Key="normal_combo" Source="images/combo.png" ViewBox="0,0,100,22" ViewCorner="2,2,24,2" />
-    <ImageBrush x:Key="hot_combo" Source="images/combo.png" ViewBox="0,22,100,44" ViewCorner="2,2,24,2" />
-    <ImageBrush x:Key="press_combo" Source="images/combo.png" ViewBox="0,44,100,66" ViewCorner="2,2,24,2" />
+    <ImageBrush x:Key="normal_combo" Source="images/default/combo.png" ViewBox="0,0,100,22" ViewCorner="2,2,24,2" />
+    <ImageBrush x:Key="hot_combo" Source="images/default/combo.png" ViewBox="0,22,100,44" ViewCorner="2,2,24,2" />
+    <ImageBrush x:Key="press_combo" Source="images/default/combo.png" ViewBox="0,44,100,66" ViewCorner="2,2,24,2" />
 
     <!-- Button资源定义 -->
-    <ImageBrush x:Key="normal_btn" Source="images/expand.button.normal.png" OpacityMask="#EFF0F1" ViewCorner="4" />
-    <ImageBrush x:Key="hot_btn" Source="images/button.png" ViewCorner="4" OpacityMask="#FFFFFFFF" ViewBox="0,0,82,26" />
-    <ImageBrush x:Key="down_btn" Source="images/button.png" ViewCorner="4" ViewBox="0,26,82,52" />
-    <ImageBrush x:Key="focus_btn" Source="images/button.png" ViewCorner="4" ViewBox="0,52,82,78" />
+    <ImageBrush x:Key="normal_btn" Source="images/default/expand.button.normal.png" OpacityMask="#EFF0F1" ViewCorner="4" />
+    <ImageBrush x:Key="hot_btn" Source="images/default/button.png" ViewCorner="4" OpacityMask="#FFFFFFFF" ViewBox="0,0,82,26" />
+    <ImageBrush x:Key="down_btn" Source="images/default/button.png" ViewCorner="4" ViewBox="0,26,82,52" />
+    <ImageBrush x:Key="focus_btn" Source="images/default/button.png" ViewCorner="4" ViewBox="0,52,82,78" />
 
     <!-- SystemCloseButton资源定义 -->
-    <ImageBrush x:Key="normal_close" Source="images/btn_close_normal.png" ViewCorner="0" />
-    <ImageBrush x:Key="hot_close" Source="images/btn_close_highlight.png" ViewCorner="0" />
-    <ImageBrush x:Key="down_close" Source="images/btn_close_down.png" ViewCorner="0" />
+    <ImageBrush x:Key="normal_close" Source="images/common/btn_close_normal.png" ViewCorner="0" />
+    <ImageBrush x:Key="hot_close" Source="images/common/btn_close_highlight.png" ViewCorner="0" />
+    <ImageBrush x:Key="down_close" Source="images/common/btn_close_down.png" ViewCorner="0" />
 
     <!-- SystemMaxButton资源定义 -->
-    <ImageBrush x:Key="normal_max" Source="images/btn_max_normal.png" ViewCorner="0" />
-    <ImageBrush x:Key="hot_max" Source="images/btn_max_highlight.png" ViewCorner="0" />
-    <ImageBrush x:Key="down_max" Source="images/btn_max_down.png" ViewCorner="0" />
+    <ImageBrush x:Key="normal_max" Source="images/common/btn_max_normal.png" ViewCorner="0" />
+    <ImageBrush x:Key="hot_max" Source="images/common/btn_max_highlight.png" ViewCorner="0" />
+    <ImageBrush x:Key="down_max" Source="images/common/btn_max_down.png" ViewCorner="0" />
 
     <!-- SystemRestoreButton资源定义 -->
-    <ImageBrush x:Key="normal_restore" Source="images/btn_restore_normal.png" ViewCorner="0" />
-    <ImageBrush x:Key="hot_restore" Source="images/btn_restore_highlight.png" ViewCorner="0" />
-    <ImageBrush x:Key="down_restore" Source="images/btn_restore_down.png" ViewCorner="0" />
+    <ImageBrush x:Key="normal_restore" Source="images/common/btn_restore_normal.png" ViewCorner="0" />
+    <ImageBrush x:Key="hot_restore" Source="images/common/btn_restore_highlight.png" ViewCorner="0" />
+    <ImageBrush x:Key="down_restore" Source="images/common/btn_restore_down.png" ViewCorner="0" />
 
     <!-- SystemMinButton资源定义 -->
-    <ImageBrush x:Key="normal_min" Source="images/btn_mini_normal.png" ViewCorner="0" />
-    <ImageBrush x:Key="hot_min" Source="images/btn_mini_highlight.png" ViewCorner="0" />
-    <ImageBrush x:Key="down_min" Source="images/btn_mini_down.png" ViewCorner="0" />
-    <ImageBrush x:Key="down_arrow" Source="images/scrollbar-h.png" ViewCorner="0" ViewBox="0,32,16,48"/>
+    <ImageBrush x:Key="normal_min" Source="images/common/btn_mini_normal.png" ViewCorner="0" />
+    <ImageBrush x:Key="hot_min" Source="images/common/btn_mini_highlight.png" ViewCorner="0" />
+    <ImageBrush x:Key="down_min" Source="images/common/btn_mini_down.png" ViewCorner="0" />
+    <ImageBrush x:Key="down_arrow" Source="images/common/scrollbar-h.png" ViewCorner="0" ViewBox="0,32,16,48"/>
 
     <!-- 字体资源定义 -->
     <Font x:Key="boxfont" Family="宋体" Size="8" Weight="0" Italic="0" Underline="0"/>
@@ -146,8 +145,8 @@
     <Font x:Key="loginfont" Family="宋体" Size="14" Weight="1" Italic="0" Underline="0"/>
     <Font x:Key="fontedittitle" Family="宋体" Size="16" Weight="1" Italic="0" Underline="0"/>
 
-    <Cursor x:Key="splitter_ver" Source="images/splitter_ver.cur" />
-    <Cursor x:Key="splitter_hor" Source="images/splitter_hor.cur" />
+    <Cursor x:Key="splitter_ver" Source="images/common/splitter_ver.cur" />
+    <Cursor x:Key="splitter_hor" Source="images/common/splitter_hor.cur" />
 
     <!-- Window控件样式定义 -->
     <Style TargetType="Window">

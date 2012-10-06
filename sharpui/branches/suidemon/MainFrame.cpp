@@ -104,11 +104,11 @@ void MainFrame::OnChangeSkin(suic::ElementPtr pElem)
     // 下面切换系统资源，进行动态换肤
     if (_bDefault)
     {
-        CoreCurrentApp()->SetResources(_T("主界面/black_res.xml"));
+        CoreCurrentApp()->SetResources(_T("res/black_res.xml"));
     }
     else
     {
-        CoreCurrentApp()->SetResources(_T("主界面/default.xml"));
+        CoreCurrentApp()->SetResources(_T("res/default.xml"));
     }
 
     _bDefault = !_bDefault;
