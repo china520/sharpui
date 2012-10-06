@@ -41,9 +41,9 @@ public:
     int GetColumnDesired() const;
     void SetColumnDesired(int val);
 
-    void OnColumnHeaderGripperDragStarted(suic::ObjectPtr sender, DragStartedEventArg& e);
-    void OnColumnHeaderResize(suic::ObjectPtr sender, DragDeltaEventArg& e);
-    void OnColumnHeaderGripperDragCompleted(suic::ObjectPtr sender, DragCompletedEventArg& e);
+    void OnHeaderGripperStarted(suic::Element* sender, suic::MouseEventArg& e);
+    void OnHeaderGripperResize(suic::Element* sender, suic::MouseEventArg& e);
+    void OnHeaderGripperCompleted(suic::Element* sender, suic::MouseEventArg& e);
 
 protected:
 
@@ -51,6 +51,9 @@ protected:
     int _actualIndex;
     int _columnWidth;
     int _columnDesired;
+
+    int _prevWidth;
+    suic::Point _point;
     // œ‘ æ¡–
     GridViewColumnHeaderPtr _header;
 };

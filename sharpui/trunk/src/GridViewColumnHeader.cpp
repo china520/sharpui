@@ -46,15 +46,7 @@ void GridSplitter::OnMouseMove(suic::MouseEventArg& e)
 {
     if (IsMouseCaptured())
     {
-        DragDeltaEventArg edd(e.MousePoint().x - _ptPrev.x
-            , e.MousePoint().y - _ptPrev.y);
-
-        if (DragDelta)
-        {
-            DragDelta(this, edd);
-        }
-
-        _ptPrev = e.MousePoint();
+        __super::OnMouseMove(e);
     }
 
     e.Handled(true);
@@ -62,13 +54,11 @@ void GridSplitter::OnMouseMove(suic::MouseEventArg& e)
 
 void GridSplitter::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 {
-    __super::OnMouseRightButtonDown(e);
+    __super::OnMouseLeftButtonDown(e);
 
     SetCaptureMouse();
 
     e.Handled(true);
-
-    _ptPrev = e.MousePoint();
 }
 
 void GridSplitter::OnMouseLeftButtonUp(suic::MouseEventArg& e)

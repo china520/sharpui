@@ -1,4 +1,4 @@
-﻿<Window Width="600" Height="350" Opacity="1" SupportLayeredWindow="True" BorderBrush="#6666FF" 
+﻿<Window Width="600" Height="350" Opacity="1" SupportLayeredWindow="False" BorderBrush="#6666FF" 
         MinWidth="50" MinHeight="50" Margin="0" Padding="0" RoundSize="2" Author="汪荣(QQ:386666951)" 
         Name="Window" Text="Sharpui界面引擎演示"  Location="200,200">
 

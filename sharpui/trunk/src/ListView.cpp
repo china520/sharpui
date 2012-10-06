@@ -52,8 +52,6 @@ void ListView::OnColumnHeaderResize(suic::ObjectPtr sender, DragDeltaEventArg& e
     size.cx += e.HorizontalChange();
     _panel->SetDesiredSize(size);
 
-    //ArrangeVisual();
-    //InvalidateMeasure();
     _scrollView->InvalidateArrange();
     _scrollView->InvalidateVisual();
 }

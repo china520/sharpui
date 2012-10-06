@@ -21,46 +21,57 @@ GridViewColumn::GridViewColumn()
     : _actualIndex(0)
     , _columnWidth(20)
     , _columnDesired(20)
+    , _prevWidth(0)
 {
     _header = new GridViewColumnHeader();
-    _header->HeaderGripper()->DragDelta += DragDeltaHandler(this, &GridViewColumn::OnColumnHeaderResize);
+
+    _header->HeaderGripper()->MouseLButtonDown += suic::MouseEventHandler(this, &GridViewColumn::OnHeaderGripperStarted);
+    _header->HeaderGripper()->MouseMove += suic::MouseEventHandler(this, &GridViewColumn::OnHeaderGripperResize);
+    _header->HeaderGripper()->MouseLButtonUp += suic::MouseEventHandler(this, &GridViewColumn::OnHeaderGripperCompleted);
 }
 
 GridViewColumn::~GridViewColumn()
 {
 }
 
-void GridViewColumn::
-OnColumnHeaderGripperDragStarted(suic::ObjectPtr sender, DragStartedEventArg& e)
+void GridViewColumn::OnHeaderGripperStarted(suic::Element* sender, suic::MouseEventArg& e)
 {
-
+    _point = e.MousePoint();
+    _prevWidth = _columnWidth;
 }
 
-void GridViewColumn::
-OnColumnHeaderResize(suic::ObjectPtr sender, DragDeltaEventArg& e)
+void GridViewColumn::OnHeaderGripperResize(suic::Element* sender, suic::MouseEventArg& e)
 {
-    _columnWidth += e.HorizontalChange();
+    int iWid = _prevWidth + e.MousePoint().x - _point.x;
 
-    if (_columnWidth < 10)
+    if (iWid < 10)
     {
-        _columnWidth = 10;
+        iWid = 10;
     }
 
-    suic::Size size = ColumnHeader()->GetDesiredSize();
-
-    size.cx = GetColumnWidth();
-    ColumnHeader()->SetDesiredSize(size);
-
-    if (DragDelta)
+    if (iWid != GetColumnWidth())
     {
-        DragDelta(this, e);
+        int iDelta = iWid - GetColumnWidth();
+
+        SetColumnWidth(iWid);
+
+        suic::Size size = ColumnHeader()->GetDesiredSize();
+
+        size.cx = GetColumnWidth();
+        ColumnHeader()->SetDesiredSize(size);
+
+        if (DragDelta)
+        {
+            DragDeltaEventArg edd(iDelta, 0);
+
+            DragDelta(this, edd);
+        }
     }
 }
 
-void GridViewColumn::
-OnColumnHeaderGripperDragCompleted(suic::ObjectPtr sender, DragCompletedEventArg& e)
+void GridViewColumn::OnHeaderGripperCompleted(suic::Element* sender, suic::MouseEventArg& e)
 {
-
+    ;
 }
 
 GridViewColumnHeader* GridViewColumn::ColumnHeader()

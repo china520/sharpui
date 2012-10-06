@@ -176,7 +176,7 @@ void MainFrame::OnLoaded(suic::LoadedEventArg& e)
     CenterWindow();
 
     // 设置窗体支持层样式，这样，才可以对其进行透明度动画
-    SetValue(suic::SUPPORTLAYEREDWINDOW, new suic::UString(_T("True")));
+    //SetValue(suic::SUPPORTLAYEREDWINDOW, new suic::UString(_T("True")));
 
     // 创建动画显示板
     suic::StoryBoardPtr pSb = new suic::StoryBoard();
