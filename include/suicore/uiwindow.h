@@ -63,18 +63,21 @@ public:
 
 protected:
     
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
-    virtual void OnLoaded(suic::LoadedEventArg& e);
-    virtual void OnRenderSizeChanged(RenderSizeChangedEventArg& e);
-    virtual void OnRenderSizeModeChanged(SizeModeChangedEventArg& e);
+    void OnLoaded(suic::LoadedEventArg& e);
 
-    virtual void OnHitTest(HitResultEventArg& e);
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnSetterChanged(SetterChangedEventArg& e);
 
-    virtual void OnKeyDown(suic::KeyEventArg& e);
-    virtual void OnMouseLeftButtonDown(suic::MouseEventArg& e);
+    void OnRenderSizeChanged(RenderSizeChangedEventArg& e);
+    void OnRenderSizeModeChanged(SizeModeChangedEventArg& e);
+
+    void OnHitTest(HitResultEventArg& e);
+    void OnRender(suic::DrawingContext * drawing);
+
+    void OnKeyDown(suic::KeyEventArg& e);
+    void OnMouseLeftButtonDown(suic::MouseEventArg& e);
 
 protected:
 

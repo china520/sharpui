@@ -29,6 +29,7 @@ public:
     void OnTestWndAni(suic::ElementPtr pElem);
     void OnChangeSkin(suic::ElementPtr pElem);
 
+    void SelectTabItem(suic::Element* sender);
     void OnValueChanged(suic::Element* sender, double o, double n);
 
     void OnLoaded(suic::LoadedEventArg& e);

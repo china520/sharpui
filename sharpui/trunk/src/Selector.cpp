@@ -146,16 +146,9 @@ void Selector::UnselectAllItems()
 //
 void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
 {
+    suic::Element* oldFocus = _focusItem;
     SelectionChangedEventArg ec;
     suic::Element* pItem = dynamic_cast<suic::Element*>(item.get());
-
-    if (!e.IsSelected())
-    {
-        if (_focusItem == pItem)
-        {
-            _focusItem = NULL;
-        }
-    }
 
     if (e.IsSelected())
     {
@@ -164,17 +157,6 @@ void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
             _focusItem = pItem;
         }
 
-        if (_focusItem)
-        {
-            _focusItem->Focus();
-        }
-    }
-
-    ec.AddItem(item, e.IsSelected());
-    OnSelectionChanged(ec);
-
-    if (e.IsSelected())
-    {
         if (ItemSelected)
         {
             ItemSelected(pItem);
@@ -182,10 +164,23 @@ void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
     }
     else
     {
+        if (_focusItem == pItem)
+        {
+            _focusItem = NULL;
+        }
+
         if (ItemUnselected)
         {
             ItemUnselected(pItem);
         }
+    }
+
+    ec.AddItem(item, e.IsSelected());
+    OnSelectionChanged(ec);
+
+    if (_focusItem && _focusItem != oldFocus)
+    {
+        _focusItem->Focus();
     }
 }
 
@@ -214,7 +209,7 @@ void Selector::OnSelectionChanged(SelectionChangedEventArg& e)
             }
 
             _selectedItems.Reset();
-        };
+        }
 
         for (int i = 0; i < e.AddedItems()->GetCount(); ++i)
         {

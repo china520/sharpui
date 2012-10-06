@@ -55,6 +55,33 @@ void MainFrame::OnInitialized()
     {
         treePtr->ItemSelected += ui::SelectTreeItemHandler(this, &MainFrame::OnTreeItemSelect);
     }
+
+    // TabItem选择事件
+    ui::TabControlPtr tab(FindName(_T("TestTab")));
+
+    if (tab)
+    {
+        tab->ItemSelected += ui::ItemSelectedHandler(this, &MainFrame::SelectTabItem);
+    }
+}
+
+void MainFrame::SelectTabItem(suic::Element* sender)
+{
+    ui::TabItemPtr tab(sender);
+    suic::FrameworkElementPtr cont(tab->GetTabContent());
+
+    if (cont)
+    {
+        suic::StoryBoardPtr pSb = new suic::StoryBoard();
+        suic::Animation* pAni = new ui::DoubleAnimation(suic::OPACITY, 0, 1);
+
+        // 设置为True，动画正向和方向各执行一次
+        //pAni->SetAutoReverse(true);
+        pAni->SetSpeedRatio(60);
+        pAni->SetDuration(0.5);
+        pSb->Add(pAni);
+        pSb->Start(cont.get());
+    }
 }
 
 void MainFrame::OnValueChanged(suic::Element* sender, double o, double n)
@@ -71,7 +98,7 @@ void MainFrame::OnTreeItemSelect(ui::TreeViewItem* pItem)
 {
     suic::String text = pItem->GetText();
 
-    ui::MsgBox::Show(_T("提示"), text);
+    ui::MsgBox::Show(_T("Info"), text);
 }
 
 void MainFrame::OnTestAni(suic::ElementPtr pElem)
@@ -147,6 +174,9 @@ void MainFrame::OnLoaded(suic::LoadedEventArg& e)
 
     // 窗口居中显示
     CenterWindow();
+
+    // 设置窗体支持层样式，这样，才可以对其进行透明度动画
+    SetValue(suic::SUPPORTLAYEREDWINDOW, new suic::UString(_T("True")));
 
     // 创建动画显示板
     suic::StoryBoardPtr pSb = new suic::StoryBoard();

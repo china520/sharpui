@@ -160,8 +160,6 @@ void TabItem::OnMouseLeftButtonUp(suic::MouseEventArg& e)
 void TabItem::OnGotFocus(suic::FocusEventArg& e)
 {
     __super::OnGotFocus(e);
-
-    InvalidateVisual();
 }
 
 };
