@@ -86,6 +86,7 @@ public:
     ui::ScrollEventHandler TrackScroll;
 
     int GetVisualPos();
+    void SetVisualPos(int iPos);
 
     /// <summary>
     ///     设置滚动条信息
@@ -95,6 +96,8 @@ public:
     void SetScrollStep(int iStep);
     int GetScrollStep();
     int GetLogicSize() const;
+
+    int MaxVisualPos();
 
     void ScrollToBegin(bool bRepaint=true);
     void ScrollTo(int nNewPos, bool bRepaint=true);

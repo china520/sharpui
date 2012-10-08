@@ -151,15 +151,9 @@
     <!-- Window控件样式定义 -->
     <Style TargetType="Window">
         <Setter Property="Background" Value="{mainbkgnd}" />
-        <Setter Property="Background1" Value="#668888" />
+        <Setter Property="Background" Value="#668888" />
         <Setter Property="BorderThickness" Value="1,1,1,2"/>
         <Setter Property="RoundSize" Value="2" />
-        <Style.Triggers>
-            <Trigger Property="IsInactivate" Value="True">
-                <Setter Property="Background" Value="{mainbkgnd}" />
-                <Setter Property="BorderThickness" Value="1,1,1,2"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <!-- ToolTip控件样式定义 -->

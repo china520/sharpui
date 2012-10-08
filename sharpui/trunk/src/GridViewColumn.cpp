@@ -66,6 +66,11 @@ void GridViewColumn::OnHeaderGripperResize(suic::Element* sender, suic::MouseEve
 
             DragDelta(this, edd);
         }
+
+        if (GetColumnWidth() != iWid)
+        {
+            //_prevWidth = GetColumnWidth();
+        }
     }
 }
 

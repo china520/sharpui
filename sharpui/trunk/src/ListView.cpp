@@ -50,9 +50,31 @@ void ListView::OnColumnHeaderResize(suic::ObjectPtr sender, DragDeltaEventArg& e
     suic::Size size = _panel->GetDesiredSize();
 
     size.cx += e.HorizontalChange();
+    
+    int iNewPos = _scrollView->HorizontalScrollBar()->GetVisualPos();
+
+    /*if (iNewPos >= _scrollView->HorizontalScrollBar()->MaxVisualPos()
+        && e.HorizontalChange() < 0 && _scrollView->HorizontalScrollBar()->IsVisible())
+    {
+        size.cx = 10;
+        pColumn->SetColumnWidth(10);
+    }*/
+
     _panel->SetDesiredSize(size);
 
+    /*if (e.HorizontalChange() < 0)
+    {
+        int iNewPos = e.HorizontalChange() + _scrollView->HorizontalScrollBar()->GetLogicPos();
+
+        iNewPos = (int)((double)iNewPos / (double)_scrollView->HorizontalScrollBar()->GetScrollStep());
+
+        _scrollView->HorizontalScrollBar()->SetVisualPos(iNewPos);
+    }*/
+
     _scrollView->InvalidateArrange();
+
+    iNewPos = _scrollView->HorizontalScrollBar()->GetVisualPos();
+
     _scrollView->InvalidateVisual();
 }
 

@@ -103,6 +103,21 @@ int ScrollBar::GetVisualPos()
     return _scroInfo.iVisualPos;
 }
 
+void ScrollBar::SetVisualPos(int iPos)
+{
+    _scroInfo.iVisualPos = iPos;
+
+    int iMin = 0;
+    int iMaxPos = max(0, (_scroInfo.iMax - iMin + 1 - _scroInfo.iPage));
+
+    if (_scroInfo.iVisualPos < iMin)
+    {
+        _scroInfo.iVisualPos = iMin;
+    }
+
+    _scroInfo.iVisualPos = min(iMaxPos, _scroInfo.iVisualPos);
+}
+
 void ScrollBar::UpdateScrollBar()
 {
     InvalidateArrange();
@@ -153,6 +168,14 @@ void ScrollBar::ScrollToBegin(bool bRepaint)
 
         DoScroll(bRepaint);
     }
+}
+
+int ScrollBar::MaxVisualPos()
+{
+    int iMin = 0;
+    int iMaxPos = max(0, (_scroInfo.iMax - iMin + 1 - _scroInfo.iPage));
+
+    return iMaxPos;
 }
 
 void ScrollBar::ScrollTo(int nNewPos, bool bRepaint)

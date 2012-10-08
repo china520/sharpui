@@ -55,6 +55,8 @@ public:
     void SetHorizontalStep(int iStep);
     void SetVerticalStep(int iStep);
 
+    ScrollBar* HorizontalScrollBar();
+
     void SetContentOffset(suic::Point pt);
 
     void LineUp();
@@ -111,6 +113,11 @@ protected:
 };
 
 typedef suic::shared<ScrollViewer> ScrollViewPtr;
+
+inline ScrollBar* ScrollViewer::HorizontalScrollBar()
+{
+    return _hScroll.get();
+}
 
 inline void ScrollViewer::SetContentOffset(suic::Point pt)
 {
