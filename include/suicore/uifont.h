@@ -17,15 +17,15 @@
 namespace suic
 {
 
-class Font : public RefObject
+class SUICORE_API Font : public RefObject
 {
 public:
 
     Font();
     virtual ~Font();
 
-    HFONT GetFont();
-    static HFONT FindFont(String id);
+    Handle GetFont();
+    static Handle FindFont(String id);
 
     void SetID(String id);
     String GetID() const;
@@ -54,7 +54,7 @@ protected:
     Byte _underline;
     Byte _italic;
 
-    HFONT _hfont;
+    Handle _hfont;
 };
 
 typedef shared<Font> FontPtr;

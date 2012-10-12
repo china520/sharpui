@@ -17,26 +17,53 @@
 namespace suic
 {
 
-class SUICORE_API Brush : public RefObject
+class SUICORE_API Resource : public RefObject
+{
+public:
+
+    virtual ~Resource() {}
+
+    inline String GetKey() const;
+    inline void SetKey(const String& key);
+
+    inline String GetName() const;
+
+protected:
+
+    String _key;
+    String _name;
+};
+
+inline String Resource::GetKey() const 
+{ 
+    return _key; 
+}
+
+inline void Resource::SetKey(const String& key) 
+{ 
+    _key = key; 
+}
+
+inline String Resource::GetName() const 
+{ 
+    return _name; 
+}
+
+class SUICORE_API Brush : public Resource
 {
 public:
 
     virtual ~Brush() {}
 
-    virtual String GetKey();
     virtual bool Parse(const suic::String& xml) = 0;
     virtual bool Parse(void* node);
     virtual void Draw(DrawingContext* drawing, const Rect* lprc) = 0;
     virtual void Draw(DrawingContext* drawing, const Rect* lprc, const Rect* border);
-
-protected:
-
-    String _key;
 };
 
 typedef shared<Brush> BrushPtr;
 
-class SUICORE_API Cursor : public RefObject
+class SUICORE_API Cursor : public Resource
 {
 public:
 
@@ -55,6 +82,6 @@ protected:
 
 typedef shared<Cursor> CursorPtr;
 
-};
+}
 
 # endif

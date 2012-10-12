@@ -132,6 +132,7 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
 
     if (_password.Length() > 0)
     {
+        suic::TextRenderAttri att;
         suic::Size sizeChar(suic::UIRender::MeasureTextSize(suic::String(_passwordChar, 1), GetStyle()->GetTrigger()));
 
         suic::String text(_passwordChar, _password.Length());
@@ -157,8 +158,7 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
                 strDraw = suic::String(_passwordChar, iStart);
                 rcCtrl.right = rcCtrl.left + sizeChar.cx * iStart;
 
-                suic::UIRender::DrawText(drawing, strDraw, setter, &rcCtrl
-                    , CoreFlags::Left, CoreFlags::Center);
+                suic::UIRender::DrawText(drawing, strDraw, setter, &rcCtrl, CoreFlags::Left, 0);
 
                 rcCtrl.left = rcCtrl.right;
             }
@@ -166,8 +166,9 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
             strDraw = suic::String(_passwordChar, iCount);
             rcCtrl.right = rcCtrl.left + sizeChar.cx * iCount;
 
-            drawing->DrawText(strDraw.c_str(), strDraw.Length(), &rcCtrl
-                , ARGB(255,100,120,120), ARGB(255,0,0,0), CoreFlags::Left, 0);
+            att.bkcolor = ARGB(255,100,120,120);
+
+            drawing->DrawText(strDraw.c_str(), strDraw.Length(), &rcCtrl, &att);
 
             if (iStart + iCount < _password.Length() && rcCtrl.right < iRight)
             {
@@ -588,8 +589,6 @@ void PasswordBox::OnMouseMove(suic::MouseEventArg& e)
 
     if (IsMouseCaptured())
     {
-        WndHelper(this).HideCaret();
-
         suic::Point tmPt(e.MousePoint());
         int iPos = CalcCaretPos(tmPt.x);
         int iDif = abs(iPos - _startSel);

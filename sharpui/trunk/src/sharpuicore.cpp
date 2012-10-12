@@ -40,6 +40,7 @@
 #include <sui/webbrowser.h>
 #include <sui/richtextbox.h>
 #include <sui/PasswordBox.h>
+#include <sui/AnimateBox.h>
 
 #include <sui/HwndHost.h>
 
@@ -81,6 +82,7 @@ void SHARPUI_API CoreInitialize(const suic::String& resPath)
     suic::Builder::RegisterElement(suic::RADIOBUTTON, &ui::RadioButton::Create);
     suic::Builder::RegisterElement(suic::SCROLLBAR, &ui::ScrollBar::Create);
 
+    suic::Builder::RegisterElement(_T("AnimateBox"), &ui::AnimateBox::Create);
     suic::Builder::RegisterElement(suic::LISTBOX, &ui::ListBox::Create);   
     suic::Builder::RegisterElement(_T("ListBoxItem"), &ui::ListBoxItem::Create);
 

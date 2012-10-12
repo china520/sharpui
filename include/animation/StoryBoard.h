@@ -23,7 +23,7 @@ namespace suic
 typedef struct tagAniItem
 {
     AnimationPtr ani;
-    TimerTargetPtr timer;
+    TimerIdentityPtr timer;
 }AniItem;
 
 class SUICORE_API StoryBoard : public RefObject

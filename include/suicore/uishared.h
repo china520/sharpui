@@ -26,8 +26,12 @@ public:
     }
 
     shared (T * ptr)
+        : _obj(ptr)
     {
-        __setFirstPtr (ptr);
+        if (_obj)
+        {
+            _obj->__addRef();
+        }
     }
 
     shared (const shared & myObj)
@@ -56,7 +60,6 @@ public:
         {
             _obj->__release();
         }
-        //__setSharePtr (0);
     }
 
     shared & operator = (T * other)

@@ -77,23 +77,30 @@ void TextBoxPanel::OnRender(suic::DrawingContext * drawing)
 
     // »æÖÆÎÄ±¾
 
-    suic::Color clrText(ARGB(255,0,0,0));
+    suic::TextRenderAttri att;
     suic::ObjectPtr oValue = trg->GetValue(suic::FOREGROUND);
 
     rcdraw.Deflate(_textBox->GetPadding());
 
     if (oValue)
     {
-        clrText = oValue->ToColor();
+        att.color = oValue->ToColor();
+    }
+
+    suic::FontPtr pFont(trg->GetValue(_T("Font")));
+
+    if (pFont)
+    {
+        att.font = pFont->GetFont();
     }
 
     if (_textBox->_isSingle)
     {
-        _textBox->_eDoc.DrawSingleLine(drawing, _textBox->IsFocused(), &rcdraw, clrText);
+        _textBox->_eDoc.DrawSingleLine(drawing, _textBox->IsFocused(), &rcdraw, &att);
     }
     else
     {
-        _textBox->_eDoc.Draw(drawing, _textBox->IsFocused(), &rcdraw, clrText);
+        _textBox->_eDoc.Draw(drawing, _textBox->IsFocused(), &rcdraw, &att);
     }
 }
 
@@ -260,7 +267,7 @@ void TextBox::Paste()
     _panel.InvalidateVisual();
     dwTime = ::GetTickCount() - dwTime;
 
-    UI_Trace(_T("Reflesh Time cose: %d\n"), dwTime);
+    suic::SystemHelper::Trace(_T("Reflesh Time cose: %d\n"), dwTime);
 
     ResetCaretPos();
 }
@@ -335,6 +342,8 @@ static suic::Uint32 WCharToChar(wchar_t w, suic::Byte * asc)
 
 void TextBox::OnTextInput(suic::KeyEventArg& e)
 {
+    e.Handled(true);
+
     if (IsReadOnly())
     {
         return;
@@ -409,6 +418,8 @@ void TextBox::OnTextInput(suic::KeyEventArg& e)
 
 void TextBox::OnKeyDown(suic::KeyEventArg& e)
 {
+    e.Handled(true);
+
     if (IsReadOnly())
     {
         return;
@@ -719,7 +730,7 @@ void TextBox::OnMouseRightButtonUp(suic::MouseEventArg& e)
 
     if (rc.PointIn(e.MousePoint()))
     {
-        pt = UI_ToScreenPoint(this, e.MousePoint());
+        pt = suic::SystemHelper::ToScreenPoint(this, e.MousePoint());
 
         ui::MenuPtr editMenu(new Menu());
         suic::StylePtr style(FindResource(_T("TextBox.Menu")));
@@ -900,8 +911,8 @@ void TextBox::UpdateScrollInfo(bool bUpdate)
         _view.InvalidateArrange();
     }
 
-    _view.ScrollToVerticalOffset(iVert);
-    _view.ScrollToHorizontalOffset(iHorz);
+    _view.ScrollToVerticalPos(iVert);
+    _view.ScrollToHorizontalPos(iHorz);
 
     _eDoc.SetVertScrollPos(_view.VerticalVisualPos());
     _eDoc.SetHorzScrollPos(_view.HorizontalVisualPos());

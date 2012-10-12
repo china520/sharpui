@@ -47,7 +47,7 @@ void ListBox::OnUnloaded(suic::LoadedEventArg& e)
 {
     __super::OnUnloaded(e);
 
-    suic::SystemHelper::KillTimer(this, _timerid);
+    suic::SystemHelper::KillTimer(_timerid);
     _timerid = 0;
 }
 
@@ -119,7 +119,7 @@ void ListBox::OnMouseMove(suic::MouseEventArg& e)
 
     if (!IsMouseCaptured())
     {
-        suic::SystemHelper::KillTimer(this, _timerid);
+        suic::SystemHelper::KillTimer(_timerid);
         _timerid = 0;
         SetCaptureMouse();
     }
@@ -133,7 +133,7 @@ void ListBox::OnMouseMove(suic::MouseEventArg& e)
     if (rect.PointIn(e.MousePoint()) && 
         e.MousePoint().y < 0)
     {
-        suic::SystemHelper::KillTimer(this, _timerid);
+        suic::SystemHelper::KillTimer(_timerid);
         _timerid = 0;
     }
     else
@@ -190,7 +190,7 @@ void ListBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 {
     __super::OnMouseLeftButtonDown(e);
 
-    suic::SystemHelper::KillTimer(this, _timerid);
+    suic::SystemHelper::KillTimer(_timerid);
     _timerid = 0;
 
     SetCaptureMouse();
@@ -202,7 +202,7 @@ void ListBox::OnMouseLeftButtonUp(suic::MouseEventArg& e)
 
     ReleaseCaptureMouse();
 
-    suic::SystemHelper::KillTimer(this, _timerid);
+    suic::SystemHelper::KillTimer(_timerid);
     _timerid = 0;
 }
 

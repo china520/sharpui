@@ -107,6 +107,8 @@ suic::Size VisualizePanel::ArrangeHorizontal(const suic::Size& size)
         }
     }
 
+    _startLogicalIndex = i;
+
     suic::Rect rect(iWid - _horizontalOffset, -_verticalOffset, 0, size.cy + _verticalOffset);
 
     for (; i < _container->GetCount(); ++i)
@@ -121,12 +123,13 @@ suic::Size VisualizePanel::ArrangeHorizontal(const suic::Size& size)
             itemPtr->Arrange(rect);
         }
 
+        rect.left = rect.right;
+
         if (rect.left >= size.cx)
         {
+            _endLogicalIndex = i;
             break;
         }
-
-        rect.left = rect.right;
     }
 
     return size;
@@ -157,6 +160,8 @@ suic::Size VisualizePanel::ArrangeVertical(const suic::Size& size, int iOffset)
         }
     }
 
+    _startLogicalIndex = i;
+
     suic::Rect rect(-_horizontalOffset, iHei - _verticalOffset + iOffset, size.cx + _horizontalOffset, 0);
 
     for (; i < _container->GetCount(); ++i)
@@ -171,12 +176,14 @@ suic::Size VisualizePanel::ArrangeVertical(const suic::Size& size, int iOffset)
             itemPtr->Arrange(rect);
         }
 
+        rect.top = rect.bottom;
+
         if (rect.top >= size.cy)
         {
+            _endLogicalIndex = i;
+
             break;
         }
-
-        rect.top = rect.bottom;
     }
 
     return size;

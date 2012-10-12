@@ -94,7 +94,7 @@ void RadioButton::SetCheck()
         {
             rdPtr = radioGrp->LookupCheckedRadioFromGroup(_sGrpName);
 
-            UI_Trace(_T("radioGrp->LookupCheckedRadioFromGroup(_sGrpName)\n"));
+            suic::SystemHelper::Trace(_T("radioGrp->LookupCheckedRadioFromGroup(_sGrpName)\n"));
         }
 
         // 取消组里已经被选中的控件

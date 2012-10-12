@@ -17,9 +17,9 @@
 namespace suic
 {
 
-/// =====================================================
-/// VisualHostËÞÖ÷Àà
-/// =====================================================
+/// <summary>
+/// VisualHostËÞÖ÷
+/// </summary>
 class SUICORE_API VisualHost : public suic::RefObject
 {
 public:

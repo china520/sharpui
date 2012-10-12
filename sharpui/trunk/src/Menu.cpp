@@ -173,7 +173,7 @@ void Menu::OnItemLeftButtonDown(MenuItem* item, suic::MouseEventArg& e)
         {
             if (item->IsSubmenu())
             {
-                suic::Point pt = UI_CalcScreenElementPoint(item, CoreFlags::eLeftBottom);
+                suic::Point pt = suic::SystemHelper::CalcScreenElementPoint(item, CoreFlags::eLeftBottom);
 
                 TrackPopupMenuItem(item, pt.x, pt.y, this, item->_submenuPopup);
             }

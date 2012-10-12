@@ -225,6 +225,22 @@ void Selector::OnSelectionChanged(SelectionChangedEventArg& e)
     }
 }
 
+void Selector::ScrollByUpDown(suic::Element* pElem, bool bUp)
+{
+    double val = _scrollView->VerticalScrollBar()->GetScrollPos();
+    double step = _scrollView->VerticalScrollBar()->GetScrollStep();
+    double pos = (double)pElem->GetDesiredSize().cy / step + 0.5;
+
+    if (bUp)
+    {
+        pos = -pos;
+    }
+
+    _scrollView->ScrollToVerticalPos(val + pos);
+    _scrollView->InvalidateArrange();
+    _scrollView->InvalidateVisual();    
+}
+
 void Selector::OnInitialized()
 {
     __super::OnInitialized();
@@ -241,33 +257,105 @@ void Selector::OnInitialized()
     }
 }
 
-void Selector::OnRender(suic::DrawingContext * drawing)
-{
-    __super::OnRender(drawing);
-}
-
 void Selector::OnTextInput(suic::KeyEventArg& e)
 {
     __super::OnTextInput(e);
+
+    double val = _scrollView->HorizontalScrollBar()->GetScrollSize();
+    double step = _scrollView->HorizontalScrollBar()->GetScrollStep();
+
+    if (e.IsLeftArrow())
+    {
+        _scrollView->ScrollToHorizontalPos(val - 1);
+    }
+    else if (e.IsRightArrow())
+    {
+        _scrollView->ScrollToHorizontalPos(val + 1);
+    }
+
+    e.Handled(true);
 }
 
 void Selector::OnKeyDown(suic::KeyEventArg& e)
 {
-    if (e.IsLeftArrow())
+    if (e.IsLeftArrow() || e.IsRightArrow())
     {
+        OnTextInput(e);
         _scrollView->LineLeft();
-    }
-    else if (e.IsRightArrow())
-    {
-        _scrollView->LineRight();
     }
     else if (e.IsUpArrow())
     {
-        ;
+        if (!_focusItem)
+        {
+            if (GetMaxVisualIndex() > 0)
+            {
+                SelectItem(_panel->GetVisualChild(GetMaxVisualIndex() - 1), true);
+            }
+        }
+        else
+        {
+            int index = _panel->GetVisualChildIndex(_focusItem);
+
+            if (index > GetMinVisualIndex())
+            {
+                SelectItem(_panel->GetVisualChild(index - 1), true);
+
+                if (index == GetMinVisualIndex() + 1)
+                {
+                    ScrollByUpDown(GetLogicalChild(index - 1), true);
+                }
+            }
+            else
+            {
+                index = _panel->GetStartLogicalIndex();
+
+                if (index > 0)
+                {
+                    ScrollByUpDown(GetLogicalChild(index - 1), true);
+                }
+                else
+                {
+                    ScrollByUpDown(GetLogicalChild(0), true);
+                }
+            }
+        }
     }
     else if (e.IsDownArrow())
     {
-        ;
+        if (!_focusItem)
+        {
+            if (_panel->GetVisualChildrenCount() > 0)
+            {
+                SelectItem(GetVisualChild(0), true);
+            }
+        }
+        else
+        {
+            int index = _panel->GetVisualChildIndex(_focusItem);
+
+            if (index < GetMaxVisualIndex() - 1)
+            {
+                SelectItem(_panel->GetVisualChild(index + 1), true);
+
+                if (index == GetMaxVisualIndex() - 2)
+                {
+                    ScrollByUpDown(GetLogicalChild(index + 1), false);
+                }
+            }
+            else
+            {
+                index = _panel->GetEndLogicalIndex();
+
+                if (index < GetItemsCount() - 1)
+                {
+                    ScrollByUpDown(GetLogicalChild(index + 1), false);
+                }
+                else
+                {
+                    ScrollByUpDown(GetLogicalChild(GetItemsCount() - 1), false);
+                }
+            }
+        }
     }
     else if (e.IsPageup())
     {
@@ -292,45 +380,6 @@ void Selector::OnKeyDown(suic::KeyEventArg& e)
     }
 
     e.Handled(true);
-}
-
-void Selector::OnMouseEnter(suic::MouseEventArg& e)
-{
-    __super::OnMouseEnter(e);
-
-    e.Handled(true);
-}
-
-void Selector::OnMouseMove(suic::MouseEventArg& e)
-{
-    __super::OnMouseMove(e);
-}
-
-void Selector::OnMouseLeave(suic::MouseEventArg& e)
-{
-    __super::OnMouseLeave(e);
-
-    e.Handled(true);
-}
-
-void Selector::OnMouseLeftButtonDown(suic::MouseEventArg& e)
-{
-    __super::OnMouseLeftButtonDown(e);
-}
-
-void Selector::OnMouseLeftButtonDbclk(suic::MouseEventArg& e)
-{
-    __super::OnMouseLeftButtonDbclk(e);
-}
-
-void Selector::OnMouseLeftButtonUp(suic::MouseEventArg& e)
-{
-    __super::OnMouseLeftButtonUp(e);
-}
-
-void Selector::OnItemsChanged(NotifyContainerChangedArg& e)
-{
-    __super::OnItemsChanged(e);
 }
 
 };

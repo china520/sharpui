@@ -17,9 +17,9 @@
 namespace suic
 {
 
-// =========================================================
-// 所有面板界面元素类的基类，实现一般界面元素的公共操作和接口.
-//
+/// <summary>
+/// 所有面板界面元素类的基类，实现一般界面元素的公共操作和接口.
+/// </summary>
 class SUICORE_API Panel : public FrameworkElement
 {
 public:
@@ -44,6 +44,9 @@ public:
 
     void SetHorizontalOffset(int val);
     void SetVerticalOffset(int val);
+
+    int GetStartLogicalIndex() const;
+    int GetEndLogicalIndex() const;
 
 protected:
 
@@ -94,11 +97,25 @@ protected:
     IntVector _zIndex;
     IntVector _tabIndex;
 
+    // 可视树第一个元素在逻辑树中的索引
+    int _startLogicalIndex;
+    int _endLogicalIndex;
+
     int _horizontalOffset;
     int _verticalOffset;
 };
 
 typedef shared<Panel> PanelPtr;
+
+inline int Panel::GetStartLogicalIndex() const
+{
+    return _startLogicalIndex;
+}
+
+inline int Panel::GetEndLogicalIndex() const
+{
+    return _endLogicalIndex;
+}
 
 inline void Panel::SetHorizontalOffset(int val)
 {
@@ -108,6 +125,16 @@ inline void Panel::SetHorizontalOffset(int val)
 inline void Panel::SetVerticalOffset(int val)
 {
     _verticalOffset = val;
+}
+
+inline suic::Element* Panel::GetLogicalChild(int index)
+{
+    return _elementConnection->GetElement(index);
+}
+
+inline Int32 Panel::GetLogicalChildrenCount()
+{
+    return _elementConnection->GetCount();
 }
 
 };

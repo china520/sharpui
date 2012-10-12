@@ -13,7 +13,6 @@
 
 #include <suicore/uivisual.h>
 #include <suicore/uievent.h>
-#include <suicore/uiresource.h>
 #include <suicore/delegate.h>
 
 #include <suicore/style/ResourceDictionary.h>
@@ -37,9 +36,16 @@ typedef delegate<void(suic::Element*)> InitializedEventHandler;
 typedef delegate<void(suic::Element*, StylePtr)> ThemeChangedHandler;
 typedef delegate<void(suic::Element*, HitResultEventArg&)> HitTestEventHandler;
 
-// ====================================================
-// 界面元素类的基类，实现一般界面元素的公共操作和接口.
-// ====================================================
+class IUserData : public RefObject
+{
+public:
+
+    virtual ~IUserData() {}
+};
+
+/// <summary>
+/// 界面元素类的基类，实现一般界面元素的公共操作和接口.
+/// </summary>
 class SUICORE_API Element : public Visual
 {
 public:
@@ -549,7 +555,24 @@ public:
     virtual void OnUnloaded(LoadedEventArg& e);
     virtual void OnTargetUpdated(DataTransferEventArg& e);
 
+    /// <summary>
+    ///     元素属性值变化时进行回调（定义在元素本身节点的属性）
+    /// </summary>
+    /// <remarks>
+    ///     第一次加载和更换资源时都会调用。
+    /// </remarks>
+    /// <param name="e">属性信息事件</param>
+    /// <returns>无</returns>
     virtual void OnSetterChanged(SetterChangedEventArg& e);
+
+    /// <summary>
+    ///     IsSelected等状态变化时回调。
+    /// </summary>
+    /// <remarks>
+    ///     状态变化时让元素有处理机会。
+    /// </remarks>
+    /// <param name="e">状态事件，包含新旧状态</param>
+    /// <returns>无</returns>
     virtual void OnStateChanged(StateChangedEventArg& e);
     virtual void OnValueChanged(ValueChangedEventArg& e);
 

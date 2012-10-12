@@ -6,7 +6,7 @@
 // 作  者：汪荣
 // 时  间：2010-08-02
 // 
-// ============================================================================
+// =========================================================
 
 # ifndef _UIDELEGATE_H_
 # define _UIDELEGATE_H_
@@ -17,9 +17,9 @@ inline void throwBadInvoke()
 {
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
-// 目前最多支持9个参数委托绑定
-
+/// <summary>
+/// 目前最多支持9个参数委托绑定
+/// </summary>
 #define FUNC_RET R
 
 #define UNION_S(a, b) UNION_S_OO((a, b))
@@ -28,8 +28,9 @@ inline void throwBadInvoke()
 #define UNION_S_II(res) res
 #define UNION_ARG(r,u) r##(##u##)
 
-////////////////////////////////////////////////////////////////////////////////////////
-// 支持多个参数的重复绑定
+/// <summary>
+/// 支持多个参数的重复绑定
+/// </summary>
 
 #define ARGS_REPEAT_2_1(T,A) T##1 A##1
 #define ARGS_REPEAT_2_2(T,A) ARGS_REPEAT_2_1(T,A),T##2 A##2
@@ -91,7 +92,6 @@ struct function_call {};
 #define ARGS_COUNT 0
 #include "delegate.inl"
 
-
 // 支持一个参数委托
 #define ARGS_COUNT 1
 #include "delegate.inl"
@@ -104,7 +104,6 @@ struct function_call {};
 
 #define ARGS_COUNT 4
 #include "delegate.inl"
-
 
 #define ARGS_COUNT 5
 #include "delegate.inl"

@@ -51,7 +51,7 @@ void ListView::OnColumnHeaderResize(suic::ObjectPtr sender, DragDeltaEventArg& e
 
     size.cx += e.HorizontalChange();
     
-    int iNewPos = _scrollView->HorizontalScrollBar()->GetVisualPos();
+    int iNewPos = _scrollView->HorizontalScrollBar()->GetScrollPos();
 
     /*if (iNewPos >= _scrollView->HorizontalScrollBar()->MaxVisualPos()
         && e.HorizontalChange() < 0 && _scrollView->HorizontalScrollBar()->IsVisible())
@@ -73,7 +73,7 @@ void ListView::OnColumnHeaderResize(suic::ObjectPtr sender, DragDeltaEventArg& e
 
     _scrollView->InvalidateArrange();
 
-    iNewPos = _scrollView->HorizontalScrollBar()->GetVisualPos();
+    iNewPos = _scrollView->HorizontalScrollBar()->GetScrollPos();
 
     _scrollView->InvalidateVisual();
 }
@@ -181,6 +181,12 @@ suic::Size ListView::ArrangeOverride(const suic::Size& availableSize)
     return availableSize;
 }
 
+inline int ListView::GetMaxVisualIndex()
+{
+    int count = _panel->GetVisualChildrenCount();
+    return (_header->IsVisible() ? (count - 1) : count);
+}
+
 void ListView::OnInitialized()
 {
     __super::OnInitialized();
@@ -213,42 +219,4 @@ void ListView::OnInitialized()
     pBtn->SetMinHeight(29);
 }
 
-void ListView::OnRender(suic::DrawingContext * drawing)
-{
-    __super::OnRender(drawing);
 }
-
-void ListView::OnTextInput(suic::KeyEventArg& e)
-{
-}
-
-void ListView::OnKeyDown(suic::KeyEventArg& e)
-{
-}
-
-void ListView::OnGotFocus(suic::FocusEventArg& e)
-{
-    __super::OnGotFocus(e);
-}
-
-void ListView::OnMouseLeftButtonDown(suic::MouseEventArg& e)
-{
-    __super::OnMouseLeftButtonDown(e);
-}
-
-void ListView::OnMouseLeftButtonDbclk(suic::MouseEventArg& e)
-{
-    __super::OnMouseLeftButtonDbclk(e);
-}
-
-void ListView::OnMouseLeftButtonUp(suic::MouseEventArg& e)
-{
-    __super::OnMouseLeftButtonUp(e);
-}
-
-void ListView::OnSelectionChanged(SelectionChangedEventArg& e)
-{
-    __super::OnSelectionChanged(e);
-}
-
-};

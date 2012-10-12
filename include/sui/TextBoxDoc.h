@@ -106,8 +106,10 @@ public:
     TextBoxLine();
     virtual ~TextBoxLine();
 
-    void Draw(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc, suic::Color clrText);
-    void DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc, suic::Uint32 beg, suic::Uint32 end, suic::Color clrText);
+    void Draw(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc
+        , const suic::TextRenderAttri* att);
+    void DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc
+        , suic::Uint32 beg, suic::Uint32 end, suic::TextRenderAttri* att);
 
     void GetText(suic::String & str);
     void GetSelText(suic::String & str, int beg, int len);
@@ -172,10 +174,10 @@ public:
     void Paste();
     void SelectAll();
 
-    void DrawPassword(suic::DrawingContext * drawing, suic::Char ch, bool bActive
-        , suic::Rect * lprc, suic::Color clrText);
-    void DrawSingleLine(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc, suic::Color clrText);
-    void Draw(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc, suic::Color clrText);
+    void DrawSingleLine(suic::DrawingContext * drawing, bool bActive
+        , suic::Rect * lprc, suic::TextRenderAttri* att);
+    void Draw(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc
+        , suic::TextRenderAttri* att);
 
     void SetVisualRect(suic::Rect * lprc);
     suic::Rect GetVisualRect() const;

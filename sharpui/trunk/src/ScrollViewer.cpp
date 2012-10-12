@@ -46,22 +46,22 @@ ScrollViewer::~ScrollViewer()
 
 double ScrollViewer::HorizontalOffset()
 {
-    return _hScroll->GetLogicPos();
+    return _hScroll->GetScrollSize();
 }
 
 double ScrollViewer::VerticalOffset()
 {
-    return _vScroll->GetLogicPos();
+    return _vScroll->GetScrollSize();
 }
 
 double ScrollViewer::HorizontalVisualPos()
 {
-    return _hScroll->GetVisualPos();
+    return _hScroll->GetScrollPos();
 }
 
 double ScrollViewer::VerticalVisualPos()
 {
-    return _vScroll->GetVisualPos();
+    return _vScroll->GetScrollPos();
 }
 
 void ScrollViewer::LineUp()
@@ -134,19 +134,19 @@ void ScrollViewer::ScrollToBottom()
     _vScroll->ScrollToEnd();
 }
 
-void ScrollViewer::ScrollToHorizontalOffset(double offset)
+void ScrollViewer::ScrollToHorizontalPos(double offset)
 {
     _hScroll->ScrollTo(offset);
 }
 
-void ScrollViewer::ScrollToVerticalOffset(double offset)
+void ScrollViewer::ScrollToVerticalPos(double offset)
 {
     _vScroll->ScrollTo(offset);
 }
 
 void ScrollViewer::OnHorizontalScroll(suic::ElementPtr eScroll, ScrollEventArg& scroll)
 {
-    suic::Int32 curpos = (int)_hScroll->GetLogicPos();
+    suic::Int32 curpos = (int)_hScroll->GetScrollSize();
 
     suic::PanelPtr cont(GetContent());
 
@@ -161,7 +161,7 @@ void ScrollViewer::OnHorizontalScroll(suic::ElementPtr eScroll, ScrollEventArg& 
 
 void ScrollViewer::OnVerticalScroll(suic::ElementPtr eScroll, ScrollEventArg& scroll)
 {
-    suic::Int32 curpos = (int)_vScroll->GetLogicPos();
+    suic::Int32 curpos = (int)_vScroll->GetScrollSize();
 
     suic::PanelPtr cont(GetContent());
 
@@ -304,8 +304,8 @@ suic::Size ScrollViewer::ArrangeOverride(const suic::Size& availableSize)
 
         if (lay)
         {
-            lay->SetHorizontalOffset(_hScroll->GetLogicPos());
-            lay->SetVerticalOffset(_vScroll->GetLogicPos());
+            lay->SetHorizontalOffset(_hScroll->GetScrollSize());
+            lay->SetVerticalOffset(_vScroll->GetScrollSize());
         }
 
         rect.left += _contentOffset.x;
@@ -358,23 +358,9 @@ void ScrollViewer::OnTextInput(suic::KeyEventArg& e)
 
 void ScrollViewer::OnKeyDown(suic::KeyEventArg& e)
 {
-    if (e.IsLeftArrow())
-    {
-        LineLeft();
-    }
-    else if (e.IsRightArrow())
-    {
-        LineRight();
-    }
-    else if (e.IsUpArrow())
-    {
-        LineUp();
-    }
-    else if (e.IsDownArrow())
-    {
-        LineDown();
-    }
-    else if (e.IsPageup())
+    bool handled = true;
+
+    if (e.IsPageup())
     {
         PageUp();
     }
@@ -392,10 +378,10 @@ void ScrollViewer::OnKeyDown(suic::KeyEventArg& e)
     }
     else
     {
-        return;
+        handled = false;
     }
 
-    e.Handled(true);
+    e.Handled(handled);
 }
 
 void ScrollViewer::OnMouseWheel(suic::MouseWheelEventArg& e)
@@ -403,7 +389,7 @@ void ScrollViewer::OnMouseWheel(suic::MouseWheelEventArg& e)
     if (_vScroll->IsVisible())
     {
         int zDelta = e.Delta();
-        int nPos = _vScroll->GetVisualPos();
+        int nPos = _vScroll->GetScrollPos();
 
         if (zDelta < 0)
         {
@@ -414,7 +400,7 @@ void ScrollViewer::OnMouseWheel(suic::MouseWheelEventArg& e)
             _vScroll->ScrollTo(nPos - 4, false);
         }
 
-        if (_vScroll->GetVisualPos() != nPos)
+        if (_vScroll->GetScrollPos() != nPos)
         {
             _vScroll->UpdateScrollBar();
 

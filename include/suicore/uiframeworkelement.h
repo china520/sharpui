@@ -12,6 +12,7 @@
 # define _UIFRAMEELEMENT_H_
 
 #include <suicore/uielement.h>
+#include <suicore/uiinterface.h>
 #include <suicore/drawing/uiBrush.h>
 
 namespace suic
@@ -20,9 +21,9 @@ namespace suic
 class FrameworkElement;
 typedef shared<FrameworkElement> FrameworkElementPtr;
 
-/// ====================================================
+/// <summary>
 /// 框架界面元素类的基类，实现框架界面元素的公共操作和接口.
-/// ====================================================
+/// </summary>
 class SUICORE_API FrameworkElement : public Element
 {
 public:
@@ -177,6 +178,8 @@ public:
     void SetBorderThickness(Rect border);
 
 public:
+
+    virtual bool OnReadChild(ObjectPtr& pChild, IMarkupNode* pNode);
 
     virtual Size MeasureCore(const Size & availableSize);
     virtual Size MeasureOverride(const Size& availableSize);

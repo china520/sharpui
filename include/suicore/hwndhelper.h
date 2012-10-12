@@ -22,11 +22,11 @@ class SUICORE_API HwndHelper : public Object
 {
 public:
 
-    HwndHelper();
-
     static VisualHostPtr GetVisualHost(Element* pElem); 
     static suic::Handle GetHandle(Element* pElem);
     static void LoadedElement(Element* pElem);
+
+    static bool IsMouseInElement(suic::Element* element);
 
     static void DragMoveWindow(Element* pElem);
 
@@ -47,6 +47,10 @@ public:
     static bool IsWindowMaximize(suic::ElementPtr);
     static bool IsWindowVisible(suic::ElementPtr);
     static bool IsWindowEnable(suic::ElementPtr);
+
+protected:
+
+    HwndHelper();
 };
 
 };

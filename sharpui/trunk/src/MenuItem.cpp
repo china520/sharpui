@@ -273,7 +273,7 @@ void MenuItem::OnMouseEnter(suic::MouseEventArg& e)
 
         if (!GetTrackMenu()->IsClosed())
         {
-            suic::Point pt = UI_CalcScreenElementPoint(this, CoreFlags::eRightTop);
+            suic::Point pt = suic::SystemHelper::CalcScreenElementPoint(this, CoreFlags::eRightTop);
 
             pt.x -= menu->GetBorderThickness().right;
 
@@ -283,7 +283,7 @@ void MenuItem::OnMouseEnter(suic::MouseEventArg& e)
         }
         else
         {
-            suic::Point pt = UI_CalcScreenElementPoint(this, CoreFlags::eLeftBottom);
+            suic::Point pt = suic::SystemHelper::CalcScreenElementPoint(this, CoreFlags::eLeftBottom);
             SetPopupMenu(this, pt.x, pt.y, _submenuPopup);
         }
     }

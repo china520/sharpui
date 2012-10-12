@@ -194,6 +194,14 @@
                     <TextBox Name="txttest" Padding="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  MultiLine="True" ReadOnly="False" Margin="4,80,4,4" />
                 </Panel>
             </TabItem>
+
+            <TabItem Header="动画演示">
+                <Panel Wrapper="TabContent" Name="AniCtrl" >
+                    <AnimateBox Name="ani" Padding="2" Gif="images/ani/email.gif" Background="#FFFFFF" Margin="4,6,4,4" />
+                    <AnimateBox Name="lb" Padding="2" Gif="images/ani/laba.gif" Background1="#FFFFFF" Margin="90,6,4,4" />
+                    <AnimateBox Name="ani1" Padding="2" Gif="images/ani/haha.gif" Background="#FFFFFF" Margin="4,90,4,4" />
+                </Panel>
+            </TabItem>
         </TabControl>
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
                     Name="stb" Height="24" Margin="3,0,4,2" Background="#BBFFFFFF">

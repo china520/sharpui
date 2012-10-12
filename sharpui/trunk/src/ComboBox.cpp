@@ -272,16 +272,11 @@ void ComboBox::OnInitialized()
     AddVisualChild(_textBox.get());
 
     const suic::String COMBOBOXTEXTBOX = _T("ComboBox.TextBox");
-    suic::StylePtr style = FindResource(COMBOBOXTEXTBOX);
-
-    if (style)
-    {
-        _textBox->SetStyle(style);
-    }
-
+    
+    _textBox->SetClassName(COMBOBOXTEXTBOX);
     _textBox->SetOwner(this);
 
-    style = FindResource(suic::COMBOBOXLISTBOX);
+    suic::StylePtr style = FindResource(suic::COMBOBOXLISTBOX);
 
     if (!style)
     {
@@ -456,7 +451,7 @@ void ComboBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
     }
     else
     {
-        suic::Point point = UI_CalcScreenElementPoint(this, CoreFlags::eLeftBottom);
+        suic::Point point = suic::SystemHelper::CalcScreenElementPoint(this, CoreFlags::eLeftBottom);
 
         suic::Size availableSize;
         int iWid = RenderSize().cx;

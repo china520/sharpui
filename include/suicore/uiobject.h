@@ -21,6 +21,9 @@
 namespace suic
 {
 
+/// <summary>
+/// 框架界面所有类的基类，重载new和delete，实现内存管理
+/// </summary>
 class SUICORE_API Object
 {
 public:
@@ -50,6 +53,9 @@ public:
     static void operator delete[](void* ptr);
 };
 
+/// <summary>
+/// 带引用计数类的基类
+/// </summary>
 class SUICORE_API RefObject : public Object
 {
 public:

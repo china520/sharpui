@@ -40,8 +40,8 @@ void RepeatButton::OnUnloaded(suic::LoadedEventArg& e)
 {
     __super::OnUnloaded(e);
 
-    suic::SystemHelper::KillTimer(this, m_iTimer300);
-    suic::SystemHelper::KillTimer(this, m_iTimer301);
+    suic::SystemHelper::KillTimer(m_iTimer300);
+    suic::SystemHelper::KillTimer(m_iTimer301);
     m_iTimer300 = 0;
     m_iTimer301 = 0;
 }
@@ -56,7 +56,7 @@ void RepeatButton::OnRender(suic::DrawingContext * drawing)
 
 void RepeatButton::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 {
-    suic::SystemHelper::KillTimer(this, m_iTimer301);
+    suic::SystemHelper::KillTimer(m_iTimer301);
     m_iTimer300 = suic::SystemHelper::SetTimer(this, m_iDelay);
 
     __super::OnMouseLeftButtonDown(e);
@@ -64,7 +64,7 @@ void RepeatButton::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 
 void RepeatButton::OnMouseLeftButtonUp(suic::MouseEventArg& e)
 {
-    suic::SystemHelper::KillTimer(this, m_iTimer301);
+    suic::SystemHelper::KillTimer(m_iTimer301);
     m_iTimer301 = 0;
 
     __super::OnMouseLeftButtonUp(e);
@@ -74,7 +74,7 @@ void RepeatButton::OnMouseEnter(suic::MouseEventArg& e)
 {
     if (IsMouseDown())
     {
-        suic::SystemHelper::KillTimer(this, m_iTimer301);
+        suic::SystemHelper::KillTimer(m_iTimer301);
         m_iTimer301 = suic::SystemHelper::SetTimer(this, m_iInterval);
     }
 
@@ -83,7 +83,7 @@ void RepeatButton::OnMouseEnter(suic::MouseEventArg& e)
 
 void RepeatButton::OnMouseLeave(suic::MouseEventArg& e)
 {
-    suic::SystemHelper::KillTimer(this, m_iTimer301);
+    suic::SystemHelper::KillTimer(m_iTimer301);
     m_iTimer301 = 0;
 
     __super::OnMouseLeave(e);
@@ -101,7 +101,7 @@ void RepeatButton::OnTimer(int id)
 {
     if (id == m_iTimer300)
     {
-        suic::SystemHelper::KillTimer(this, m_iTimer300);
+        suic::SystemHelper::KillTimer(m_iTimer300);
         m_iTimer300 = 0;
 
         if (IsMouseDown())
@@ -112,7 +112,7 @@ void RepeatButton::OnTimer(int id)
 
     if (IsMouseDown())
     {
-        suic::Point pt = UI_CalcuCusorPoint(this);
+        suic::Point pt = suic::SystemHelper::CalcuCusorPoint(this);
 
         pt = PointFromScreen(pt);
 

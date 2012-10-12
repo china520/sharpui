@@ -16,37 +16,53 @@
 namespace suic
 {
 
-class IElementCollection : public RefObject
+class SUICORE_API ElementCollection : public RefObject
 {
 public:
 
-    virtual ~IElementCollection() {};
+    ElementCollection(ElementPtr virtualParent, ElementPtr logicParent);
+    virtual ~ElementCollection();
 
-    virtual int GetCapacity() = 0;
-    virtual void SetCapacity(int iCapacity) = 0;
+    int GetCapacity();
+    void SetCapacity(int iCapacity);
 
-    virtual int GetCount() = 0;
+    int GetCount();
 
-    virtual ElementPtr GetElement(int iIndex) = 0;
+    Element* GetElement(int iIndex);
 
-    virtual int Add(ElementPtr element) = 0;
-    virtual void Clear() = 0;
-    virtual void ClearLogicalParent(ElementPtr element) = 0;
-    virtual bool Contains(ElementPtr element) = 0;
+    int Add(ElementPtr element);
+    void Clear();
+    void ClearLogicalParent(ElementPtr element);
+    bool Contains(ElementPtr element);
 
-    virtual void CopyTo(ElementPtr array[], int index) = 0;
+    void CopyTo(ElementPtr array[], int index);
 
-    virtual int IndexOf(ElementPtr element) = 0;
-    virtual void Insert(int index, ElementPtr element) = 0;
+    int IndexOf(ElementPtr element);
+    void Insert(int index, ElementPtr element);
 
-    virtual void Remove(ElementPtr element) = 0;
-    virtual void RemoveAt(int index) = 0;
-    virtual void RemoveRange(int index, int count) = 0; 
+    void Remove(ElementPtr element) ;
+    void RemoveAt(int index);
+    void RemoveRange(int index, int count); 
+
+protected:
+
+    ElementPtr _logicParent;
+    ElementPtr _virtualParent;
+
+    Vector<ElementPtr> _items;
 };
 
-typedef shared<IElementCollection> ElementCollectionPtr;
+typedef shared<ElementCollection> ElementCollectionPtr;
 
-SUICORE_API ElementCollectionPtr CreateElementCollection(ElementPtr parent);
+inline int ElementCollection::GetCount()
+{
+    return _items.size();
+}
+
+inline Element* ElementCollection::GetElement(int iIndex)
+{
+    return _items[iIndex].get();
+}
 
 };
 

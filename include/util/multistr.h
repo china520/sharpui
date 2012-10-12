@@ -108,7 +108,7 @@ inline void Multistr::init(size_type sz)
 
 inline void Multistr::set_size(size_type sz) 
 { 
-    _rep->str[ _rep->size = sz ] = '\0'; 
+    _rep->str[_rep->size=sz] = '\0'; 
 }
 
 inline char* Multistr::start() const 

@@ -56,7 +56,7 @@ suic::Size TabControl::MeasureOverride(const suic::Size& size)
 
         TabItemPtr focusTab(_focusItem);
 
-        if (focusTab)
+        if (focusTab && focusTab->GetTabContent())
         {
             focusTab->GetTabContent()->Measure(size);
         }

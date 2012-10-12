@@ -156,7 +156,7 @@ public:
 
 typedef shared<IInitializeHook> InitializeHookPtr;
 
-class TimerTarget : public RefObject
+class TimerIdentity : public RefObject
 {
 public:
 
@@ -164,14 +164,14 @@ public:
     int elapse;
     bool started;
 
-    TimerTarget()
+    TimerIdentity()
         : id(0)
         , elapse(10)
         , started(false)
     {}
 };
 
-typedef shared<TimerTarget> TimerTargetPtr;
+typedef shared<TimerIdentity> TimerIdentityPtr;
 
 typedef delegate<void(int)> TimerFunc;
 
@@ -214,6 +214,31 @@ protected:
 };
 
 typedef shared<TimerEntity> TimerEntityPtr;
+
+struct AnimateItem
+{
+    ImagePtr img;
+
+    int elapse;
+    int transparent;
+    int x;
+    int y;
+    int w;
+    int h;
+    int flag;
+};
+
+struct GifDescriptor
+{
+    unsigned short w;
+    unsigned short h;
+
+    unsigned char packed;
+    unsigned char bkIndex;
+    unsigned char pixelAspect;
+
+    Color bkcolor;
+};
 
 }
 

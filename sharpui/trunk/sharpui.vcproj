@@ -123,6 +123,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="2"
+				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="../../include;."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SHARPUI_EXPORTS;"
 				RuntimeLibrary="0"
@@ -423,6 +425,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\sui\AnimateBox.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\sui\Button.h"
 				>
 			</File>
@@ -628,6 +634,10 @@
 			>
 			<File
 				RelativePath=".\src\ActiveXControl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\AnimateBox.cpp"
 				>
 			</File>
 			<File

@@ -23,8 +23,6 @@ class SUICORE_API SystemHelper : public Object
 {
 public:
 
-    SystemHelper();
-
     static void* Malloc(int);
     static void Free(void*);
 
@@ -33,12 +31,20 @@ public:
     static String CalculatePath(const String& path);
     static bool ReadResource(const String& path);
 
+    static Point ToScreenPoint(Element* element, Point pt);
+    static Point GetCursorPoint(Element* element);
+    static Point CalcuCusorPoint(ElementPtr element);
+    static Point CalcScreenElementPoint(Element* element, int flag);
+    static ElementPtr GetMouseOverElement(ElementPtr root);
+
     static DrawingContextPtr GetRenderContext(Element* pElem);
 
     static Uint32 SetTimer(suic::ElementPtr, suic::Uint32, int iPriority=-10);
-    static void KillTimer(suic::ElementPtr, suic::Uint32);
+    static Uint32 RestartTimer(Uint32 timerid, Uint32 iElapse);
+    static void KillTimer(suic::Uint32);
 
     static suic::ImagePtr GetImage();
+    static void LoadGif(const suic::String& path, GifDescriptor& gd, suic::Vector<AnimateItem>& anis);
 
     /// <summary>
     ///     解析样式描述文件并返回根元素
@@ -77,6 +83,10 @@ public:
     static void RemoveMessageListener(suic::Element*, MessageListener ml);
 
     static void RegisterContent(ContentBuilder val);
+
+protected:
+
+    SystemHelper();
 };
 
 };

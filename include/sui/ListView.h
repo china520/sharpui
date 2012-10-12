@@ -51,25 +51,14 @@ public:
 
 protected:
 
+    int GetMaxVisualIndex();
+
     void InitializeScrollView();
 
     suic::Size MeasureOverride(const suic::Size& size);
     suic::Size ArrangeOverride(const suic::Size& size);
 
     void OnInitialized();
-
-    void OnRender(suic::DrawingContext * drawing);
-
-    void OnTextInput(suic::KeyEventArg& e);
-    void OnKeyDown(suic::KeyEventArg& e);
-
-    void OnGotFocus(suic::FocusEventArg& e);
-
-    void OnMouseLeftButtonDown(suic::MouseEventArg& e);
-    void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
-    void OnMouseLeftButtonUp(suic::MouseEventArg& e);
-
-    void OnSelectionChanged(SelectionChangedEventArg& e);
 
 protected:
 

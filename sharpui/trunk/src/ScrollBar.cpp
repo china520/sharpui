@@ -98,12 +98,17 @@ ScrollBar::~ScrollBar()
 {
 }
 
-int ScrollBar::GetVisualPos()
+int ScrollBar::GetScrollPos()
 {
     return _scroInfo.iVisualPos;
 }
 
-void ScrollBar::SetVisualPos(int iPos)
+int ScrollBar::GetScrollSize()
+{
+    return (_scroInfo.iVisualPos * _iStep);
+}
+
+void ScrollBar::SetScrollPos(int iPos)
 {
     _scroInfo.iVisualPos = iPos;
 
@@ -170,7 +175,7 @@ void ScrollBar::ScrollToBegin(bool bRepaint)
     }
 }
 
-int ScrollBar::MaxVisualPos()
+int ScrollBar::MaxScrollPos()
 {
     int iMin = 0;
     int iMaxPos = max(0, (_scroInfo.iMax - iMin + 1 - _scroInfo.iPage));
@@ -274,13 +279,8 @@ void ScrollBar::AddScrollLogic(int iLogic, bool bRepaint)
     UpdateScrollLogic(_iLogicSize + iLogic, bRepaint);
 }
 
-int ScrollBar::GetLogicPos()
-{
-    return (_scroInfo.iVisualPos * _iStep);
-}
-
-const int c_ScrollMin      = 4;
-const int c_ScrollThumbMin = 8;
+const int cst_ScrollMin      = 4;
+const int cst_ScrollThumbMin = 8;
 
 suic::Rect ScrollBar::GetScrollThumbRect(const suic::Size & size, bool bThumb)
 {
@@ -335,7 +335,7 @@ suic::Rect ScrollBar::GetScrollThumbRect(const suic::Size & size, bool bThumb)
 			nClientSize = rectThumb.Height();
 		}
 
-		if (nClientSize <= c_ScrollMin)
+		if (nClientSize <= cst_ScrollMin)
 		{
             rectThumb.SetEmpty();
 			return rectThumb;
@@ -345,7 +345,7 @@ suic::Rect ScrollBar::GetScrollThumbRect(const suic::Size & size, bool bThumb)
 
 		if (_scroInfo.iPage != 0)
 		{
-			nThumbSize = max (::MulDiv(nClientSize, _scroInfo.iPage, _scroInfo.iMax - iMin + 1), c_ScrollThumbMin);
+			nThumbSize = max (::MulDiv(nClientSize, _scroInfo.iPage, _scroInfo.iMax - iMin + 1), cst_ScrollThumbMin);
 		}
 
 		if (nClientSize < nThumbSize || nThumbSize == 0)

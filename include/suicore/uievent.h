@@ -17,10 +17,9 @@
 namespace suic
 {
 
-///======================================================
-/// 定义鼠标测试结果结构，当鼠标在某一个界面元素上时会
-/// 返回一个测试码。
-///
+/// <summary>
+/// 定义鼠标测试结果结构，当鼠标在某一个界面元素上时会返回一个测试码。
+/// </summary>
 typedef struct tagHitResult
 {
 public:
@@ -44,10 +43,10 @@ public:
 
 }HitResult;
 
-///======================================================
+/// <summary>
 /// 界面元素的处理方式，Tunneling：如果注册了回溯事件，系统事件处理模块
 /// 会调用其事件处理，直到事件被处理掉。
-///
+/// </summary>
 enum RoutingType
 {
     Tunneling,
@@ -57,10 +56,10 @@ enum RoutingType
 
 class SUICORE_API RoutedEventArg;
 
-///======================================================
+/// <summary>
 /// 界面元素的事件，这是所有界面元素的基类，其它的界面元素都会直接或
 /// 或间接地派生它
-///
+/// </summary>
 class SUICORE_API EventArg : public Object
 {
 public:
@@ -99,9 +98,9 @@ protected:
     Size _finialSize;
 };
 
-///======================================================
+/// <summary>
 /// 窗口尺寸位置改变时结构
-///
+/// </summary>
 class SUICORE_API RenderSizeChangedEventArg : public EventArg
 {
 public:
@@ -342,9 +341,9 @@ inline ObjectPtr FocusEventArg::GetNewFocus() const
     return _newFocus;
 }
 
-///======================================================
+/// <summary>
 /// 处理键盘事件
-///
+/// </summary>
 class SUICORE_API KeyEventArg : public RoutedEventArg
 {
 public:
@@ -397,9 +396,9 @@ enum MouseButtonState
     eMousePress,
 };
 
-///======================================================
+/// <summary>
 /// 处理鼠标事件
-///
+/// </summary>
 class SUICORE_API MouseEventArg : public RoutedEventArg
 {
 public:
@@ -439,9 +438,9 @@ inline Point MouseEventArg::MousePoint()
     return mousept; 
 }
 
-///======================================================
+/// <summary>
 /// 处理鼠标的滚轮事件
-///
+/// </summary>
 class SUICORE_API MouseWheelEventArg : public MouseEventArg
 {
 public:
@@ -454,9 +453,9 @@ protected:
     int _delta;
 };
 
-///======================================================
+/// <summary>
 /// 处理光标事件
-///
+/// </summary>
 class SUICORE_API CursorEventArg : public MouseEventArg
 {
 public:
@@ -467,17 +466,17 @@ public:
     }
 };
 
-///======================================================
+/// <summary>
 /// 处理拖曳事件，当某一个对象被拖到某个界面元素上被触发
-///
+/// </summary>
 class SUICORE_API DragEventArg : public RoutedEventArg
 {
 public:
 };
 
-///======================================================
+/// <summary>
 /// 绘制事件，如果需要手动触发某个界面元素的绘制，可以发送此事件。
-///
+/// </summary>
 class SUICORE_API DrawEventArg : public RoutedEventArg
 {
 public:

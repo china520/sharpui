@@ -16,6 +16,9 @@
 namespace suic
 {
 
+/// <summary>
+/// 控件类基类，从其继承支持tab键切换
+/// </summary>
 class SUICORE_API Control : public FrameworkElement
 {
 public:

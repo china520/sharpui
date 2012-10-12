@@ -81,7 +81,6 @@
 #include <suicore/uiwindow.h>
 #include <suicore/uiapplication.h>
 #include <suicore/uipanel.h>
-#include <suicore/uicore.h>
 #include <suicore/uiobject.h>
 
 #include <suicore/drawing/uidrawing.h>

@@ -37,7 +37,7 @@ void ProgressBar::OnInitialized()
 {
     __super::OnInitialized();
 
-    //suic::SystemHelper::SetTimer(this, 50);
+    suic::SystemHelper::SetTimer(this, 50);
 }
 
 void ProgressBar::OnTimer(int id)

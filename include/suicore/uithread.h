@@ -9,10 +9,10 @@
 //	作  者 : 汪荣
 //	日  期 : 2008-08-10
 
-// 修改记录 ==================================================================
+// 修改记录 =================================================
 // 日期				名称			版本		评述
 // 
-// ===========================================================================
+// ==========================================================
 
 # ifndef _UITHREAD_H_
 # define _UITHREAD_H_
@@ -22,13 +22,16 @@
 
 namespace suic {
 
+/// <summary>
+/// 线程控制对象
+/// </summary>
 class ThreadControl : public RefObject
 {
 public:
 
-    /*
-     * 构造函数默认得到当前线程，但是不能调用join和detach
-     */
+    /// <summary>
+    /// 构造函数默认得到当前线程，但是不能调用join和detach
+    /// </summary>
     ThreadControl();
 
 #ifdef __OS_WIN32
@@ -37,34 +40,26 @@ public:
     explicit ThreadControl(pthread_t);
 #endif
 
-    /*
-     * 功  能: 判断两个线程是否相等，此函数只有在线程有效时调用才有意义
-     * 参  数: 无
-     * 返回值: 无
-     * 异  常: 无
-     */
+    /// <summary>
+    ///     判断两个线程是否相等，此函数只有在线程有效时调用才有意义
+    /// </summary>
+    /// <returns>相等true；否则false</returns>
     bool operator==(const ThreadControl&) const;
     bool operator!=(const ThreadControl&) const;
 
-    /*
-     * 功  能: 等待直到线程执行结束
-     * 参  数: 无
-     * 返回值: 无
-     * 异  常: 无
-     */
+    /// <summary>
+    ///     等待直到线程执行结束
+    /// </summary>
+    /// <returns>无</returns>
     void join();
 
-    /*
-     * 功  能: 关闭线程，此函数和join只能被调用一次，再次调用可能会引起未定义的错误
-     * 参  数: 无
-     * 返回值: 无
-     * 异  常: 无
-     */
+    /// <summary>
+    ///     关闭线程，此函数和join只能被调用一次，再次调用可能会引起未定义的错误
+    /// </summary>
+    /// <returns>无</returns>
     void detach();
 
-    /*-
-     * 线程ID
-     */
+    // 线程ID
 #ifdef __OS_WIN32
     typedef DWORD ID;
 #else

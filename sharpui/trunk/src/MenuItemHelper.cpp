@@ -49,7 +49,7 @@ void HwndSourceHookMenuPopup::HandleMouseDown(HWND hwnd)
 
         if (g_trackmenuitem)
         {
-            suic::ElementPtr cur = UI_GetMouseOverElement(g_trackmenuitem);
+            suic::ElementPtr cur = suic::SystemHelper::GetMouseOverElement(g_trackmenuitem);
 
             //
             // 对焦点菜单项处理
@@ -75,7 +75,7 @@ void HwndSourceHookMenuPopup::HandleMouseUp()
     {
         bool bIsMain = (focusMenu == _mainMenu);
 
-        suic::ElementPtr hot = UI_GetMouseOverElement(focusMenu.get());
+        suic::ElementPtr hot = suic::SystemHelper::GetMouseOverElement(focusMenu.get());
         MenuItemPtr menuPtr = MenuItemPtr::cast(hot);
 
         if (menuPtr)
@@ -128,7 +128,7 @@ bool HwndSourceHookMenuPopup::HandleMouseMove(suic::MessageParameter& mp)
         }
         else
         {
-            suic::MouseEventArg e(hotMenu.get(), UI_GetCursorPoint(hotMenu.get()));
+            suic::MouseEventArg e(hotMenu.get(), suic::SystemHelper::GetCursorPoint(hotMenu.get()));
 
             if (_focusMenu && _focusMenu != hotMenu)
             {
@@ -157,7 +157,7 @@ bool HwndSourceHookMenuPopup::IsMouseOverOwer()
     if (ower)
     {
         suic::Rect rect(0, 0, ower->RenderSize().cx, ower->RenderSize().cy);
-        suic::Point point = UI_GetCursorPoint(ower.get());
+        suic::Point point = suic::SystemHelper::GetCursorPoint(ower.get());
 
         point = ower->PointFromScreen(point);
 
@@ -243,7 +243,7 @@ MenuPtr HwndSourceHookMenuPopup::HitTestPopup()
     {
         suic::PopupPtr pop = suic::PopupPtr::cast(_popups->GetAt(i));
         suic::Rect rcpop(0, 0, pop->RenderSize().cx, pop->RenderSize().cy);
-        suic::Point pt = UI_GetCursorPoint(pop.get());
+        suic::Point pt = suic::SystemHelper::GetCursorPoint(pop.get());
 
         if (rcpop.PointIn(pt))
         {

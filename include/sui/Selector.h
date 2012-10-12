@@ -77,12 +77,12 @@ public:
     static Selector* SelectorFromItem(suic::Element* pElem);
 
     /// <summary>
-    ///     选择或取消一个子项
+    ///  选择或取消一个子项
     /// </summary>
     /// <remarks>
-    ///     此方法获使用SelectorFromItem获取Selector对象
-    ///     然后设置元素的IsSelected标志，同时触发Selector
-    ///     对象的OnItemSelected事件
+    ///  此方法获使用SelectorFromItem获取Selector对象
+    ///  然后设置元素的IsSelected标志，同时触发Selector
+    ///  对象的OnItemSelected事件
     /// </remarks>
     /// <param name="item">子项对象</param>
     /// <param name="selected">选择标志</param>
@@ -110,21 +110,15 @@ public:
 
 protected:
 
-    virtual void OnInitialized();
+    void ScrollByUpDown(suic::Element* pElem, bool bUp);
 
-    virtual void OnRender(suic::DrawingContext * drawing);
+    virtual int GetMinVisualIndex();
+    virtual int GetMaxVisualIndex();
+
+    virtual void OnInitialized();
 
     virtual void OnTextInput(suic::KeyEventArg& e);
     virtual void OnKeyDown(suic::KeyEventArg& e);
-
-    virtual void OnMouseEnter(suic::MouseEventArg& e);
-    virtual void OnMouseMove(suic::MouseEventArg& e);
-    virtual void OnMouseLeave(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonDown(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonUp(suic::MouseEventArg& e);
-
-    virtual void OnItemsChanged(NotifyContainerChangedArg& e);
 
 protected:
 
@@ -141,6 +135,16 @@ protected:
 inline SelectionMode::eSelectionMode Selector::GetSelectionMode() const
 {
     return _selectMode;
+}
+
+inline int Selector::GetMinVisualIndex()
+{
+    return 0;
+}
+
+inline int Selector::GetMaxVisualIndex()
+{
+    return _panel->GetVisualChildrenCount();
 }
 
 };

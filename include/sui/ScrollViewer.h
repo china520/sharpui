@@ -56,6 +56,7 @@ public:
     void SetVerticalStep(int iStep);
 
     ScrollBar* HorizontalScrollBar();
+    ScrollBar* VerticalScrollBar();
 
     void SetContentOffset(suic::Point pt);
 
@@ -73,8 +74,8 @@ public:
     void ScrollToEnd();
     void ScrollToTop();
     void ScrollToBottom();
-    void ScrollToHorizontalOffset(double offset);
-    void ScrollToVerticalOffset(double offset);
+    void ScrollToHorizontalPos(double offset);
+    void ScrollToVerticalPos(double offset);
 
     void InvalidateScrollBar();
 
@@ -117,6 +118,11 @@ typedef suic::shared<ScrollViewer> ScrollViewPtr;
 inline ScrollBar* ScrollViewer::HorizontalScrollBar()
 {
     return _hScroll.get();
+}
+
+inline ScrollBar* ScrollViewer::VerticalScrollBar()
+{
+    return _vScroll.get();
 }
 
 inline void ScrollViewer::SetContentOffset(suic::Point pt)

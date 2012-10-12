@@ -33,11 +33,10 @@ protected:
 
     void OnInitialized();
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
-    virtual void OnHitTest(HitResultEventArg& e);
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnHitTest(HitResultEventArg& e);
 };
 
 typedef shared<ToolTip> ToolTipPtr;

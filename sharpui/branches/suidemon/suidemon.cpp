@@ -4,7 +4,6 @@
 #include "stdafx.h"
 
 #include <suicore/uistring.h>
-#include <suicore/uicore.h>
 #include <sui/sharpuicore.h>
 #include "Application.h"
 #include "MainFrame.h"

@@ -84,68 +84,66 @@ TextBoxLine::~TextBoxLine()
 {
 }
 
-void TextBoxLine::Draw(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc, suic::Color clrText)
+void TextBoxLine::Draw(suic::DrawingContext * drawing, bool bActive
+                       , suic::Rect * lprc, const suic::TextRenderAttri* att)
 {
     if (_buff.Length() > 0)
     {
-        static UINT fmt = DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX | DT_EXPANDTABS;
-
-        drawing->DrawText(_buff.c_str(), _buff.Length(), lprc, clrText, CoreFlags::Left, 0);
+        drawing->DrawText(_buff.c_str(), _buff.Length(), lprc, att);
     }
 }
 
-void TextBoxLine::DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc, suic::Uint32 beg, suic::Uint32 end, suic::Color clrText)
+void TextBoxLine::DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc
+                          , suic::Uint32 beg, suic::Uint32 end, suic::TextRenderAttri* att)
 {
-    static UINT fmt = DT_SINGLELINE | DT_CENTER | DT_VCENTER | DT_NOPREFIX | DT_EXPANDTABS;
-    static suic::Color clrDef = 0;
-
     if (_buff.Length() > 0)
     {
         suic::Size sz;
 
         if (end == -1)
         {
-            suic::Color clrSelBkText = !bActive ? DefInactivateSelTextBkColor : DefSelTextBkColor;
-            suic::Color clrSelText = bActive ? DefSelTextColor : DefInactivateSelTextColor;
+            att->bkcolor = !bActive ? DefInactivateSelTextBkColor : DefSelTextBkColor;
+            att->color = bActive ? DefSelTextColor : DefInactivateSelTextColor;
 
-            drawing->DrawText(_buff.c_str(), _buff.Length(), lprc
-                , clrSelBkText, clrSelText, CoreFlags::Left, 0);
+            drawing->DrawText(_buff.c_str(), _buff.Length(), lprc, att);
 
             return;
         }
 
         if (beg > 0)
         {
-            sz = drawing->CalculateText(_buff.c_str(), beg, fmt);
+            sz = drawing->CalculateText(_buff.c_str(), beg, att);
 
             int nRight = lprc->right;
             lprc->right = lprc->left + sz.cx;
 
-            drawing->DrawText(_buff.c_str(), beg, lprc, clrText, CoreFlags::Left, 0);
+            drawing->DrawText(_buff.c_str(), beg, lprc, att);
 
             lprc->left = lprc->right;
             lprc->right = nRight;
         }
 
-        sz = drawing->CalculateText(_buff.c_str() + beg, end - beg, fmt);
+        sz = drawing->CalculateText(_buff.c_str() + beg, end - beg, att);
 
+        suic::Color oldClr = att->color;
         int nRight = lprc->right;
         lprc->right = lprc->left + sz.cx;
 
-        suic::Color clrSelBkText = (!bActive ? DefInactivateSelTextBkColor : DefSelTextBkColor);
-        suic::Color clrSelText = (bActive ? DefSelTextColor : DefInactivateSelTextColor);
+        att->bkcolor = (!bActive ? DefInactivateSelTextBkColor : DefSelTextBkColor);
+        att->color = (bActive ? DefSelTextColor : DefInactivateSelTextColor);
 
-        drawing->DrawText(_buff.c_str() + beg, (int)(end - beg), lprc
-            , clrSelBkText, clrSelText, CoreFlags::Left, 0);
+        drawing->DrawText(_buff.c_str() + beg, (int)(end - beg), lprc, att);
 
         lprc->left = lprc->right;
         lprc->right = nRight;
 
         if (end < (suic::Uint32)_buff.Length())
         {
-            sz = drawing->CalculateText(_buff.c_str() + end, (int)_buff.Length() - end, fmt);
-            drawing->DrawText(_buff.c_str() + end, (int)(_buff.Length() - end)
-                , lprc, clrText, CoreFlags::Left, 0);
+            att->bkcolor = -1;
+            att->color = oldClr;
+
+            sz = drawing->CalculateText(_buff.c_str() + end, (int)_buff.Length() - end, att);
+            drawing->DrawText(_buff.c_str() + end, (int)(_buff.Length() - end), lprc, att);
         }
     }
 }
@@ -526,8 +524,8 @@ void TextBoxDoc::SelectAll()
     RecalcCaret(false);
 }
 
-void TextBoxDoc::DrawPassword(suic::DrawingContext * drawing, suic::Char ch, bool bActive
-                              , suic::Rect * lprc, suic::Color clrText)
+void TextBoxDoc::DrawSingleLine(suic::DrawingContext * drawing, bool bActive
+                                , suic::Rect * lprc, suic::TextRenderAttri* att)
 {
     suic::Rect rc;
     int i = 0;
@@ -558,82 +556,30 @@ void TextBoxDoc::DrawPassword(suic::DrawingContext * drawing, suic::Char ch, boo
 
             if (!bSel)
             {
-                _lines[i]->Draw(drawing, bActive, &rcdr, clrText);
+                _lines[i]->Draw(drawing, bActive, &rcdr, att);
             }
             else if (bline == i)
             {
-                _lines[i]->DrawSel(drawing, bActive, &rcdr, bl, br, clrText);
+                _lines[i]->DrawSel(drawing, bActive, &rcdr, bl, br, att);
             }
             else if (eline == i)
             {
-                _lines[i]->DrawSel(drawing, bActive, &rcdr, el, er, clrText);
+                _lines[i]->DrawSel(drawing, bActive, &rcdr, el, er, att);
             }
             else if (i > bline && i < eline)
             {
-                _lines[i]->DrawSel(drawing, bActive, &rcdr, 0, -1, clrText);
+                _lines[i]->DrawSel(drawing, bActive, &rcdr, 0, -1, att);
             }
             else
             {
-                _lines[i]->Draw(drawing, bActive, &rcdr, clrText);
+                _lines[i]->Draw(drawing, bActive, &rcdr, att);
             }
         }
     }
 }
 
-void TextBoxDoc::DrawSingleLine(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc, suic::Color clrText)
-{
-    suic::Rect rc;
-    int i = 0;
-    rc.top = 0;
-    int by = _vertScroll * _aveCharHei;
-    int ey = _rcVisual.bottom + _vertScroll * _aveCharHei;
-
-    int bline=-1, bl=0, br=0, eline=-1, el=0, er=0;
-    bool bSel = CalcSelectPos(bline, bl, br, eline, el, er);
-
-    if (_lines.size() > 0)
-    {
-        suic::Rect rcdr;
-        _lines[i]->GetRect(&rcdr);
-
-        rc.top += (_rcVisual.Height() - rcdr.Height()) / 2;
-        rc.bottom = rc.top + rcdr.Height();
-
-        if (rc.bottom >= by)
-        {
-            // 绘制一行
-            suic::Rect rcdr;
-            _lines[i]->GetRect(&rcdr);
-            rc.right = rcdr.Width();
-
-            rcdr = rc;
-            rcdr.Offset(-_horzScroll * _aveCharWid + lprc->left, -_vertScroll * _aveCharHei + lprc->top);
-
-            if (!bSel)
-            {
-                _lines[i]->Draw(drawing, bActive, &rcdr, clrText);
-            }
-            else if (bline == i)
-            {
-                _lines[i]->DrawSel(drawing, bActive, &rcdr, bl, br, clrText);
-            }
-            else if (eline == i)
-            {
-                _lines[i]->DrawSel(drawing, bActive, &rcdr, el, er, clrText);
-            }
-            else if (i > bline && i < eline)
-            {
-                _lines[i]->DrawSel(drawing, bActive, &rcdr, 0, -1, clrText);
-            }
-            else
-            {
-                _lines[i]->Draw(drawing, bActive, &rcdr, clrText);
-            }
-        }
-    }
-}
-
-void TextBoxDoc::Draw(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc, suic::Color clrText)
+void TextBoxDoc::Draw(suic::DrawingContext * drawing, bool bActive
+                      , suic::Rect * lprc, suic::TextRenderAttri* att)
 {
     suic::Rect rc;
     rc.top = 0;
@@ -666,23 +612,23 @@ void TextBoxDoc::Draw(suic::DrawingContext * drawing, bool bActive, suic::Rect *
 
             if (!bSel)
             {
-                _lines[i]->Draw(drawing, bActive, &rcdr, clrText);
+                _lines[i]->Draw(drawing, bActive, &rcdr, att);
             }
             else if (bline == i)
             {
-                _lines[i]->DrawSel(drawing, bActive, &rcdr, bl, br, clrText);
+                _lines[i]->DrawSel(drawing, bActive, &rcdr, bl, br, att);
             }
             else if (eline == i)
             {
-                _lines[i]->DrawSel(drawing, bActive, &rcdr, el, er, clrText);
+                _lines[i]->DrawSel(drawing, bActive, &rcdr, el, er, att);
             }
             else if (i > bline && i < eline)
             {
-                _lines[i]->DrawSel(drawing, bActive, &rcdr, 0, -1, clrText);
+                _lines[i]->DrawSel(drawing, bActive, &rcdr, 0, -1, att);
             }
             else
             {
-                _lines[i]->Draw(drawing, bActive, &rcdr, clrText);
+                _lines[i]->Draw(drawing, bActive, &rcdr, att);
             }
         }
 
@@ -1403,6 +1349,7 @@ bool TextBoxDoc::DeleteSelect()
                 _lines.erase(_lines.begin() + (bline + 1), _lines.begin() + (eline - 0));
             }
         }
+
         CancelSelect();
         _caretLine = bline;
         _caretOffset = bl;
@@ -1494,6 +1441,7 @@ void TextBoxDoc::DelLeftOne()
         _lines[_caretLine]->Remove(_caretOffset-1, _caretOffset);
         --_caretOffset;
     }
+
     RecalcCaret(false);
 }
 
@@ -1504,6 +1452,7 @@ void TextBoxDoc::DelRightOne()
     {
         return;
     }
+
     // 删除一行
     if (_caretOffset == _lines[_caretLine]->GetCount())
     {

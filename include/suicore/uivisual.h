@@ -65,9 +65,14 @@ public:
     /// <returns>可视子元素</returns>
     virtual suic::Visual* GetVisualChild(int index);
     virtual void ClearVisualChildren();
-    virtual void OnVisualRenderChanged();
-
     virtual void RemoveVisualChild(suic::Visual* pChild);
+
+    /// <summary>
+    ///     取得可视子元素在集合中的索引。
+    /// </summary>
+    /// <param name="pChild">资源对象</param>
+    /// <returns>可视子索引</returns>
+    virtual int GetVisualChildIndex(suic::Visual* pChild);
 
     /// <summary>
     ///     取得渲染数据对象。
@@ -80,6 +85,8 @@ public:
     /// </summary>
     /// <returns>分配器对象</returns>
     AssignerPtr GetAssigner() const;
+
+    virtual void OnVisualRenderChanged();
 
 protected:
 

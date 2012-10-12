@@ -26,6 +26,7 @@ typedef Uint32 Color;
 typedef wchar_t Char;
 
 static const Color COLOR_NULL = -1;
+static const Uint32 UintMax = -1;
 
 typedef char Int8;
 typedef short Int16;

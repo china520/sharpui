@@ -85,8 +85,12 @@ public:
     ui::ScrollEventHandler Scroll;
     ui::ScrollEventHandler TrackScroll;
 
-    int GetVisualPos();
-    void SetVisualPos(int iPos);
+    int GetScrollPos();
+    void SetScrollPos(int iPos);
+
+    int GetScrollSize();
+
+    int MaxScrollPos();
 
     /// <summary>
     ///     设置滚动条信息
@@ -96,8 +100,6 @@ public:
     void SetScrollStep(int iStep);
     int GetScrollStep();
     int GetLogicSize() const;
-
-    int MaxVisualPos();
 
     void ScrollToBegin(bool bRepaint=true);
     void ScrollTo(int nNewPos, bool bRepaint=true);
@@ -116,7 +118,6 @@ public:
     void UpdateScrollLogic(int iLogic, bool bRepaint);
     void AddScrollLogic(int iLogic, bool bRepaint=false);
 
-    int GetLogicPos();
     void UpdateScrollBar();
 
     void ShowFirstScrollButton(bool bShow);
