@@ -39,9 +39,9 @@ public:
 
     static DrawingContextPtr GetRenderContext(Element* pElem);
 
-    static Uint32 SetTimer(suic::ElementPtr, suic::Uint32, int iPriority=-10);
-    static Uint32 RestartTimer(Uint32 timerid, Uint32 iElapse);
-    static void KillTimer(suic::Uint32);
+    static void SetTimer(TimerIdentityPtr&, suic::Element*, suic::Uint32, int iPriority=-10);
+    static void RestartTimer(TimerIdentityPtr& tip);
+    static void KillTimer(TimerIdentityPtr& tip);
 
     static suic::ImagePtr GetImage();
     static void LoadGif(const suic::String& path, GifDescriptor& gd, suic::Vector<AnimateItem>& anis);
