@@ -72,12 +72,12 @@ suic::Size TextBoxPanel::ArrangeOverride(const suic::Size& size)
 
 void TextBoxPanel::OnRender(suic::DrawingContext * drawing)
 {
-    suic::TriggerPtr trg(suic::UIRender::GetTriggerByStatus(this, GetStyle()));        
+    suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));        
     suic::Rect rcdraw(0, 0, RenderSize().cx, RenderSize().cy);
 
     // 绘制文本
 
-    suic::TextRenderAttri att;
+    suic::FormattedText att;
     suic::ObjectPtr oValue = trg->GetValue(suic::FOREGROUND);
 
     rcdraw.Deflate(_textBox->GetPadding());
@@ -324,12 +324,12 @@ void TextBox::OnMenuItemSelected(suic::ObjectPtr mPtr, MenuItemPtr itemPtr)
 
 void TextBox::OnRender(suic::DrawingContext * drawing)
 {
-    suic::TriggerPtr trg(suic::UIRender::GetTriggerByStatus(this, GetStyle()));        
+    suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));        
     suic::Rect rcdraw(0, 0, RenderSize().cx, RenderSize().cy);
 
     // 先填充背景
-    suic::UIRender::DrawBackground(drawing, trg, &rcdraw);
-    suic::UIRender::DrawBorderBrush(drawing, trg, &rcdraw);
+    suic::Render::DrawBackground(drawing, trg, &rcdraw);
+    suic::Render::DrawBorderBrush(drawing, trg, &rcdraw);
 }
 
 static suic::Uint32 WCharToChar(wchar_t w, suic::Byte * asc)   

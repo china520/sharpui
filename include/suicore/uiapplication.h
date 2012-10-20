@@ -70,7 +70,6 @@ inline ResourceDictionaryPtr Application::GetResources() const
 }
 
 #define CoreApp suic::Application
-#define CoreCurrentApp() suic::Application::Current()
 
 }
 

@@ -17,7 +17,6 @@
 namespace ui
 {
 
-
 //---------------------------------------------------------------
 static suic::PopupPtr g_trackmenu;
 static suic::PopupPtr g_menuPop;
@@ -190,16 +189,8 @@ bool HwndSourceHookMenuPopup::OnFilterMessage(suic::ObjectPtr sender, suic::Mess
     case WM_LBUTTONUP:
         HandleMouseUp();
         break;
-        /*case WM_SETCURSOR:
-        if (!HitTestPopup())
-        {
-        handled = true;
-        suic::HwndHelper::HandleDefWndMessage(mp);
-        }
-        break;*/
     case WM_MOUSEMOVE:
     case WM_NCMOUSEMOVE:
-        //case WM_SETCURSOR:
         handled = HandleMouseMove(mp);
         break;
     case WM_CLOSE:
@@ -293,7 +284,6 @@ bool HwndSourceHookMenuPopup::IsMouseCapture() const
 
 void HwndSourceHookMenuPopup::SetMouseCapture(bool value)
 {
-    //_mouseCapture = value;
 }
 
 void HwndSourceHookMenuPopup::AddMenuPopup(MenuItemPtr item, suic::PopupPtr popup)
@@ -430,4 +420,4 @@ int TrackPopupMenuItem(MenuItemPtr itemPtr, int x, int y, MenuPtr mainMenu, suic
     }
 }
 
-};
+}

@@ -17,7 +17,7 @@
 namespace suic
 {
 
-class SUICORE_API ImageBrush : public Brush
+class SUICORE_API ImageBrush : public TileBrush
 {
 public:
 

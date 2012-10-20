@@ -417,7 +417,7 @@ public:
     /// <returns>true: 拥有鼠标</returns> 
     bool IsMouseCaptureWithin() const;
     bool IsFocusedWithin() const;
-    //bool IsKeyboardFocusWithin();
+    bool IsKeyboardFocusWithin();
 
     /// <summary>
     ///     刷新界面元素绘制。
@@ -471,6 +471,9 @@ public:
     /// <param name="point">界面坐标</param>
     /// <returns>窗口坐标</returns>
     Point PointToScreen(Point point);
+
+    DrawingContextPtr RenderOpen();
+    void RenderClose();
 
     virtual void OnPreviewSetCursor(CursorEventArg& e);
     virtual void OnSetCursor(CursorEventArg& e);

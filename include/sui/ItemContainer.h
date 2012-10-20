@@ -17,7 +17,7 @@
 namespace ui
 {
 
-class ItemSelectionEventArg : public suic::RoutedEventArg
+class SHARPUI_API ItemSelectionEventArg : public suic::RoutedEventArg
 {
 public:
 
@@ -44,9 +44,10 @@ protected:
     int _type;
 };
 
-static const int ITEM_MINHEIGHT = 18;
+static const int MENUITEM_MINHEIGHT = 18;
+static const int MENUITEM_ICONSIZE = 18;
 
-class ItemContentList
+class SHARPUI_API ItemContentList
 {
 public:
 
@@ -65,7 +66,7 @@ protected:
     suic::EnumeratorPtr _items;
 };
 
-class NotifyContainerChangedAction
+class SHARPUI_API NotifyContainerChangedAction
 {
 public:
 
@@ -79,7 +80,7 @@ public:
     };
 };
 
-class NotifyContainerChangedArg : public suic::RoutedEventArg
+class SHARPUI_API NotifyContainerChangedArg : public suic::RoutedEventArg
 {
 public:
 
@@ -90,8 +91,8 @@ public:
     void AddNewItem(suic::ObjectPtr item);
     void AddOldItem(suic::ObjectPtr item);
 
-    ItemContentList* GetNewItems();
-    ItemContentList* GetOldItems();
+    ItemContentList* NewItems();
+    ItemContentList* OldItems();
 
 protected:
 
@@ -107,7 +108,7 @@ inline int NotifyContainerChangedArg::GetAction() const
 
 typedef delegate<void(suic::ObjectPtr, NotifyContainerChangedArg&)> NotifyContainerChangedHandler;
 
-class ItemContainer : public suic::RefObject
+class SHARPUI_API ItemContainer : public suic::RefObject
 {
 public:
 

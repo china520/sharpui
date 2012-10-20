@@ -38,6 +38,8 @@ ScrollViewer::ScrollViewer()
 
     _vScroll->SetVisible(false);
     _hScroll->SetVisible(false);
+
+    SetFocusable(false);
 }
 
 ScrollViewer::~ScrollViewer()

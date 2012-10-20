@@ -12,6 +12,9 @@
 # define _UIDRAWIN_H_
 
 #include <suicore/uiobject.h>
+#include <suicore/drawing/uigeometry.h>
+#include <suicore/drawing/uibrush.h>
+#include <suicore/drawing/uipen.h>
 
 namespace suic
 {
@@ -21,7 +24,7 @@ class Image;
 /// <summary>
 ///  文本绘制属性
 /// </summary>
-typedef struct tagTextRenderAttri
+typedef struct tagFormattedText
 {
     bool single;
     bool ellipsis;
@@ -38,7 +41,7 @@ typedef struct tagTextRenderAttri
     // 字体
     Handle font;
 
-    tagTextRenderAttri()
+    tagFormattedText()
         : color(ARGB(255,0,0,0))
         , bkcolor(-1)
         , single(true)
@@ -50,7 +53,7 @@ typedef struct tagTextRenderAttri
         ;
     }
 
-}TextRenderAttri;
+}FormattedText;
 
 /// <summary>
 ///  绘制接口类，完成一般的绘制，线的颜色采用标准的四色表示
@@ -61,41 +64,54 @@ public:
 
     virtual ~DrawingContext() {};
 
-    virtual void SetOffset(int x, int y) = 0;
+    void SetOffset(int x, int y);
 
-    // 取得原始的裁剪区域
-    virtual Rect* RenderClip() = 0;
-    virtual Size CalculateText(const Char * text, int size, const TextRenderAttri* att) = 0;
+    //---------------------------------------------------------------
 
-    // 设置裁剪区域
+    virtual Handle GetHandle() const = 0;
+
+    virtual Size CalculateText(const Char * text, int size, const FormattedText* att) = 0;
+
     virtual void PushClip(const Rect* rcClip) = 0;
     virtual void PushTextColor(Color clr) = 0;
-    // 恢复上一次裁剪区域
+
     virtual void Pop() = 0;
 
     virtual void SetPixel(int x, int y, Color clr) = 0;
 
-    /// <summary>
-    ///     绘制一条直线
-    /// </summary>
-    /// <param name="pt1">起始点</param>
-    /// <param name="pt2">终点</param>
-    /// <param name="n">线的厚度</param>
-    /// <param name="clr">线的颜色</param>
-    /// <returns>无</returns>
-    virtual void DrawLine(Point pt1, Point pt2, Uint16 n, Color clr) = 0;
+    virtual void DrawLine(Pen* pen, Point pt0, Point pt1) = 0;
     virtual void DrawRectangle(Rect rc, Uint16 n, Color clr) = 0;
     virtual void DrawRoundRectangle(Rect rc, Uint16 n, Uint16 w, Uint16 h, Color clr) = 0;
-    virtual void DrawFocused(const Rect * lprc) = 0;
-
-    virtual void DrawImage(Image* img, const Rect* rcdc, const Rect* rcimg, Byte alpha) = 0;
-    virtual void DrawTransparent(Image* img, const Rect* rcdc, const Rect* rcimg, Color trans) = 0;
-
-    virtual void FillRectangle(Rect rc, Color clr) = 0;
+    virtual void DrawFocusedRectangle(const Rect * lprc) = 0;
     virtual void DrawGradient(const Rect* rc, Color dwFirst, Color dwSecond, bool bVertical) = 0;
 
-    virtual void DrawText(const Char * text, int size, const Rect * rc, const TextRenderAttri* att) = 0;
+    virtual void DrawEllipse(Color clr, Point center, Double radiusX, Double radiusY) = 0;
+
+    virtual void DrawImage(Image* img, const Rect* rcdc, const Rect* rcimg, Byte alpha) = 0;
+    virtual void DrawImage(Image* img, const Rect* rcdc, const Rect* rcimg, Byte alpha, Color trans) = 0;
+
+    virtual void DrawText(const Char * text, int size, const Rect * rc, const FormattedText* att) = 0;
+
+    virtual void FillRectangle(Rect rc, Color clr) = 0;
+
+    //void DrawVideo(MediaPlayer player, Rect rectangle);
+
+    //void PushClip(Geometry clipGeometry);
+    //void PushOpacityMask(Brush brush);
+    //void PushOpacity(Double opacity);
+
+    //------------------------------------------------------------
+
+protected:
+
+    Point _offset;
 };
+
+inline void DrawingContext::SetOffset(int x, int y)
+{
+    _offset.x = x;
+    _offset.y = y;
+}
 
 typedef shared<DrawingContext> DrawingContextPtr;
 

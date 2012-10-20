@@ -19,10 +19,9 @@
 namespace ui
 {
 
-// =========================================================
-// ListView，实现标准的列表框。
-// =========================================================
-
+/// <summary>
+/// 实现标准的列表框
+/// </summary>
 class SHARPUI_API ListView : public ListBox
 {
 public:
@@ -51,7 +50,8 @@ public:
 
 protected:
 
-    int GetMaxVisualIndex();
+    void CheckAddingItem(suic::ObjectPtr& itemObj);
+    int GetVisualEndIndex();
 
     void InitializeScrollView();
 

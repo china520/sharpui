@@ -17,7 +17,7 @@
 namespace ui
 {
 
-class ListViewItem : public ListBoxItem
+class SHARPUI_API ListViewItem : public ListBoxItem
 {
 public:
 

@@ -12,16 +12,15 @@
 # define _UIVISUALIZEPANEL_H_
 
 #include <sui/sharpuiconfig.h>
-#include <suicore/uipanel.h>
 #include <sui/itemcontainer.h>
+#include <suicore/uipanel.h>
 
 namespace ui
 {
 
-// ============================================================================
-// VisualizePanel¡£
-// ============================================================================
-
+/// <summary>
+/// VisualizePanel
+/// </summary>
 class SHARPUI_API VisualizePanel : public suic::Panel
 {
 public:

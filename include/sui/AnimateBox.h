@@ -80,7 +80,6 @@ protected:
     // 当前播放的动画帧索引
     int _curframe;
     int _anim_timer;
-    int _timerid;
 
     int _wid;
     int _hei;
@@ -88,6 +87,7 @@ protected:
     suic::Color _bkcolor;
 
     suic::ImagePtr _frame;
+    suic::TimerIdentityPtr _timerid;
 };
 
 typedef suic::shared<AnimateBox> AnimateBoxPtr;

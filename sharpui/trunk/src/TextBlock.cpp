@@ -40,11 +40,11 @@ TextBlock::~TextBlock()
 
 suic::Size TextBlock::MeasureOverride(const suic::Size& availableSize)
 {
-    suic::TriggerPtr setter(suic::UIRender::GetTriggerByStatus(this, GetStyle()));
+    suic::TriggerPtr setter(suic::Render::GetTriggerByStatus(this, GetStyle()));
 
     if (setter.get())
     {
-        suic::Size ret = suic::UIRender::MeasureTextSize(GetText(), setter);
+        suic::Size ret = suic::Render::MeasureTextSize(GetText(), setter);
 
         ret.cx += 2;
         MeasureCheck(ret);
@@ -64,16 +64,9 @@ void TextBlock::OnInitialized()
 
 void TextBlock::OnRender(suic::DrawingContext * drawing)
 {
-    suic::Rect elemrect(0, 0, RenderSize().cx, RenderSize().cy);
-
     // 绘制背景
-    //suic::UIRender::DrawBackground(drawing, GetStyle()->GetTrigger(), &elemrect);
-
-    elemrect.Deflate(GetPadding());
-
-    suic::UIRender::DrawText(drawing, GetText()
-        , GetStyle()->GetTrigger(), &elemrect
-        , GetHorizontalContentAlignment(), GetVerticalContentAlignment());
+    suic::Render::DrawBackground(drawing, this);
+    suic::Render::DrawText(drawing, this, GetText());
 
     //
     // 如果拥有焦点则绘制焦点虚线
@@ -83,35 +76,8 @@ void TextBlock::OnRender(suic::DrawingContext * drawing)
         suic::Rect rect(0, 0, RenderSize().cx, RenderSize().cy);
 
         rect.Deflate(GetBorderThickness());
-        drawing->DrawFocused(&rect);
+        drawing->DrawFocusedRectangle(&rect);
     }
 }
 
-void TextBlock::OnMouseLeftButtonDown(suic::MouseEventArg& e)
-{
-    Element::OnMouseLeftButtonDown(e);
 }
-
-void TextBlock::OnMouseLeftButtonUp(suic::MouseEventArg& e)
-{
-    Element::OnMouseLeftButtonUp(e);
-}
-
-void TextBlock::OnMouseEnter(suic::MouseEventArg& e)
-{
-}
-
-void TextBlock::OnMouseMove(suic::MouseEventArg& e)
-{
-}
-
-void TextBlock::OnMouseLeave(suic::MouseEventArg& e)
-{
-}
-
-bool TextBlock::HandleFocus() const
-{
-    return false;
-}
-
-};

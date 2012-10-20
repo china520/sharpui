@@ -63,7 +63,7 @@ public:
 
 protected:
 
-    suic::Uint32 _timerid;
+    suic::TimerIdentityPtr _timerid;
 };
 
 typedef suic::shared<ListBox> ListBoxPtr;

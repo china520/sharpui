@@ -23,6 +23,7 @@
 #include <sui/scrollbar.h>
 #include <sui/slider.h>
 #include <sui/textblock.h>
+#include <sui/label.h>
 #include <sui/itemscontrol.h>
 #include <sui/combobox.h>
 #include <sui/textbox.h>
@@ -90,6 +91,8 @@ void SHARPUI_API CoreInitialize(const suic::String& resPath)
     suic::Builder::RegisterElement(_T("ListViewItem"), &ui::ListViewItem::Create);
 
     suic::Builder::RegisterElement(_T("ScrollViewer"), &ui::ScrollViewer::Create);
+
+    suic::Builder::RegisterElement(_T("Label"), &ui::Label::Create);
 
     suic::Builder::RegisterElement(_T("TreeView"), &ui::TreeView::Create);
     suic::Builder::RegisterElement(_T("TreeViewItem"), &ui::TreeViewItem::Create);

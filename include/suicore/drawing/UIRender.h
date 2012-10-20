@@ -18,7 +18,7 @@
 namespace suic
 {
 
-class SUICORE_API UIRender : public RefObject
+class SUICORE_API Render : public RefObject
 {
 public:
 
@@ -26,10 +26,12 @@ public:
     static void Draw(DrawingContext* drawing, FrameworkElement* obj, suic::StylePtr& style, const String& state);
     static void Draw(DrawingContext* drawing, FrameworkElement* obj, suic::StylePtr& style);
 
+    static void DrawBackground(DrawingContext* drawing, FrameworkElement* obj);
     static void DrawBackground(DrawingContext* drawing, TriggerPtr& trigger, const Rect* rc);
     static void DrawBorderBrush(DrawingContext* drawing, TriggerPtr& trigger, const Rect* rc);
-    static void DrawText(DrawingContext* drawing, String& text, TriggerPtr& trigger
-        , const Rect* rc, int iHorz, int iVert);
+
+    static void DrawText(DrawingContext* drawing, FrameworkElement* obj, String& text, TriggerPtr& trigger, const Rect* rc);
+    static void DrawText(DrawingContext* drawing, FrameworkElement* obj, String& text);
 
     static TriggerPtr GetTriggerByStatus(FrameworkElement* obj, suic::StylePtr& style);
     static Size MeasureImageSize(const TriggerPtr& trigger);
@@ -38,11 +40,11 @@ public:
 
 protected:
 
-    UIRender() {}
-    virtual ~UIRender();
+    Render() {}
+    virtual ~Render();
 };
 
-#define RENDER suic::UIRender
+#define RENDER suic::Render
 
 };
 

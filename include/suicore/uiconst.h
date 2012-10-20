@@ -71,7 +71,7 @@ public:
         IsLayeredWindow = 0x00001000,
 
         IsSupportMouseOver = 0x00002000,
-        IsSupportFocused = 0x00004000,
+        IsFocusable = 0x00004000,
 
         IsMeasureDirty = 0x00008000,
         IsArrangeDirty = 0x00010000,
@@ -80,8 +80,7 @@ public:
 
         IsSizeModing = 0x00080000,
         IsSelected = 0x00100000,
-        IsFocusable = 0x00200000,
-        IsTabStop = 0x00400000,
+        IsTabStop = 0x00200000,
     };
 };
 
@@ -124,6 +123,49 @@ struct VerticalContentAlignment
         Center = 0,
         Top,
         Bottom,
+    };
+};
+
+struct TileMode
+{
+    enum 
+    {
+        None = 0,
+        FlipX = 1,
+        FlipY = 2,
+        FlipXY = 3,
+        Tile = 4,
+    };
+};
+
+struct AlignmentX
+{
+    enum 
+    {
+        Left = 0,
+        Center = 1,
+        Right = 2,
+    };
+};
+
+struct AlignmentY
+{
+    enum 
+    {
+        Top = 0,
+        Center = 1,
+        Bottom = 2,
+    };
+};
+
+struct Stretch
+{
+    enum 
+    {
+        None = 0,
+        Fill = 1,
+        Uniform = 2,
+        UniformToFill = 3,
     };
 };
 

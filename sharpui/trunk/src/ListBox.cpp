@@ -48,7 +48,6 @@ void ListBox::OnUnloaded(suic::LoadedEventArg& e)
     __super::OnUnloaded(e);
 
     suic::SystemHelper::KillTimer(_timerid);
-    _timerid = 0;
 }
 
 void ListBox::OnRender(suic::DrawingContext * drawing)
@@ -58,7 +57,7 @@ void ListBox::OnRender(suic::DrawingContext * drawing)
 
 void ListBox::OnTimer(int iTimerId)
 {
-    if (_timerid == iTimerId)
+    if (_timerid->id == iTimerId)
     {
         suic::Point pt(suic::VisualHelper::GetCursorPoint(this));
         suic::Rect rect(suic::VisualHelper::GetRenderRect(this));
@@ -120,7 +119,6 @@ void ListBox::OnMouseMove(suic::MouseEventArg& e)
     if (!IsMouseCaptured())
     {
         suic::SystemHelper::KillTimer(_timerid);
-        _timerid = 0;
         SetCaptureMouse();
     }
 
@@ -134,13 +132,12 @@ void ListBox::OnMouseMove(suic::MouseEventArg& e)
         e.MousePoint().y < 0)
     {
         suic::SystemHelper::KillTimer(_timerid);
-        _timerid = 0;
     }
     else
     {
-        if (_timerid == 0)
+        if (!_timerid || _timerid->id == 0)
         {
-            _timerid = suic::SystemHelper::SetTimer(this, 50, -1);
+            suic::SystemHelper::SetTimer(_timerid, this, 50, -1);
         }
     }
 
@@ -191,7 +188,6 @@ void ListBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
     __super::OnMouseLeftButtonDown(e);
 
     suic::SystemHelper::KillTimer(_timerid);
-    _timerid = 0;
 
     SetCaptureMouse();
 }
@@ -203,7 +199,6 @@ void ListBox::OnMouseLeftButtonUp(suic::MouseEventArg& e)
     ReleaseCaptureMouse();
 
     suic::SystemHelper::KillTimer(_timerid);
-    _timerid = 0;
 }
 
 void ListBox::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
@@ -216,4 +211,4 @@ void ListBox::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
     }
 }
 
-};
+}

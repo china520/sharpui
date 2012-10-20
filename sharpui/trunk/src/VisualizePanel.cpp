@@ -108,6 +108,7 @@ suic::Size VisualizePanel::ArrangeHorizontal(const suic::Size& size)
     }
 
     _startLogicalIndex = i;
+    _endLogicalIndex = _container->GetCount() - 1;
 
     suic::Rect rect(iWid - _horizontalOffset, -_verticalOffset, 0, size.cy + _verticalOffset);
 
@@ -161,6 +162,7 @@ suic::Size VisualizePanel::ArrangeVertical(const suic::Size& size, int iOffset)
     }
 
     _startLogicalIndex = i;
+    _endLogicalIndex = _container->GetCount() - 1;
 
     suic::Rect rect(-_horizontalOffset, iHei - _verticalOffset + iOffset, size.cx + _horizontalOffset, 0);
 
@@ -181,7 +183,6 @@ suic::Size VisualizePanel::ArrangeVertical(const suic::Size& size, int iOffset)
         if (rect.top >= size.cy)
         {
             _endLogicalIndex = i;
-
             break;
         }
     }

@@ -28,7 +28,7 @@ public:
 
     TreeItemHeader();
 
-protected:
+protected: 
 
     void OnRender(suic::DrawingContext * drawing);
 

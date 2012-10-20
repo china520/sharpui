@@ -105,7 +105,7 @@ void GridViewHeaderRow::OnRender(suic::DrawingContext * drawing)
     // 
     // ÏÈ»æÖÆ±³¾°
     //
-    suic::UIRender::DrawBackground(drawing, GetStyle()->GetTrigger(), &drawrect);
+    suic::Render::DrawBackground(drawing, GetStyle()->GetTrigger(), &drawrect);
 }
 
 };

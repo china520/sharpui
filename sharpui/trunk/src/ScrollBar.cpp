@@ -28,7 +28,7 @@ void ThumbButton::OnRender(suic::DrawingContext * drawing)
     // ÏÈ»æÖÆ±³¾°
     __super::OnRender(drawing);
 
-    suic::TriggerPtr trg(suic::UIRender::GetTriggerByStatus(this, GetStyle()));
+    suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));
     suic::ImageBrushPtr bkgnd = trg->GetValue(_T("Glyph"));
 
     if (bkgnd)

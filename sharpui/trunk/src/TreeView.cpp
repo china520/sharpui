@@ -108,9 +108,9 @@ void TreeView::OnItemsChanged(NotifyContainerChangedArg& e)
 
     if (e.GetAction() == NotifyContainerChangedAction::Add)
     {
-        for (int i = 0; i < e.GetNewItems()->GetCount(); ++i)
+        for (int i = 0; i < e.NewItems()->GetCount(); ++i)
         {
-            TreeViewItemPtr itemPtr(e.GetNewItems()->GetAt(i));
+            TreeViewItemPtr itemPtr(e.NewItems()->GetAt(i));
 
             if (itemPtr)
             {

@@ -14,11 +14,11 @@
 namespace suic
 {
 
-static String SUPPORTLAYEREDWINDOW = _T("SupportLayeredWindow");
-static String RESOURCES = _T("Resources");
+static String ISLAYEREDWINDOW = _T("IsLayeredWindow");
 
 // 全局唯一资源ID
 static String USID = _T("usid");
+static String RESOURCES = _T("Resources");
 
 static String WINDOW = _T("Window");
 
@@ -200,28 +200,22 @@ static String NORMAL = _T("Normal");
 static Uint32 U_NORMAL = 0;
 
 static String DEFAULT = _T("Default");
-static Uint32 U_DEFAULT_TRUE = 2000;
-static Uint32 U_DEFAULT_FALSE = 2001;
+static Uint32 U_DEFAULT = 0;
 
 static String MOUSEOVER = _T("IsMouseOver");
-static Uint32 U_MOUSEOVER_TRUE = 2002;
-static Uint32 U_MOUSEOVER_FALSE = 2003;
+static Uint32 U_MOUSEOVER = 1;
 
 static String PRESSED = _T("IsPressed");
-static Uint32 U_PRESSED_TRUE = 2004;
-static Uint32 U_PRESSED_FALSE = 2005;
+static Uint32 U_PRESSED = 2;
 
 static String DISABLED = _T("IsDisabled");
-static Uint32 U_DISABLED_TRUE = 2006;
-static Uint32 U_DISABLED_FALSE = 2007;
+static Uint32 U_DISABLED = 3;
 
 static String FOCUSED = _T("IsFocused");
-static Uint32 U_FOCUSED_TRUE = 2008;
-static Uint32 U_FOCUSED_FALSE = 2009;
+static Uint32 U_FOCUSED = 4;
 
 static String SELECTED = _T("IsSelected");
-static Uint32 U_SELECTED_TRUE = 2010;
-static Uint32 U_SELECTED_FALSE = 2011;
+static Uint32 U_SELECTED = 5;
 
 static String CURSOR = _T("Cursor");
 

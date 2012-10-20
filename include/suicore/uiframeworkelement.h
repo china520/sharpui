@@ -179,7 +179,7 @@ public:
 
 public:
 
-    virtual bool OnReadChild(ObjectPtr& pChild, IMarkupNode* pNode);
+    virtual bool OnReadingChild(ObjectPtr& pChild, IMarkupNode* pNode);
 
     virtual Size MeasureCore(const Size & availableSize);
     virtual Size MeasureOverride(const Size& availableSize);
@@ -238,6 +238,11 @@ protected:
 inline String FrameworkElement::ToString()
 {
     return GetText();
+}
+
+inline StylePtr FrameworkElement::GetStyle()
+{
+    return _style;
 }
 
 #include "frameworkelement.inl"

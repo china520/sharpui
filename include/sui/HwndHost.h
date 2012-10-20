@@ -17,10 +17,9 @@
 namespace ui
 {
 
-// ============================================================================
-// GridView。
-// ============================================================================
-
+/// <summary>
+/// 适配真实窗口句柄，在排列时放大或缩小窗口。
+/// </summary>
 class SHARPUI_API HwndHost : public suic::Control
 {
 public:
@@ -35,15 +34,16 @@ public:
 
 protected:
 
-    virtual void OnInitialized();
+    void OnInitialized();
 
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnRender(suic::DrawingContext * drawing);
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
 protected:
 
+    // 真实窗口句柄
     suic::Handle _handle;
 };
 

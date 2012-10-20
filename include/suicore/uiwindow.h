@@ -54,6 +54,12 @@ public:
     void SetLocation(suic::Point pt);
     suic::Point GetLocation() const;
 
+    void SetWindowStyle(Uint32 val);
+    void SetWindowState(Uint32 val);
+
+    Uint32 GetWindowStyle() const;
+    Uint32 GetWindowState() const;
+
 public:
 
     virtual void OnClosed(EventArg& e);
@@ -102,12 +108,32 @@ protected:
     suic::Point _prevLocation;
     ElementPtr _disWindows;
 
-    Uint32 _style;
-    Uint32 _state;
+    Uint32 _wndStyle;
+    Uint32 _wndState;
     bool _canResize;
 };
 
 typedef shared<Window> WindowPtr;
+
+inline void Window::SetWindowStyle(Uint32 val)
+{
+    _wndStyle = val;
+}
+
+inline void Window::SetWindowState(Uint32 val)
+{
+    _wndState = val;
+}
+
+inline Uint32 Window::GetWindowStyle() const
+{
+    return _wndStyle;
+}
+
+inline Uint32 Window::GetWindowState() const
+{
+    return _wndState;
+}
 
 };
 

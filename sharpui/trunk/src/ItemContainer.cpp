@@ -223,12 +223,12 @@ void NotifyContainerChangedArg::AddOldItem(suic::ObjectPtr item)
     _oldItems.Add(item);
 }
 
-ItemContentList* NotifyContainerChangedArg::GetNewItems()
+ItemContentList* NotifyContainerChangedArg::NewItems()
 {
     return &_newItems;
 }
 
-ItemContentList* NotifyContainerChangedArg::GetOldItems()
+ItemContentList* NotifyContainerChangedArg::OldItems()
 {
     return &_oldItems;
 }

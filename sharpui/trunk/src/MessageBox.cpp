@@ -42,7 +42,7 @@ int MsgBox::Show(const suic::String& title, const suic::String& msg)
     box->SetMinHeight(200);
 
     box->SetText(title);
-    box->SetOwner(CoreCurrentApp()->GetMainWindow());
+    box->SetOwner(CoreApp::Current()->GetMainWindow());
     box->ShowDialog();
 
     return OK;

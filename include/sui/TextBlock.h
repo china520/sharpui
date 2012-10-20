@@ -17,7 +17,7 @@
 namespace ui
 {
 
-class SHARPUI_API TextBlock : public suic::Control
+class SHARPUI_API TextBlock : public suic::FrameworkElement
 {
 public:
 
@@ -28,21 +28,12 @@ public:
 
     DECLAREBUILD(TextBlock)
 
-    bool HandleFocus() const;
-
-    virtual void OnInitialized();
-    virtual suic::Size MeasureOverride(const suic::Size& availableSize);
-
 protected:
 
-    virtual void OnRender(suic::DrawingContext * drawing);
+    suic::Size MeasureOverride(const suic::Size& availableSize);
 
-    virtual void OnMouseLeftButtonDown(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonUp(suic::MouseEventArg& e);
-
-    virtual void OnMouseEnter(suic::MouseEventArg& e);
-    virtual void OnMouseMove(suic::MouseEventArg& e);
-    virtual void OnMouseLeave(suic::MouseEventArg& e);
+    void OnInitialized();
+    void OnRender(suic::DrawingContext * drawing);
 };
 
 typedef suic::shared<TextBlock> TextBlockPtr;

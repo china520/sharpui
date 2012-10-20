@@ -154,16 +154,16 @@ void TabControl::OnLoaded(suic::LoadedEventArg& e)
 void TabControl::OnRender(suic::DrawingContext * drawing)
 {
     suic::Rect rect(0, _headerHeight, RenderSize().cx, RenderSize().cy - _headerHeight);
-    suic::UIRender::DrawBackground(drawing, GetStyle()->GetTrigger(), &rect);
+    suic::Render::DrawBackground(drawing, GetStyle()->GetTrigger(), &rect);
 }
 
 void TabControl::OnItemsChanged(NotifyContainerChangedArg& e)
 {
     WriteFlag(CoreFlags::IsMeasureDirty, true);
 
-    if (e.GetNewItems()->GetCount() > 0)
+    if (e.NewItems()->GetCount() > 0)
     {        
-        TabItemPtr itemPtr = TabItemPtr::cast(e.GetNewItems()->GetAt(0));
+        TabItemPtr itemPtr = TabItemPtr::cast(e.NewItems()->GetAt(0));
         suic::ElementPtr focused;
 
         //

@@ -91,6 +91,21 @@ void Selector::SelectItem(suic::ObjectPtr item, bool selected)
     }
 }
 
+void Selector::SetItemFocus(suic::ElementPtr focusItem)
+{
+    Selector* pSelector = Selector::SelectorFromItem(focusItem);
+
+    if (focusItem && pSelector)
+    {
+        suic::Element* oldFocus = pSelector->_focusItem;
+
+        pSelector->_focusItem = focusItem.get();
+        pSelector->_focusItem->Focus();
+
+        pSelector->OnItemFocusChanged(focusItem.get(), oldFocus);
+    }
+}
+
 int Selector::SelectedIndex()
 {
     return -1;
@@ -221,8 +236,13 @@ void Selector::OnSelectionChanged(SelectionChangedEventArg& e)
 
     if (SelectionChanged)
     {
-        SelectionChanged(this, e);
+        SelectionChanged(e);
     }
+}
+
+void Selector::OnItemFocusChanged(suic::Element* newFocus, suic::Element* oldFocus)
+{
+    ;
 }
 
 void Selector::ScrollByUpDown(suic::Element* pElem, bool bUp)
@@ -236,9 +256,10 @@ void Selector::ScrollByUpDown(suic::Element* pElem, bool bUp)
         pos = -pos;
     }
 
+    SetItemFocus(pElem);
+
     _scrollView->ScrollToVerticalPos(val + pos);
     _scrollView->InvalidateArrange();
-    _scrollView->InvalidateVisual();    
 }
 
 void Selector::OnInitialized()
@@ -287,22 +308,26 @@ void Selector::OnKeyDown(suic::KeyEventArg& e)
     {
         if (!_focusItem)
         {
-            if (GetMaxVisualIndex() > 0)
+            if (GetVisualEndIndex() > 0)
             {
-                SelectItem(_panel->GetVisualChild(GetMaxVisualIndex() - 1), true);
+                SetItemFocus(_panel->GetVisualChild(GetVisualEndIndex() - 1));
             }
         }
         else
         {
             int index = _panel->GetVisualChildIndex(_focusItem);
 
-            if (index > GetMinVisualIndex())
+            if (index > GetVisualStartIndex())
             {
-                SelectItem(_panel->GetVisualChild(index - 1), true);
+                suic::ElementPtr pElem(_panel->GetVisualChild(index - 1));
 
-                if (index == GetMinVisualIndex() + 1)
+                if (index == GetVisualStartIndex() + 1)
                 {
-                    ScrollByUpDown(GetLogicalChild(index - 1), true);
+                    ScrollByUpDown(pElem.get(), true);
+                }
+                else
+                {
+                    SetItemFocus(pElem.get());
                 }
             }
             else
@@ -319,6 +344,8 @@ void Selector::OnKeyDown(suic::KeyEventArg& e)
                 }
             }
         }
+
+        _scrollView->InvalidateVisual();
     }
     else if (e.IsDownArrow())
     {
@@ -326,20 +353,24 @@ void Selector::OnKeyDown(suic::KeyEventArg& e)
         {
             if (_panel->GetVisualChildrenCount() > 0)
             {
-                SelectItem(GetVisualChild(0), true);
+                SetItemFocus(GetVisualChild(0));
             }
         }
         else
         {
             int index = _panel->GetVisualChildIndex(_focusItem);
 
-            if (index < GetMaxVisualIndex() - 1)
+            if (index < GetVisualEndIndex() - 1)
             {
-                SelectItem(_panel->GetVisualChild(index + 1), true);
+                suic::ElementPtr pElem(_panel->GetVisualChild(index + 1));
 
-                if (index == GetMaxVisualIndex() - 2)
+                if (index == GetVisualEndIndex() - 2)
                 {
-                    ScrollByUpDown(GetLogicalChild(index + 1), false);
+                    ScrollByUpDown(pElem.get(), false);
+                }
+                else
+                {
+                    SetItemFocus(pElem.get());
                 }
             }
             else
@@ -355,6 +386,8 @@ void Selector::OnKeyDown(suic::KeyEventArg& e)
                     ScrollByUpDown(GetLogicalChild(GetItemsCount() - 1), false);
                 }
             }
+
+            _scrollView->InvalidateVisual();
         }
     }
     else if (e.IsPageup())

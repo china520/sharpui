@@ -63,6 +63,42 @@ void MainFrame::OnInitialized()
     {
         tab->ItemSelected += ui::ItemSelectedHandler(this, &MainFrame::SelectTabItem);
     }
+
+    pBtn = ui::ButtonPtr::cast(FindName(_T("SwitchLayered")));
+
+    if (pBtn)
+    {
+        pBtn->Click += ui::ClickEventHandler(this, &MainFrame::OnSwitchLayered);
+    }
+
+    // 启动和停止动画
+    pBtn = ui::ButtonPtr::cast(FindName(_T("StartAni")));
+
+    if (pBtn)
+    {
+        pBtn->Click += ui::ClickEventHandler(this, &MainFrame::OnStartAni);
+    }
+
+    pBtn = ui::ButtonPtr::cast(FindName(_T("StopAni")));
+
+    if (pBtn)
+    {
+        pBtn->Click += ui::ClickEventHandler(this, &MainFrame::OnStopAni);
+    }
+    
+    ui::ListViewPtr listPtr(FindName(_T("ListView01")));
+
+    if (listPtr)
+    {
+        listPtr->Columns()->Add(_T("歌曲"), 100);
+        listPtr->Columns()->Add(_T("演唱者"), 80);
+
+        int index = listPtr->Add(new ui::ListViewItem());
+        ui::ListViewItemPtr item(listPtr->GetItem(index));
+
+        item->AddColumn(_T("真心英雄"));
+        item->AddColumn(_T("周华健"));
+    }
 }
 
 void MainFrame::SelectTabItem(suic::Element* sender)
@@ -131,14 +167,67 @@ void MainFrame::OnChangeSkin(suic::ElementPtr pElem)
     // 下面切换系统资源，进行动态换肤
     if (_bDefault)
     {
-        CoreCurrentApp()->SetResources(_T("res/black_res.xml"));
+        CoreApp::Current()->SetResources(_T("res/black_res.xml"));
     }
     else
     {
-        CoreCurrentApp()->SetResources(_T("res/default.xml"));
+        CoreApp::Current()->SetResources(_T("res/default.xml"));
     }
 
     _bDefault = !_bDefault;
+}
+
+void MainFrame::OnSwitchLayered(suic::ElementPtr pElem)
+{
+    bool bLayered = ReadFlag(CoreFlags::IsLayeredWindow);
+
+    if (bLayered)
+    {
+        SetValue(suic::ISLAYEREDWINDOW, new suic::UString(_T("False")));
+        SetText(_T("Sharpui界面引擎演示(普通)"));
+
+        suic::ImageBrushPtr bk(GetValue(_T("Background")));
+
+        if (bk)
+        {
+            bk->SetOpacity(1.0);
+        }
+    }
+    else
+    {
+        SetValue(suic::ISLAYEREDWINDOW, new suic::UString(_T("True")));
+
+        suic::ImageBrushPtr bk(GetValue(_T("Background")));
+
+        if (bk)
+        {
+            bk->SetOpacity(0.8);
+        }
+        //SetOpacity(0.8);
+        SetText(_T("Sharpui界面引擎演示(分层)"));
+    }
+
+    InvalidateVisual();
+}
+
+void MainFrame::OnStartAni(suic::ElementPtr pElem)
+{
+    ui::AnimateBoxPtr aniPtr(FindName(_T("ani")));
+
+    if (aniPtr)
+    {
+        aniPtr->Start();
+    }
+}
+
+void MainFrame::OnStopAni(suic::ElementPtr pElem)
+{
+    ui::AnimateBoxPtr aniPtr(FindName(_T("ani")));
+
+    if (aniPtr)
+    {
+        aniPtr->Stop();
+    }
 }
 
 void MainFrame::OnTestWndAni(suic::ElementPtr pElem)
@@ -158,11 +247,11 @@ void MainFrame::OnTestWndAni(suic::ElementPtr pElem)
     pSb->Start(pSln.get());
 
     // 下面切换系统资源，进行动态换肤
-    suic::ResourceDictionaryPtr resPtr(suic::Application::LoadComponent(NULL, _T("主界面/resource.xml")));
+    suic::ResourceDictionaryPtr resPtr(CoreApp::LoadComponent(NULL, _T("主界面/resource.xml")));
 
     if (resPtr)
     {
-        suic::ApplicationPtr pApp(suic::Application::Current());
+        suic::ApplicationPtr pApp(CoreApp::Current());
 
         pApp->SetResources(resPtr);
     }
@@ -176,7 +265,7 @@ void MainFrame::OnLoaded(suic::LoadedEventArg& e)
     CenterWindow();
 
     // 设置窗体支持层样式，这样，才可以对其进行透明度动画
-    //SetValue(suic::SUPPORTLAYEREDWINDOW, new suic::UString(_T("True")));
+    SetValue(suic::ISLAYEREDWINDOW, new suic::UString(_T("True")));
 
     // 创建动画显示板
     suic::StoryBoardPtr pSb = new suic::StoryBoard();

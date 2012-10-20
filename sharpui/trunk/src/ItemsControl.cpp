@@ -17,10 +17,9 @@
 namespace ui
 {
 
-// ============================================================================
-// ItemContainer，Item的基类。
-// ============================================================================
-
+/// <summary>
+///  ItemContainer，Item的容器
+/// </summary>
 ItemContainer::ItemContainer(suic::Element* itemControl)
     : _itemControl(itemControl)
 {
@@ -164,10 +163,9 @@ void ItemContainer::RemoveRange(int index, int count)
     _items.erase(_items.begin() + index, _items.begin() + index + count);
 }
 
-// ============================================================================
-// ItemsControl，Item的基类。
-// ============================================================================
-
+/// <summary>
+///  ItemsControl，Item的基类
+/// </summary>
 ItemsControl::ItemsControl()
 {
     SetClassName(_T(""));
@@ -205,6 +203,11 @@ ItemContainerPtr ItemsControl::GetItems() const
     return _container;
 }
 
+void ItemsControl::CheckAddingItem(suic::ObjectPtr& itemObj)
+{
+    ;
+}
+
 int ItemsControl::GetItemsCount() const
 {
     return GetItems()->GetCount();
@@ -212,11 +215,15 @@ int ItemsControl::GetItemsCount() const
 
 int ItemsControl::Add(suic::ObjectPtr value)
 {
+    CheckAddingItem(value);
+
     return GetItems()->AddItem(value);
 }
 
 int ItemsControl::Insert(int index, suic::ObjectPtr value)
 {
+    CheckAddingItem(value);
+
     return GetItems()->InsertItem(index, value);
 }
 
@@ -241,10 +248,6 @@ void ItemsControl::Remove(suic::ObjectPtr ePtr)
 void ItemsControl::RemoveAll()
 {
     GetItems()->Clear();
-
-    InvalidateMeasure();
-    InvalidateArrange();
-    InvalidateVisual();
 }
 
 suic::ObjectPtr ItemsControl::GetItem(int iIndex) const
@@ -258,6 +261,7 @@ suic::String ItemsControl::GetItemText(int iIndex) const
 }
 
 /////////////////////////////////////////////////////////////////
+// ItemsControl
 //
 suic::Size ItemsControl::MeasureOverride(const suic::Size& availableSize)
 {
@@ -330,7 +334,7 @@ void ItemsControl::OnItemsChanged(NotifyContainerChangedArg& e)
 {
     WriteFlag(CoreFlags::IsMeasureDirty, true);
 
-    if (e.GetNewItems()->GetCount() > 0)
+    if (e.NewItems()->GetCount() > 0)
     {
         suic::Size availableSize;
 
@@ -339,7 +343,7 @@ void ItemsControl::OnItemsChanged(NotifyContainerChangedArg& e)
         }
     }
 
-    if (e.GetOldItems()->GetCount() > 0)
+    if (e.OldItems()->GetCount() > 0)
     {
         if (e.GetAction() == NotifyContainerChangedAction::Remove)
         {

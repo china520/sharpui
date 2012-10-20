@@ -85,7 +85,7 @@ TextBoxLine::~TextBoxLine()
 }
 
 void TextBoxLine::Draw(suic::DrawingContext * drawing, bool bActive
-                       , suic::Rect * lprc, const suic::TextRenderAttri* att)
+                       , suic::Rect * lprc, const suic::FormattedText* att)
 {
     if (_buff.Length() > 0)
     {
@@ -94,7 +94,7 @@ void TextBoxLine::Draw(suic::DrawingContext * drawing, bool bActive
 }
 
 void TextBoxLine::DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc
-                          , suic::Uint32 beg, suic::Uint32 end, suic::TextRenderAttri* att)
+                          , suic::Uint32 beg, suic::Uint32 end, suic::FormattedText* att)
 {
     if (_buff.Length() > 0)
     {
@@ -525,7 +525,7 @@ void TextBoxDoc::SelectAll()
 }
 
 void TextBoxDoc::DrawSingleLine(suic::DrawingContext * drawing, bool bActive
-                                , suic::Rect * lprc, suic::TextRenderAttri* att)
+                                , suic::Rect * lprc, suic::FormattedText* att)
 {
     suic::Rect rc;
     int i = 0;
@@ -579,7 +579,7 @@ void TextBoxDoc::DrawSingleLine(suic::DrawingContext * drawing, bool bActive
 }
 
 void TextBoxDoc::Draw(suic::DrawingContext * drawing, bool bActive
-                      , suic::Rect * lprc, suic::TextRenderAttri* att)
+                      , suic::Rect * lprc, suic::FormattedText* att)
 {
     suic::Rect rc;
     rc.top = 0;

@@ -497,6 +497,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\sui\Label.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\sui\ListBox.h"
 				>
 			</File>
@@ -702,6 +706,10 @@
 			</File>
 			<File
 				RelativePath=".\src\ItemsControl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Label.cpp"
 				>
 			</File>
 			<File

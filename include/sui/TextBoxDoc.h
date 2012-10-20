@@ -107,9 +107,9 @@ public:
     virtual ~TextBoxLine();
 
     void Draw(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc
-        , const suic::TextRenderAttri* att);
+        , const suic::FormattedText* att);
     void DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc
-        , suic::Uint32 beg, suic::Uint32 end, suic::TextRenderAttri* att);
+        , suic::Uint32 beg, suic::Uint32 end, suic::FormattedText* att);
 
     void GetText(suic::String & str);
     void GetSelText(suic::String & str, int beg, int len);
@@ -175,9 +175,9 @@ public:
     void SelectAll();
 
     void DrawSingleLine(suic::DrawingContext * drawing, bool bActive
-        , suic::Rect * lprc, suic::TextRenderAttri* att);
+        , suic::Rect * lprc, suic::FormattedText* att);
     void Draw(suic::DrawingContext * drawing, bool bActive, suic::Rect * lprc
-        , suic::TextRenderAttri* att);
+        , suic::FormattedText* att);
 
     void SetVisualRect(suic::Rect * lprc);
     suic::Rect GetVisualRect() const;

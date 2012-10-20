@@ -37,7 +37,7 @@ void ProgressBar::OnInitialized()
 {
     __super::OnInitialized();
 
-    suic::SystemHelper::SetTimer(this, 50);
+    //suic::SystemHelper::SetTimer(this, 50);
 }
 
 void ProgressBar::OnTimer(int id)
@@ -65,8 +65,8 @@ void ProgressBar::OnRender(suic::DrawingContext * drawing)
     // 先绘制背景
     suic::Rect elemrect(0, 0, RenderSize().cx, RenderSize().cy);
 
-    suic::TriggerPtr trg(suic::UIRender::GetTriggerByStatus(this, GetStyle()));
-    suic::UIRender::DrawBackground(drawing, trg, &elemrect);
+    suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));
+    suic::Render::DrawBackground(drawing, trg, &elemrect);
 
     //
     // 绘制进度条状态
@@ -95,8 +95,7 @@ void ProgressBar::OnRender(suic::DrawingContext * drawing)
         }
     }
 
-    suic::UIRender::DrawText(drawing, GetText(), trg, &elemrect
-        , GetHorizontalContentAlignment(), GetVerticalContentAlignment());
+    suic::Render::DrawText(drawing, this, GetText(), trg, &elemrect);
 }
 
 void ProgressBar::OnMaximumChanged(double oldMaximum, double newMaximum)

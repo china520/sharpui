@@ -41,14 +41,14 @@ suic::Size ButtonBase::MeasureOverride(const suic::Size& size)
     {
         if (GetStyle())
         {
-            suic::TriggerPtr setter(suic::UIRender::GetTriggerByStatus(this, GetStyle()));
+            suic::TriggerPtr setter(suic::Render::GetTriggerByStatus(this, GetStyle()));
 
             //
             // 计算背景图像的内容区域大小
             //
             if (setter.get())
             {
-                return suic::UIRender::MeasureImageSize(setter);
+                return suic::Render::MeasureImageSize(setter);
             }
         }
     }
@@ -254,7 +254,7 @@ void SystemMaxButton::OnRender(suic::DrawingContext * drawing)
     }
 
     suic::Rect drawrect(0, 0, RenderSize().cx, RenderSize().cy);
-    suic::TriggerPtr trigger(suic::UIRender::GetTriggerByStatus(this, GetStyle()));
+    suic::TriggerPtr trigger(suic::Render::GetTriggerByStatus(this, GetStyle()));
     suic::BrushPtr bkgnd(trigger->GetValue(strName));
 
     if (bkgnd)

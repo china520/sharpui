@@ -15,13 +15,11 @@ namespace ui
 {
 
 RepeatButton::RepeatButton()
-    : m_iTimer300(0)
-    , m_iTimer301(0)
 {
     int iTime = (int)::GetDoubleClickTime();
 
-    m_iDelay = iTime + iTime / 3;
-    m_iInterval = iTime / 6;
+    _iDelay = iTime + iTime / 3;
+    _iInterval = iTime / 6;
 }
 
 RepeatButton::~RepeatButton()
@@ -40,10 +38,8 @@ void RepeatButton::OnUnloaded(suic::LoadedEventArg& e)
 {
     __super::OnUnloaded(e);
 
-    suic::SystemHelper::KillTimer(m_iTimer300);
-    suic::SystemHelper::KillTimer(m_iTimer301);
-    m_iTimer300 = 0;
-    m_iTimer301 = 0;
+    suic::SystemHelper::KillTimer(_iTimer300);
+    suic::SystemHelper::KillTimer(_iTimer301);
 }
 
 void RepeatButton::OnRender(suic::DrawingContext * drawing)
@@ -56,16 +52,15 @@ void RepeatButton::OnRender(suic::DrawingContext * drawing)
 
 void RepeatButton::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 {
-    suic::SystemHelper::KillTimer(m_iTimer301);
-    m_iTimer300 = suic::SystemHelper::SetTimer(this, m_iDelay);
+    suic::SystemHelper::KillTimer(_iTimer301);
+    suic::SystemHelper::SetTimer(_iTimer300, this, _iDelay);
 
     __super::OnMouseLeftButtonDown(e);
 }
 
 void RepeatButton::OnMouseLeftButtonUp(suic::MouseEventArg& e)
 {
-    suic::SystemHelper::KillTimer(m_iTimer301);
-    m_iTimer301 = 0;
+    suic::SystemHelper::KillTimer(_iTimer301);
 
     __super::OnMouseLeftButtonUp(e);
 }
@@ -74,8 +69,8 @@ void RepeatButton::OnMouseEnter(suic::MouseEventArg& e)
 {
     if (IsMouseDown())
     {
-        suic::SystemHelper::KillTimer(m_iTimer301);
-        m_iTimer301 = suic::SystemHelper::SetTimer(this, m_iInterval);
+        suic::SystemHelper::KillTimer(_iTimer301);
+        suic::SystemHelper::SetTimer(_iTimer301, this, _iInterval);
     }
 
     __super::OnMouseEnter(e);
@@ -83,8 +78,7 @@ void RepeatButton::OnMouseEnter(suic::MouseEventArg& e)
 
 void RepeatButton::OnMouseLeave(suic::MouseEventArg& e)
 {
-    suic::SystemHelper::KillTimer(m_iTimer301);
-    m_iTimer301 = 0;
+    suic::SystemHelper::KillTimer(_iTimer301);
 
     __super::OnMouseLeave(e);
 }
@@ -99,14 +93,13 @@ void RepeatButton::OnClick(suic::RoutedEventArg& e)
 
 void RepeatButton::OnTimer(int id)
 {
-    if (id == m_iTimer300)
+    if (_iTimer300 && id == _iTimer300->id)
     {
-        suic::SystemHelper::KillTimer(m_iTimer300);
-        m_iTimer300 = 0;
+        suic::SystemHelper::KillTimer(_iTimer300);
 
         if (IsMouseDown())
         {
-            m_iTimer301 = suic::SystemHelper::SetTimer(this, m_iInterval);
+            suic::SystemHelper::SetTimer(_iTimer301, this, _iInterval);
         }
     }
 
@@ -136,12 +129,12 @@ void RepeatButton::OnRepeated(bool bMouseIn)
 
 void RepeatButton::SetDelay(int iDelay)
 {
-    m_iDelay = iDelay;
+    _iDelay = iDelay;
 }
 
 void RepeatButton::SetInterval(int iInterval)
 {
-    m_iInterval = iInterval;
+    _iInterval = iInterval;
 }
 
 }

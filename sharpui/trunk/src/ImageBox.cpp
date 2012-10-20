@@ -38,7 +38,17 @@ ImageBox::~ImageBox()
 
 bool ImageBox::SetSource(suic::String source)
 {
-    return _source->Load(source);
+    if ( _source->Load(source))
+    {
+        SetWidth(_source->Width());
+        SetHeight(_source->Height());
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 suic::ImagePtr ImageBox::GetSource() const
@@ -58,19 +68,16 @@ void ImageBox::OnInitialized()
     if (GetStyle())
     {
         suic::ObjectPtr obj = GetStyle()->GetValue(_T("Source"));
+        suic::ImagePtr img(obj);
 
-        if (obj)
+        if (img)
         {
-            _source = suic::ImagePtr(obj);
-
-            if (!_source)
-            {
-                _source = suic::SystemHelper::GetImage();
-                _source->Load(obj->ToString());
-            }
-
             SetWidth(_source->Width());
             SetHeight(_source->Height());
+        }
+        else if (obj)
+        {
+            SetSource(obj->ToString());
         }
     }
 }

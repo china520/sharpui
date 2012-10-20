@@ -102,15 +102,7 @@ public:
         return _rect;
     }
 
-    String ToString()
-    {
-        String val;
-
-        val.Format(_T("%d,%d,%d,%d"), _rect.left, _rect.top
-            , _rect.right, _rect.bottom);
-
-        return val;
-    }
+    String ToString();
 
 protected:
 

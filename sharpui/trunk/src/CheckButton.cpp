@@ -108,7 +108,7 @@ suic::Size CheckButton::MeasureOverride(const suic::Size& size)
             suic::Rect rectBk;
 
             rectBk = bkgnd->GetContentBrounds();       
-            ret = suic::UIRender::MeasureTextSize(GetText(), trg);
+            ret = suic::Render::MeasureTextSize(GetText(), trg);
 
             ret.cx += rectBk.Width() + 4;
             ret.cy += rectBk.Height();
@@ -138,7 +138,7 @@ void CheckButton::OnRender(suic::DrawingContext * drawing)
     // 
     // ÏÈ»æÖÆ±³¾°
     //
-    suic::TriggerPtr trg(suic::UIRender::GetTriggerByStatus(this, GetStyle()));
+    suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));
     suic::Rect drawrect(0, 0, RenderSize().cx, RenderSize().cy);
     suic::ImageBrushPtr bkgnd(trg->GetValue(InternalBackgrount()));
 
@@ -161,8 +161,7 @@ void CheckButton::OnRender(suic::DrawingContext * drawing)
     drawrect.left = drawrect.right + GetPadding().left;
     drawrect.right = RenderSize().cx;
 
-    suic::UIRender::DrawText(drawing, GetText(), trg, &drawrect
-        , GetHorizontalContentAlignment(), GetVerticalContentAlignment());
+    suic::Render::DrawText(drawing, this, GetText(), trg, &drawrect);
 }
 
 void CheckButton::OnKeyDown(suic::KeyEventArg& e)

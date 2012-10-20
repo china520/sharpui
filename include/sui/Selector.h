@@ -35,9 +35,10 @@ protected:
 };
 
 class Selector;
-typedef delegate<void(Selector*, SelectionChangedEventArg&)> SelectionChangedHandler;
+typedef delegate<void(SelectionChangedEventArg&)> SelectionChangedHandler;
 typedef delegate<void(suic::Element*)> ItemSelectedHandler;
 typedef delegate<void(suic::Element*)> ItemUnselectedHandler;
+typedef delegate<void(suic::Element*, suic::Element*)> ItemFocusChangedHandler;
 
 class SelectionMode
 {
@@ -51,10 +52,9 @@ public:
     };
 };
 
-// ============================================================================
-// Selector，处理有选择项的元素逻辑。
-// ============================================================================
-
+/// <summary>
+///  处理有选择项的元素逻辑。
+/// </summary>
 class SHARPUI_API Selector : public ItemsControl
 {
 public:
@@ -62,6 +62,7 @@ public:
     SelectionChangedHandler SelectionChanged;
     ItemUnselectedHandler ItemUnselected;
     ItemSelectedHandler ItemSelected;
+    ItemFocusChangedHandler ItemFocusChanged;
 
     Selector();
     virtual ~Selector();
@@ -88,6 +89,7 @@ public:
     /// <param name="selected">选择标志</param>
     /// <returns>无</returns> 
     static void SelectItem(suic::ObjectPtr item, bool selected);
+    static void SetItemFocus(suic::ElementPtr focusItem);
 
     SelectionMode::eSelectionMode GetSelectionMode() const;
 
@@ -107,18 +109,19 @@ public:
 
     virtual void OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e);
     virtual void OnSelectionChanged(SelectionChangedEventArg& e);
+    virtual void OnItemFocusChanged(suic::Element* newFocus, suic::Element* oldFocus);
 
 protected:
 
     void ScrollByUpDown(suic::Element* pElem, bool bUp);
 
-    virtual int GetMinVisualIndex();
-    virtual int GetMaxVisualIndex();
+    virtual int GetVisualStartIndex();
+    virtual int GetVisualEndIndex();
 
-    virtual void OnInitialized();
+    void OnInitialized();
 
-    virtual void OnTextInput(suic::KeyEventArg& e);
-    virtual void OnKeyDown(suic::KeyEventArg& e);
+    void OnTextInput(suic::KeyEventArg& e);
+    void OnKeyDown(suic::KeyEventArg& e);
 
 protected:
 
@@ -137,12 +140,12 @@ inline SelectionMode::eSelectionMode Selector::GetSelectionMode() const
     return _selectMode;
 }
 
-inline int Selector::GetMinVisualIndex()
+inline int Selector::GetVisualStartIndex()
 {
     return 0;
 }
 
-inline int Selector::GetMaxVisualIndex()
+inline int Selector::GetVisualEndIndex()
 {
     return _panel->GetVisualChildrenCount();
 }

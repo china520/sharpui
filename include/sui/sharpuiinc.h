@@ -25,6 +25,7 @@
 
 #include <suicore/suicoreinc.h>
 
+#include <sui/animatebox.h>
 #include <sui/button.h>
 #include <sui/captionbar.h>
 #include <sui/wrappanel.h>
@@ -40,6 +41,7 @@
 #include <sui/itemscontrol.h>
 #include <sui/combobox.h>
 #include <sui/textbox.h>
+#include <sui/label.h>
 #include <sui/passwordbox.h>
 #include <sui/listbox.h>
 #include <sui/messagebox.h>

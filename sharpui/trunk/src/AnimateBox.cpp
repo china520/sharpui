@@ -11,7 +11,6 @@ namespace ui
 AnimateBox::AnimateBox() 
     : _curframe(0)
     , _anim_timer(-1)
-    , _timerid(0)
     , _wid(0)
     , _hei(0)
     , _bkcolor(-1)
@@ -27,13 +26,13 @@ void AnimateBox::Start()
 {
     if (FrameCount() > 0)
     {
-        _timerid = suic::SystemHelper::SetTimer(this, 80);
+        suic::SystemHelper::SetTimer(_timerid, this, 10);
     }
 }
 
 void AnimateBox::Stop()
 {
-    if (_timerid > 0)
+    if (_timerid)
     {
         suic::SystemHelper::KillTimer(_timerid);
     }
@@ -172,7 +171,12 @@ void AnimateBox::OnLoaded(suic::LoadedEventArg& e)
 {
     __super::OnLoaded(e);
 
-    Start();
+    suic::ObjectPtr obj(GetValue(_T("AutoStart")));
+
+    if (obj && obj->ToBool())
+    {
+        Start();
+    }
 }
 
 suic::Size AnimateBox::MeasureOverride(const suic::Size& size)
@@ -235,7 +239,13 @@ void AnimateBox::OnRender(suic::DrawingContext * drawing)
 void AnimateBox::OnTimer(int id)
 {
     NextFrame();
-    _timerid = suic::SystemHelper::RestartTimer(_timerid, CurrentElapse());
+
+    if (_timerid->elapse != CurrentElapse())
+    {
+        _timerid->elapse = CurrentElapse();
+        suic::SystemHelper::RestartTimer(_timerid);
+    }
+
     InvalidateVisual();
 }
 

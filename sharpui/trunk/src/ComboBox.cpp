@@ -12,6 +12,9 @@
 namespace ui
 {
 
+/// <summary>
+///  组合框下拉列表，处理鼠标事件
+/// </summary>
 class ComboBoxListBox : public ListBox
 {
 public:
@@ -43,6 +46,9 @@ public:
     }
 };
 
+/// <summary>
+///  组合框适配项，可加入任意类型元素
+/// </summary>
 ComboBoxItem::ComboBoxItem()
 {
     SetClassName(_T("ComboBoxItem"));
@@ -113,7 +119,7 @@ void ComboBoxItem::OnRender(suic::DrawingContext * drawing)
 
         if (trg)
         {
-            suic::UIRender::Draw(drawing, this, trg);
+            suic::Render::Draw(drawing, this, trg);
         }
     }
     else
@@ -123,6 +129,7 @@ void ComboBoxItem::OnRender(suic::DrawingContext * drawing)
 }
 
 //================================================================
+// DropDownEventArg
 //
 DropDownEventArg::DropDownEventArg(suic::PopupPtr popup, suic::ElementPtr list)
     : _popup(popup)
@@ -132,6 +139,7 @@ DropDownEventArg::DropDownEventArg(suic::PopupPtr popup, suic::ElementPtr list)
 }
 
 ///////////////////////////////////////////////////////
+// ComboListHookPopup
 //
 class ComboListHookPopup : public suic::HwndSourceHookSystemPopup
 {
@@ -163,9 +171,9 @@ public:
     }
 };
 
-///////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+// ComboBox
 //
-
 ComboBox::ComboBox()
     : _bReadOnly(false)
     , _downHeight(16)
@@ -201,6 +209,11 @@ void ComboBox::AddLogicalChild(suic::Element* child)
     _list->AddLogicalChild(child);
 }
 
+void ComboBox::RemoveAll()
+{
+    _list->RemoveAll();
+}
+
 void ComboBox::SetReadOnly(bool bOnly)
 {
     _bReadOnly = bOnly;
@@ -233,7 +246,7 @@ suic::String ComboBox::GetText()
 
 bool ComboBox::StaysOpenOnEdit() const
 {
-    return false;
+    return !_popup->IsClosed();
 }
 
 suic::Size ComboBox::MeasureOverride(const suic::Size& size)
@@ -280,7 +293,7 @@ void ComboBox::OnInitialized()
 
     if (!style)
     {
-        style = FindResource(suic::LISTBOX);
+        _list->SetStyle(style);
     }
 
     _list->SetStyle(style);
@@ -294,14 +307,8 @@ void ComboBox::OnInitialized()
     _list->SetMaxHeight(_downHeight);
     _textBox->Enable(IsEnabled());
 
-    _textBox->GetStyle()->Setters->Remove(suic::BORDERTHICKNESS);
-    _textBox->GetStyle()->Setters->Remove(suic::PADDING);
-    _textBox->GetStyle()->Setters->Remove(suic::BACKGROUND);
-
-    _textBox->SetBorderThickness(suic::Rect());
-    _textBox->SetPadding(suic::Rect());
-
     _textBox->CursorSet += suic::CursorEventHandler(this, &ComboBox::OnTextBoxCursor);
+    _list->SelectionChanged += SelectionChangedHandler(this, &ComboBox::OnSelectionChanged);
 
     suic::ObjectPtr selObj = _list->SelectedItem();
 
@@ -347,8 +354,6 @@ void ComboBox::OnRender(suic::DrawingContext * drawing)
     suic::Point pt;
     suic::Rect drawrect(pt.x, pt.y, RenderSize().cx, RenderSize().cy);
 
-    //drawrect.right = drawrect.left + 16;
-
     // 
     // 先绘制背景
     //
@@ -361,29 +366,36 @@ void ComboBox::OnRender(suic::DrawingContext * drawing)
 
     if (!bksetter)
     {
-        bksetter = suic::UIRender::GetTriggerByStatus(this, GetStyle());
+        bksetter = suic::Render::GetTriggerByStatus(this, GetStyle());
     }
 
-    suic::UIRender::DrawBackground(drawing, bksetter, &drawrect);
+    suic::Render::DrawBackground(drawing, bksetter, &drawrect);
 
     // 获取下拉箭头的设置
     if (styleArrow.get())
     {
-        suic::TriggerPtr downSet(suic::UIRender::GetTriggerByStatus(this, styleArrow));
+        suic::TriggerPtr downSet(suic::Render::GetTriggerByStatus(this, styleArrow));
         suic::Rect downRect = drawrect;
 
         downRect.Deflate(GetBorderThickness());
         downRect.left = downRect.right - 16;
 
-        suic::UIRender::DrawBackground(drawing, downSet, &downRect);
+        suic::Render::DrawBackground(drawing, downSet, &downRect);
     }
 
-    suic::UIRender::DrawBorderBrush(drawing, bksetter, &drawrect);
+    suic::Render::DrawBorderBrush(drawing, bksetter, &drawrect);
 }
 
 void ComboBox::OnKeyDown(suic::KeyEventArg& e)
 {
-    _textBox->OnKeyDown(e);
+    if (e.IsUpArrow() || e.IsDownArrow())
+    {
+        _list->OnKeyDown(e);
+    }
+    else
+    {
+        _textBox->OnKeyDown(e);
+    }
 }
 
 void ComboBox::OnTextInput(suic::KeyEventArg& e)
@@ -407,14 +419,6 @@ void ComboBox::OnDropDownClosed(DropDownEventArg& e)
 void ComboBox::OnDropDownOpened(DropDownEventArg& e)
 {
     TriggerEvent(DropDownOpened, e);
-
-    /*suic::StoryBoardPtr pSb = new suic::StoryBoard();
-    suic::Animation* pAni = new ui::DoubleAnimation(suic::HEIGHT, 5, 100, true);
-
-    pAni->SetSpeedRatio(50);
-    pAni->SetDuration(1);
-    pSb->Add(pAni);
-    pSb->Start(e.GetPopup());*/
 }
 
 void ComboBox::OnPreviewSetCursor(suic::CursorEventArg& e)
@@ -486,21 +490,20 @@ void ComboBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 
         if (selObj)
         {
-            _textBox->SetText(selObj->ToString());
+            SelectionChangedEventArg e;
 
-            if (_textBox->IsReadOnly() || !_textBox->IsEnabled())
-            {
-                _textBox->InvalidateVisual();
-            }
-            else
-            {
-                _textBox->Focus();
-            }
+            e.AddedItems()->Add(selObj);
+            OnSelectionChanged(e);
         }
 
         _list->UnselectAllItems();
 
         OnDropDownClosed(eo);
+
+        if (!_textBox->IsReadOnly() && _textBox->IsEnabled())
+        {
+            _textBox->Focus();
+        }
     }
 }
 
@@ -526,17 +529,10 @@ void ComboBox::OnMouseLeftButtonDbclk(suic::MouseEventArg& e)
 
 void ComboBox::OnPreviewMouseEnter(suic::MouseEventArg& e)
 {
-    //e.Handled(true);
-
-    //OnMouseEnter(e);
 }
 
 void ComboBox::OnPreviewMouseMove(suic::MouseEventArg& e)
 {
-    //e.Handled(true);
-
-    //OnMouseMove(e);
-
     if (e.LeftButton() == suic::MouseButtonState::eMousePress)
     {
         if (suic::VisualHelper::CursorPointIsInElement(_list.get()))
@@ -560,4 +556,21 @@ void ComboBox::OnLostFocus(suic::FocusEventArg& e)
     _textBox->OnLostFocus(e);
 }
 
-};
+void ComboBox::OnSelectionChanged(SelectionChangedEventArg& e)
+{
+    if (e.AddedItems()->GetCount() > 0)
+    {
+        _textBox->SetText(e.AddedItems()->GetAt(0)->ToString());
+
+        if (_textBox->IsReadOnly() || !_textBox->IsEnabled() || StaysOpenOnEdit())
+        {
+            _textBox->InvalidateVisual();
+        }
+        else
+        {
+            _textBox->Focus();
+        }
+    }
+}
+
+}

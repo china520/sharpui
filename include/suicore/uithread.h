@@ -1,6 +1,6 @@
 //	Copyright (c) 2008-2009, Inc, 华勤科技版权所有.
 //
-//	文件名 : uithread.h.h
+//	文件名 : uithread.h
 //	描  述 : 封装线程对象，自动完成启动，挂起操作。
 //
 //	基  类 : no
@@ -25,7 +25,7 @@ namespace suic {
 /// <summary>
 /// 线程控制对象
 /// </summary>
-class ThreadControl : public RefObject
+class SUICORE_API ThreadControl : public RefObject
 {
 public:
 
@@ -81,7 +81,7 @@ private:
 #endif
 };
 
-class Thread : virtual public RefObject
+class SUICORE_API Thread : virtual public RefObject
 {
 public:
 

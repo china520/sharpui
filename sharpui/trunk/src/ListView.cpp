@@ -53,24 +53,7 @@ void ListView::OnColumnHeaderResize(suic::ObjectPtr sender, DragDeltaEventArg& e
     
     int iNewPos = _scrollView->HorizontalScrollBar()->GetScrollPos();
 
-    /*if (iNewPos >= _scrollView->HorizontalScrollBar()->MaxVisualPos()
-        && e.HorizontalChange() < 0 && _scrollView->HorizontalScrollBar()->IsVisible())
-    {
-        size.cx = 10;
-        pColumn->SetColumnWidth(10);
-    }*/
-
     _panel->SetDesiredSize(size);
-
-    /*if (e.HorizontalChange() < 0)
-    {
-        int iNewPos = e.HorizontalChange() + _scrollView->HorizontalScrollBar()->GetLogicPos();
-
-        iNewPos = (int)((double)iNewPos / (double)_scrollView->HorizontalScrollBar()->GetScrollStep());
-
-        _scrollView->HorizontalScrollBar()->SetVisualPos(iNewPos);
-    }*/
-
     _scrollView->InvalidateArrange();
 
     iNewPos = _scrollView->HorizontalScrollBar()->GetScrollPos();
@@ -181,10 +164,15 @@ suic::Size ListView::ArrangeOverride(const suic::Size& availableSize)
     return availableSize;
 }
 
-inline int ListView::GetMaxVisualIndex()
+int ListView::GetVisualEndIndex()
 {
     int count = _panel->GetVisualChildrenCount();
     return (_header->IsVisible() ? (count - 1) : count);
+}
+
+void ListView::CheckAddingItem(suic::ObjectPtr& itemObj)
+{
+    ;
 }
 
 void ListView::OnInitialized()
@@ -199,10 +187,10 @@ void ListView::OnInitialized()
     _header->EndInit();
 
     // 增加两列
-    Columns()->Add(_T("歌名"), 80);
-    Columns()->Add(_T("演唱者"), 120);
+    //Columns()->Add(_T("歌名"), 80);
+    //Columns()->Add(_T("演唱者"), 120);
 
-    int index = Add(new ListViewItem());
+    /*int index = Add(new ListViewItem());
     ListViewItemPtr item(GetItem(index));
 
     item->AddColumn(_T("真心英雄"));
@@ -216,7 +204,7 @@ void ListView::OnInitialized()
     item->AddColumn(_T("按钮测试"));
     item->AddColumn(pBtn);
 
-    pBtn->SetMinHeight(29);
+    pBtn->SetMinHeight(29);*/
 }
 
 }

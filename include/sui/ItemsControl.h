@@ -101,6 +101,7 @@ public:
 protected:
 
     virtual void InitializeScrollView();
+    virtual void CheckAddingItem(suic::ObjectPtr& itemObj);
 
 protected:
 

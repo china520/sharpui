@@ -59,9 +59,22 @@ void ListBoxItem::OnMouseLeftButtonUp(suic::MouseEventArg& e)
 
 void ListBoxItem::OnRender(suic::DrawingContext * drawing)
 {
-    if (IsEnabled() && IsSelected())
+    if (IsEnabled())
     {
-        suic::TriggerPtr setter = GetStyle()->GetTrigger(suic::FOCUSED);
+        suic::TriggerPtr setter;
+        
+        if (IsFocused())
+        {
+            setter = GetStyle()->GetTrigger(suic::SELECTED);
+        }
+        else if (IsSelected())
+        {
+            setter = GetStyle()->GetTrigger(suic::FOCUSED);
+        }
+        else if (IsMouseOver())
+        {
+            setter = GetStyle()->GetTrigger(suic::MOUSEOVER);
+        }
 
         if (!setter)
         {
@@ -70,7 +83,7 @@ void ListBoxItem::OnRender(suic::DrawingContext * drawing)
 
         if (setter)
         {
-            suic::UIRender::Draw(drawing, this, setter);
+            suic::Render::Draw(drawing, this, setter);
         }
     }
     else

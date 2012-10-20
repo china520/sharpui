@@ -204,7 +204,7 @@ void Slider::OnRender(suic::DrawingContext * drawing)
             rcdraw.right = rcdraw.left + GetDesiredSize().cx;
         }
 
-        suic::UIRender::DrawBackground(drawing, trg, &rcdraw);
+        suic::Render::DrawBackground(drawing, trg, &rcdraw);
     }
     else
     {

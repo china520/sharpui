@@ -22,7 +22,7 @@ namespace ui
 MenuItem::MenuItem()
 {
     SetClassName(_T("MenuItem"));
-    SetMinHeight(ITEM_MINHEIGHT);
+    SetMinHeight(MENUITEM_MINHEIGHT);
     SetHorizontalContentAlignment(suic::LEFT);
     SetFocusable(false);
     SetOrientation(CoreFlags::Vertical);
@@ -138,7 +138,7 @@ suic::Size MenuItem::MeasureOverride(const suic::Size& size)
     suic::Size availableSize(size);
 
     availableSize = __super::MeasureOverride(availableSize);
-    availableSize.cx += 16;
+    availableSize.cx += MENUITEM_ICONSIZE;
 
     return availableSize;
 }
@@ -167,32 +167,29 @@ void MenuItem::OnStyleUpdated()
 
 void MenuItem::OnRender(suic::DrawingContext * drawing)
 {
-    if (GetContent())
+    suic::Rect rect(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::StylePtr sty(GetStyle());
+    suic::TriggerPtr trg;
+
+    if (IsEnabled() && (IsSelected() || IsMouseOver() || IsSubmenuOpen()))
     {
-        suic::ContentControl::OnRender(drawing);
+        trg = sty->GetTrigger(suic::FOCUSED);
     }
-    else 
+    else
     {
-        suic::StylePtr sty(GetStyle());
+        trg = sty->GetTrigger(!IsEnabled() ? suic::DISABLED : _T(""));
+    }
 
-        if (IsEnabled() && (IsSelected() || IsMouseOver() || IsSubmenuOpen()))
-        {
-            suic::TriggerPtr trg = sty->GetTrigger(suic::FOCUSED);
+    if (!trg)
+    {
+        trg = sty->GetTrigger(_T(""));
+    }
 
-            if (!trg)
-            {
-                trg = sty->GetTrigger(_T(""));
-            }
-
-            if (trg)
-            {
-                suic::UIRender::Draw(drawing, this, trg);
-            }
-        }
-        else
-        {
-            suic::Control::OnRender(drawing);
-        }
+    if (trg)
+    {
+        suic::Render::DrawBackground(drawing, trg, &rect);
+        rect.left += MENUITEM_ICONSIZE;
+        suic::Render::DrawText(drawing, this, GetText(), trg, &rect);
     }
 }
 

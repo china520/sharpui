@@ -31,6 +31,8 @@ public:
     static String CalculatePath(const String& path);
     static bool ReadResource(const String& path);
 
+    static ObjectPtr GetRefObj(Element*, const String&);
+
     static Point ToScreenPoint(Element* element, Point pt);
     static Point GetCursorPoint(Element* element);
     static Point CalcuCusorPoint(ElementPtr element);

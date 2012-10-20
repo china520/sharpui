@@ -90,6 +90,8 @@ public:
     ComboBox();
     virtual ~ComboBox();
 
+    void RemoveAll();
+
     void SetReadOnly(bool bOnly);
     bool IsReadOnly() const;
     bool IsDropDown() const;
@@ -128,34 +130,36 @@ public:
 
 public:
 
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnRender(suic::DrawingContext * drawing);
 
-    virtual void OnKeyDown(suic::KeyEventArg& e);
-    virtual void OnTextInput(suic::KeyEventArg& e);
+    void OnKeyDown(suic::KeyEventArg& e);
+    void OnTextInput(suic::KeyEventArg& e);
 
-    virtual void OnPreviewSetCursor(suic::CursorEventArg& e);
-    virtual void OnPreviewMouseLeftButtonDown(suic::MouseEventArg& e);
-    virtual void OnPreviewMouseLeftButtonDbclk(suic::MouseEventArg& e);
+    void OnPreviewSetCursor(suic::CursorEventArg& e);
+    void OnPreviewMouseLeftButtonDown(suic::MouseEventArg& e);
+    void OnPreviewMouseLeftButtonDbclk(suic::MouseEventArg& e);
 
-    virtual void OnMouseLeftButtonDown(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonUp(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
-    virtual void OnPreviewMouseEnter(suic::MouseEventArg& e);
-    virtual void OnPreviewMouseMove(suic::MouseEventArg& e);
+    void OnMouseLeftButtonDown(suic::MouseEventArg& e);
+    void OnMouseLeftButtonUp(suic::MouseEventArg& e);
+    void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
+    void OnPreviewMouseEnter(suic::MouseEventArg& e);
+    void OnPreviewMouseMove(suic::MouseEventArg& e);
 
-    virtual void OnSetCursor(suic::CursorEventArg& e);
+    void OnSetCursor(suic::CursorEventArg& e);
 
-    virtual void OnGotFocus(suic::FocusEventArg& e);
-    virtual void OnLostFocus(suic::FocusEventArg& e);
+    void OnGotFocus(suic::FocusEventArg& e);
+    void OnLostFocus(suic::FocusEventArg& e);
+
+    void OnSelectionChanged(SelectionChangedEventArg& e);
 
 protected:
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
-    virtual void OnInitialized();
-    virtual void OnStyleUpdated();
-    virtual void OnSetterChanged(suic::SetterChangedEventArg& e);
+    void OnInitialized();
+    void OnStyleUpdated();
+    void OnSetterChanged(suic::SetterChangedEventArg& e);
 
 protected:
 

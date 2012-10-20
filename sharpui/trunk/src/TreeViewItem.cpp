@@ -108,11 +108,42 @@ protected:
 TreeItemHeader::TreeItemHeader()
 {
     SetClassName(_T("TreeViewItem"));
+    WriteFlag(CoreFlags::IsSupportMouseOver, true);
 }
 
 void TreeItemHeader::OnRender(suic::DrawingContext * drawing)
 {
-    suic::Control::OnRender(drawing);
+    if (IsEnabled())
+    {
+        suic::TriggerPtr setter;
+
+        if (IsFocused())
+        {
+            setter = GetStyle()->GetTrigger(suic::SELECTED);
+        }
+        else if (IsSelected())
+        {
+            setter = GetStyle()->GetTrigger(suic::FOCUSED);
+        }
+        else if (IsMouseOver())
+        {
+            setter = GetStyle()->GetTrigger(suic::MOUSEOVER);
+        }
+
+        if (!setter)
+        {
+            setter = GetStyle()->GetTrigger();
+        }
+
+        if (setter)
+        {
+            suic::Render::Draw(drawing, this, setter);
+        }
+    }
+    else
+    {
+        suic::Control::OnRender(drawing);
+    }
 }
 
 //======================================================
@@ -459,9 +490,9 @@ void TreeViewItem::OnItemsChanged(NotifyContainerChangedArg& e)
 
     if (e.GetAction() == NotifyContainerChangedAction::Add)
     {
-        for (int i = 0; i < e.GetNewItems()->GetCount(); ++i)
+        for (int i = 0; i < e.NewItems()->GetCount(); ++i)
         {
-            TreeViewItemPtr itemPtr(e.GetNewItems()->GetAt(i));
+            TreeViewItemPtr itemPtr(e.NewItems()->GetAt(i));
 
             if (itemPtr)
             {

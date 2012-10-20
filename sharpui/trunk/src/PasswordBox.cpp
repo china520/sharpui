@@ -114,11 +114,11 @@ void PasswordBox::SetText(const suic::String & text)
 
 void PasswordBox::OnRender(suic::DrawingContext * drawing)
 {
-    suic::TriggerPtr setter(suic::UIRender::GetTriggerByStatus(this, GetStyle()));        
+    suic::TriggerPtr setter(suic::Render::GetTriggerByStatus(this, GetStyle()));        
     suic::Rect rcdraw(0, 0, RenderSize().cx, RenderSize().cy);
 
     // 先填充背景
-    suic::UIRender::DrawBackground(drawing, setter, &rcdraw);
+    suic::Render::DrawBackground(drawing, setter, &rcdraw);
 
     // 绘制文本
 
@@ -132,8 +132,8 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
 
     if (_password.Length() > 0)
     {
-        suic::TextRenderAttri att;
-        suic::Size sizeChar(suic::UIRender::MeasureTextSize(suic::String(_passwordChar, 1), GetStyle()->GetTrigger()));
+        suic::FormattedText att;
+        suic::Size sizeChar(suic::Render::MeasureTextSize(suic::String(_passwordChar, 1), GetStyle()->GetTrigger()));
 
         suic::String text(_passwordChar, _password.Length());
         suic::Rect rcCtrl = rcdraw;
@@ -158,7 +158,7 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
                 strDraw = suic::String(_passwordChar, iStart);
                 rcCtrl.right = rcCtrl.left + sizeChar.cx * iStart;
 
-                suic::UIRender::DrawText(drawing, strDraw, setter, &rcCtrl, CoreFlags::Left, 0);
+                suic::Render::DrawText(drawing, this, strDraw, setter, &rcCtrl);
 
                 rcCtrl.left = rcCtrl.right;
             }
@@ -178,22 +178,20 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
                 rcCtrl.left = rcCtrl.right;
                 rcCtrl.right += sizeChar.cx * iCount;
 
-                suic::UIRender::DrawText(drawing, strDraw
-                    , setter, &rcCtrl, CoreFlags::Left, CoreFlags::Center);
+                suic::Render::DrawText(drawing, this, strDraw, setter, &rcCtrl);
             }
         }
         else
         {
             suic::String strDraw(_passwordChar, _password.Length());
 
-            suic::UIRender::DrawText(drawing, strDraw, setter, &rcCtrl
-                , CoreFlags::Left, CoreFlags::Center);
+            suic::Render::DrawText(drawing, this, strDraw, setter, &rcCtrl);
         }
 
         drawing->Pop();
     }
 
-    suic::UIRender::DrawBorderBrush(drawing, setter, &rcdraw);
+    suic::Render::DrawBorderBrush(drawing, setter, &rcdraw);
 }
 
 bool PasswordBox::InSelectMode() const
@@ -252,7 +250,7 @@ void PasswordBox::ResetCaretPos()
 
     helper.HideCaret();
 
-    suic::Size size(suic::UIRender::MeasureTextSize(suic::String(_passwordChar, 1), GetStyle()->GetTrigger()));
+    suic::Size size(suic::Render::MeasureTextSize(suic::String(_passwordChar, 1), GetStyle()->GetTrigger()));
     suic::Point pt = PointToScreen(suic::Point());
     suic::Rect rc(GetVisualOffset().x, GetVisualOffset().y
         , RenderSize().cx, RenderSize().cy);
@@ -304,7 +302,7 @@ int PasswordBox::CalcCaretPos(int xOffset)
 
     suic::String strChar(_passwordChar, 1);
     int iPos = 0;
-    suic::Size size(suic::UIRender::MeasureTextSize(strChar, GetStyle()->GetTrigger()));
+    suic::Size size(suic::Render::MeasureTextSize(strChar, GetStyle()->GetTrigger()));
 
     iPos = (int)((double)xOffset / (double)size.cx) + _horizontalOffset;
 
@@ -321,7 +319,7 @@ void PasswordBox::InternalSetCaret(int iOff)
     _caretPos += iOff;
 
     suic::String strChar(_passwordChar, 1);
-    suic::Size size(suic::UIRender::MeasureTextSize(strChar, GetStyle()->GetTrigger()));
+    suic::Size size(suic::Render::MeasureTextSize(strChar, GetStyle()->GetTrigger()));
     int iSize = RenderSize().cx - GetPadding().left - GetPadding().right
         - GetBorderThickness().left - GetBorderThickness().right;
     // 计算滚动位置
