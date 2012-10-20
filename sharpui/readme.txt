@@ -12,3 +12,8 @@
 0.1.2.2
    1. 加入AnimateBox动画控件，支持gif格式读取和多图像动画播放。
    2. 对ListBox加入键盘方向键移动操作。
+
+0.1.2.3
+   1. 加入TileBrush和Pen支持绘制。
+   2. 修改直线绘制接口，使其支持Pen参数。
+   3. 调整ListBox、ComboBox控件逻辑。
