@@ -21,7 +21,7 @@ ListView::ListView()
     SetClassName(_T("ListView"));
 
     _header = new GridViewHeaderRow();
-    suic::VisualHelper::SetLogicalParent(this, _header.get());
+
     _header->SetHeight(16);
     _header->Columns()->ColumnHeaderChanged += ColumnHeaderChangedHandler(this, &ListView::OnColumnHeaderChanged);
 
@@ -34,12 +34,12 @@ ListView::~ListView()
 
 void ListView::InitializeScrollView()
 {
-    _panel = new VisualizeHeaderPanel(_container);
-    _scrollView = new ScrollViewer();
+    _itemsHost = new VisualizeHeaderPanel(_items);
+    _scrollHost = new ScrollViewer();
 
-    _scrollView->SetContent(_panel);
+    _scrollHost->SetContent(_itemsHost);
 
-    VisualizeHeaderPanelPtr vp(_panel);
+    VisualizeHeaderPanelPtr vp(_itemsHost);
     vp->SetHeader(_header);
 }
 
@@ -47,18 +47,18 @@ void ListView::OnColumnHeaderResize(suic::ObjectPtr sender, DragDeltaEventArg& e
 {
     GridViewColumnPtr pColumn(sender);
 
-    suic::Size size = _panel->GetDesiredSize();
+    suic::Size size = _itemsHost->GetDesiredSize();
 
     size.cx += e.HorizontalChange();
     
-    int iNewPos = _scrollView->HorizontalScrollBar()->GetScrollPos();
+    int iNewPos = _scrollHost->HorizontalScrollBar()->GetScrollPos();
 
-    _panel->SetDesiredSize(size);
-    _scrollView->InvalidateArrange();
+    _itemsHost->SetDesiredSize(size);
+    _scrollHost->InvalidateArrange();
 
-    iNewPos = _scrollView->HorizontalScrollBar()->GetScrollPos();
+    iNewPos = _scrollHost->HorizontalScrollBar()->GetScrollPos();
 
-    _scrollView->InvalidateVisual();
+    _scrollHost->InvalidateVisual();
 }
 
 void ListView::OnColumnHeaderChanged(GridViewColumn* pColumn, int flag)
@@ -77,7 +77,7 @@ ColumnHeaderCollectionPtr& ListView::Columns()
     return _header->Columns();
 }
 
-int ListView::Add(suic::ObjectPtr value)
+int ListView::AddChild(suic::ObjectPtr value)
 {
     ListViewItemPtr item(value);
 
@@ -91,10 +91,10 @@ int ListView::Add(suic::ObjectPtr value)
         item->SetContent(new GridViewRow(Columns()));
     }
 
-    return __super::Add(item);
+    return __super::AddChild(item);
 }
 
-int ListView::Insert(int index, suic::ObjectPtr value)
+int ListView::InsertChild(int index, suic::ObjectPtr value)
 {
     ListViewItemPtr item(value);
 
@@ -108,7 +108,7 @@ int ListView::Insert(int index, suic::ObjectPtr value)
         item->SetContent(new GridViewRow(Columns()));
     }
 
-    return __super::Insert(index, item);
+    return __super::InsertChild(index, item);
 }
 
 int ListView::AddText(const suic::String& text)
@@ -117,7 +117,7 @@ int ListView::AddText(const suic::String& text)
 
     item->SetContent(new GridViewRow(Columns()));
 
-    return __super::Add(item);
+    return __super::AddChild(item);
 }
 
 void ListView::SetLargeImageList()
@@ -159,14 +159,14 @@ suic::Size ListView::ArrangeOverride(const suic::Size& availableSize)
 
     finalRect.Deflate(GetBorderThickness());
 
-    _scrollView->Arrange(finalRect);
+    _scrollHost->Arrange(finalRect);
 
     return availableSize;
 }
 
 int ListView::GetVisualEndIndex()
 {
-    int count = _panel->GetVisualChildrenCount();
+    int count = _itemsHost->GetVisualChildrenCount();
     return (_header->IsVisible() ? (count - 1) : count);
 }
 

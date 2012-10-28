@@ -49,21 +49,21 @@ public:
 
 public:
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
     
-    virtual void OnInitialized();
-    virtual void OnSetterChanged(SetterChangedEventArg& e);
-    virtual void OnRender(DrawingContext * drawing);
+    void OnInitialized();
+    void OnSetterChanged(SetterChangedEventArg& e);
+    void OnRender(DrawingContext * drawing);
 
-    virtual void OnMouseLeftButtonDown(MouseEventArg& e);
-    virtual void OnMouseLeftButtonDbclk(MouseEventArg& e);
+    void OnMouseLeftButtonDown(MouseEventArg& e);
+    void OnMouseLeftButtonDbclk(MouseEventArg& e);
 
-    virtual void OnContentChanged(suic::ObjectPtr oldContent, suic::ObjectPtr newContent);
+    void OnContentChanged(suic::ObjectPtr oldContent, suic::ObjectPtr newContent);
 
-    virtual void AddLogicalChild(suic::Element* child);
-    virtual suic::Element* GetLogicalChild(int index);
-    virtual Int32 GetLogicalChildrenCount();
+    int AddChild(suic::ObjectPtr child);
+    suic::Element* GetChild(int index);
+    Int32 GetChildrenCount();
 
 protected:
 

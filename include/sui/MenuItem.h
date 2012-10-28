@@ -69,28 +69,29 @@ public:
 protected:
 
     suic::ElementPtr FindName(const suic::String& strName);
-    virtual void AddLogicalChild(suic::Element* child);
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
+    int AddChild(suic::ObjectPtr child);
 
-    virtual void OnInitialized();
-    virtual void OnStyleUpdated();
+    suic::Size MeasureOverride(const suic::Size& size);
 
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnInitialized();
+    void OnStyleUpdated();
 
-    virtual void OnTextInput(suic::KeyEventArg& e);
-    virtual void OnKeyDown(suic::KeyEventArg& e);
+    void OnRender(suic::DrawingContext * drawing);
 
-    virtual void OnGotFocus(suic::FocusEventArg& e);
-    virtual void OnLostFocus(suic::FocusEventArg& e);
-    virtual void OnSetCursor(suic::CursorEventArg& e);
+    void OnTextInput(suic::KeyEventArg& e);
+    void OnKeyDown(suic::KeyEventArg& e);
 
-    virtual void OnMouseEnter(suic::MouseEventArg& e);
-    virtual void OnMouseMove(suic::MouseEventArg& e);
-    virtual void OnMouseLeave(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonDown(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonUp(suic::MouseEventArg& e);
+    void OnGotFocus(suic::FocusEventArg& e);
+    void OnLostFocus(suic::FocusEventArg& e);
+    void OnSetCursor(suic::CursorEventArg& e);
+
+    void OnMouseEnter(suic::MouseEventArg& e);
+    void OnMouseMove(suic::MouseEventArg& e);
+    void OnMouseLeave(suic::MouseEventArg& e);
+    void OnMouseLeftButtonDown(suic::MouseEventArg& e);
+    void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
+    void OnMouseLeftButtonUp(suic::MouseEventArg& e);
 
 protected:
 

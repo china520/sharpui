@@ -43,15 +43,19 @@ void HeaderedContentControl::SetHeader(suic::ElementPtr val)
     }
 }
 
-void HeaderedContentControl::AddLogicalChild(suic::Element* child)
+int HeaderedContentControl::AddChild(suic::ObjectPtr child)
 {
-    if (child->GetWrapper().Equals(_T("Header")))
+    suic::ElementPtr pElem(child);
+
+    if (pElem->GetWrapper().Equals(_T("Header")))
     {
         SetHeader(child);
+
+        return 0;
     }
     else
     {
-        __super::AddLogicalChild(child);
+        return __super::AddChild(child);
     }
 }
 

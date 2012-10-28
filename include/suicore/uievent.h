@@ -17,6 +17,33 @@
 namespace suic
 {
 
+class DragDropEffects
+{
+public:
+
+    enum
+    {
+        Scroll = -2,
+        All = -1,
+        None = 0,
+        Copy = 1,
+        Move = 2,
+        Link = 4,
+    };
+};
+
+class IDataObject : public RefObject
+{
+public:
+
+    virtual ~IDataObject() {}
+
+    virtual ObjectPtr GetData(String format) = 0;
+    virtual void SetData(String format, ObjectPtr val) = 0;
+};
+
+typedef shared<IDataObject> DataObjectPtr;
+
 /// <summary>
 /// 定义鼠标测试结果结构，当鼠标在某一个界面元素上时会返回一个测试码。
 /// </summary>
@@ -271,14 +298,14 @@ protected:
     bool _value;
 };
 
-class SUICORE_API ScrollPosChangedEventArg : public EventArg
+class SUICORE_API ScrollChangedEventArg : public EventArg
 {
 public:
 
-    ScrollPosChangedEventArg(double horz, double vert);
+    ScrollChangedEventArg(double horz, double vert);
 
-    double GetHorzScrollPos() const { return _horz; }
-    double GetVertScrollPos() const { return _vert; }
+    double GetHorizontalScrollOffset() const { return _horz; }
+    double GetVerticalScrollOffset() const { return _vert; }
 
 protected:
 
@@ -472,6 +499,12 @@ public:
 class SUICORE_API DragEventArg : public RoutedEventArg
 {
 public:
+
+protected:
+
+    DataObjectPtr _data;
+    ObjectPtr _target;
+    Point _dropPoint;
 };
 
 /// <summary>

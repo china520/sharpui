@@ -93,7 +93,7 @@ void MainFrame::OnInitialized()
         listPtr->Columns()->Add(_T("ИшЧњ"), 100);
         listPtr->Columns()->Add(_T("бнГЊеп"), 80);
 
-        int index = listPtr->Add(new ui::ListViewItem());
+        int index = listPtr->AddChild(new ui::ListViewItem());
         ui::ListViewItemPtr item(listPtr->GetItem(index));
 
         item->AddColumn(_T("ецаФгЂал"));

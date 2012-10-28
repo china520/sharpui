@@ -267,7 +267,7 @@ void TextBox::Paste()
     _panel.InvalidateVisual();
     dwTime = ::GetTickCount() - dwTime;
 
-    suic::SystemHelper::Trace(_T("Reflesh Time cose: %d\n"), dwTime);
+    suic::SystemHelper::suiTrace(_T("Reflesh Time cose: %d\n"), dwTime);
 
     ResetCaretPos();
 }
@@ -410,6 +410,7 @@ void TextBox::OnTextInput(suic::KeyEventArg& e)
                 }
             }
         }
+
         bUnicode = false;
     }
 
@@ -418,8 +419,6 @@ void TextBox::OnTextInput(suic::KeyEventArg& e)
 
 void TextBox::OnKeyDown(suic::KeyEventArg& e)
 {
-    e.Handled(true);
-
     if (IsReadOnly())
     {
         return;
@@ -467,6 +466,10 @@ void TextBox::OnKeyDown(suic::KeyEventArg& e)
         if (!_isSingle)
         {
             _eDoc.InsertLine();
+        }
+        else
+        {
+            __super::OnKeyDown(e);
         }
     }
     else if (VK_ESCAPE == ch)
@@ -522,27 +525,37 @@ void TextBox::OnKeyDown(suic::KeyEventArg& e)
     else if (bCtrl && (ch == 'v' || ch == 'V'))
     {
         Paste();
+        e.Handled(true);
+
         return;
     }
     else if (bCtrl && (ch == 'c' || ch == 'C'))
     {
         Copy();
+        e.Handled(true);
+
         return;
     }
     else if (bCtrl && (ch == 'x' || ch == 'X'))
     {
         Cut();
+        e.Handled(true);
+
         return;
     }
     else if (bCtrl && (ch == 'a' || ch == 'A'))
     {
         SelectAll();
+        e.Handled(true);
+
         return;
     }
     else
     {
         return;
     }
+
+    e.Handled(true);
 
     if (bValid || bSel)
     {
@@ -813,6 +826,9 @@ void TextBox::OnInitialized()
 
     AddVisualChild(&_view);
     _view.SetContent(&_panel);
+
+    _panel.WriteFlag(CoreFlags::IsComposition, true);
+    _view.WriteFlag(CoreFlags::IsComposition, true);
 
     _view.BeginInit();
     _view.EndInit();

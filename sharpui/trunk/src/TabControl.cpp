@@ -18,9 +18,13 @@ namespace ui
 
 TabControl::TabControl()
     : _isAverage(true)
+    , _headerHeight(25)
 {
     SetClassName(_T("TabControl"));
     _headerPanel.SetAutoDelete(false);
+    _headerPanel.SetHorizontalAlignment(suic::STRETCH);
+
+    _headerPanel.Children()->SetLogicalParent(this);
 }
 
 TabControl::~TabControl()
@@ -30,6 +34,33 @@ TabControl::~TabControl()
 suic::ObjectPtr TabControl::SelectedContent() const
 {
     return suic::ObjectPtr();
+}
+
+void TabControl::OnSetterChanged(suic::SetterChangedEventArg& e)
+{
+    if (e.GetName().Equals(_T("Average")))
+    {
+        _isAverage = e.GetSetter()->ToBool();
+    }
+    else
+    {
+        //
+        // 必须调用基类初始化基本数据
+        //
+        __super::OnSetterChanged(e);
+    }
+}
+
+void TabControl::ClearChildren()
+{
+    _headerPanel.ClearChildren();
+    __super::ClearChildren();
+}
+
+void TabControl::RemoveChild(suic::ObjectPtr child)
+{
+    _headerPanel.RemoveChild(child);
+    __super::RemoveChild(child);
 }
 
 suic::Size TabControl::MeasureOverride(const suic::Size& size)
@@ -54,7 +85,9 @@ suic::Size TabControl::MeasureOverride(const suic::Size& size)
             }
         }
 
-        TabItemPtr focusTab(_focusItem);
+        _headerPanel.SetMinHeight(_headerHeight);
+
+        TabItemPtr focusTab(_focusedItem);
 
         if (focusTab && focusTab->GetTabContent())
         {
@@ -71,44 +104,64 @@ suic::Size TabControl::ArrangeOverride(const suic::Size& size)
 {
     ClearVisualChildren();
 
-    _headerPanel.ClearLogicalChildren();
+    _headerPanel.ClearChildren();
 
     int iItems = GetItems()->GetCount();
     suic::Rect finalRect(0, 0, size.cx, size.cy);
 
-    if (_isAverage && iItems > 0)
+    if (iItems > 0)
     {
-        TabItemPtr tabItem;
-        int iWid = size.cx / iItems;
-        suic::Size itemSize(iWid, _headerHeight);
-
-        for (int i = 0; i < iItems - 1; ++i)
+        if (_isAverage)
         {
-            tabItem = GetItems()->GetItem(i).get();
+            TabItemPtr tabItem;
+            int iWid = size.cx / iItems;
+            suic::Size itemSize(iWid, _headerHeight);
+
+            for (int i = 0; i < iItems - 1; ++i)
+            {
+                tabItem = GetItems()->GetItem(i).get();
+                tabItem->SetDesiredSize(itemSize);
+            }
+
+            tabItem = GetItems()->GetItem(iItems - 1).get();
+
+            itemSize.cx = size.cx - iWid * (iItems - 1);
             tabItem->SetDesiredSize(itemSize);
+
+            for (int i = 0; i < iItems; ++i)
+            {
+                tabItem = GetItems()->GetItem(i).get();
+                _headerPanel.AddChild(tabItem.get());
+            }
+
+            finalRect.bottom = finalRect.top + _headerHeight;
+
+            AddVisualChild(&_headerPanel);
+            _headerPanel.Arrange(finalRect);
         }
-
-        tabItem = GetItems()->GetItem(iItems - 1).get();
-
-        itemSize.cx = size.cx - iWid * (iItems - 1);
-        tabItem->SetDesiredSize(itemSize);
-
-        for (int i = 0; i < iItems; ++i)
+        else
         {
-            tabItem = GetItems()->GetItem(i).get();
-            _headerPanel.AddLogicalChild(tabItem.get());
+            for (int i = 0; i < iItems; ++i)
+            {
+                TabItemPtr tabItem = GetItems()->GetItem(i);
+
+                if (tabItem)
+                {
+                    _headerPanel.AddChild(tabItem.get());
+                }
+            }
+
+            finalRect.bottom = finalRect.top + _headerHeight;
+
+            AddVisualChild(&_headerPanel);
+            _headerPanel.Arrange(finalRect);
         }
-
-        finalRect.bottom = finalRect.top + _headerHeight;
-
-        AddVisualChild(&_headerPanel);
-        _headerPanel.Arrange(finalRect);
 
         finalRect.top = finalRect.bottom;
         finalRect.bottom = size.cy;
     }
 
-    TabItemPtr focusTab(_focusItem);
+    TabItemPtr focusTab(_focusedItem);
 
     if (focusTab)
     {  
@@ -126,16 +179,22 @@ void TabControl::OnInitialized()
 {
     __super::OnInitialized();
 
-    suic::VisualHelper::SetLogicalParent(this, &_headerPanel);
+    //AddLogicalChild(&_headerPanel);
 
-    if (GetItems()->GetCount() > 0 && !_focusItem)
+    _headerPanel.SetClassName(_T("TabHeader"));
+    //_headerPanel.Children()->NotifyCollectionChanged += suic::NotifyCollectionChangedHandler(this, &TabControl::OnNotifyCollectionChanged);
+
+    _headerPanel.BeginInit();
+    _headerPanel.EndInit();
+
+    if (GetItems()->GetCount() > 0 && !_focusedItem)
     {
         Selector::SelectItem(GetItems()->GetItem(0), true);
     }
 
-    TabItemPtr focusTab(_focusItem);
+    TabItemPtr focusTab(_focusedItem);
 
-    if (focusTab)
+    if (focusTab && focusTab->GetTabContent())
     {
         focusTab->GetTabContent()->Measure(suic::Size());
     }
@@ -145,10 +204,15 @@ void TabControl::OnLoaded(suic::LoadedEventArg& e)
 {
     __super::OnLoaded(e);
 
-    if (_focusItem)
+    if (_focusedItem)
     {
-        Selector::SelectItem(_focusItem, true);
+        Selector::SelectItem(_focusedItem, true);
     }
+}
+
+void TabControl::OnStyleUpdated()
+{
+    _headerPanel.UpdateStyle();
 }
 
 void TabControl::OnRender(suic::DrawingContext * drawing)
@@ -157,7 +221,22 @@ void TabControl::OnRender(suic::DrawingContext * drawing)
     suic::Render::DrawBackground(drawing, GetStyle()->GetTrigger(), &rect);
 }
 
-void TabControl::OnItemsChanged(NotifyContainerChangedArg& e)
+void TabControl::OnNotifyCollectionChanged(suic::ObjectPtr sender, suic::NotifyCollectionChangedArg& e)
+{
+    if (sender.get() == &_headerPanel)
+    {
+        if (e.GetAction() == suic::NotifyCollectionChangedAction::Remove)
+        {
+            RemoveChild(e.OldItems()->GetAt(0));
+        }
+    }
+    else
+    {
+        __super::OnNotifyCollectionChanged(sender, e);
+    }
+}
+
+void TabControl::OnItemsChanged(suic::NotifyCollectionChangedArg& e)
 {
     WriteFlag(CoreFlags::IsMeasureDirty, true);
 

@@ -27,7 +27,10 @@ public:
     Panel();
     virtual ~Panel();
 
+    // 派生类不推荐使用这个函数进行布局、测量等
     ElementCollectionPtr & Children();
+
+    //LogicalChildren
 
     bool SetItemsHost(bool value);
     bool IsItemsHost();
@@ -45,11 +48,12 @@ public:
     void SetHorizontalOffset(int val);
     void SetVerticalOffset(int val);
 
-    int GetStartLogicalIndex() const;
-    int GetEndLogicalIndex() const;
+    int GetVisibleStart() const;
+    int GetVisibleCount() const;
 
 protected:
 
+    ElementCollectionPtr & InternalChildren();
     int InternalChildCount() const;
     Element* InternalChild(int index);
 
@@ -72,24 +76,27 @@ protected:
     /// <returns>界面元素期望的位置区域</returns>
     static Rect ArrangeCheck(Element* pElem, const Size & size);
 
-
 public:
 
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    Size MeasureOverride(const Size& availableSize);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
-    virtual void OnRender(DrawingContext * drawing);
+    void OnScrollChanged(ScrollChangedEventArg& e);
 
-    virtual void AddLogicalChild(suic::Element* child);
-    virtual void InsertLogicalChild(int index, suic::Element* child);
-    virtual void ClearLogicalChildren();
-    virtual void RemoveLogicalChild(suic::Element* child);
+    void OnRender(DrawingContext * drawing);
 
-    virtual suic::Visual* GetVisualChild(int index);
-    virtual suic::Element* GetLogicalChild(int index);
-    virtual Int32 GetLogicalChildrenCount();
+    Int32 GetChildrenCount();
+    suic::Element* GetChild(int index);
 
-    virtual void OnGotFocus(FocusEventArg& e);
-    virtual void OnLostFocus(FocusEventArg& e);
+    int AddChild(suic::ObjectPtr child);
+    int InsertChild(int index, suic::ObjectPtr child);
+    void ClearChildren();
+    void RemoveChild(suic::ObjectPtr child);
+
+    suic::Visual* GetVisualChild(int index);
+
+    void OnGotFocus(FocusEventArg& e);
+    void OnLostFocus(FocusEventArg& e);
 
 protected:
 
@@ -98,8 +105,8 @@ protected:
     IntVector _tabIndex;
 
     // 可视树第一个元素在逻辑树中的索引
-    int _startLogicalIndex;
-    int _endLogicalIndex;
+    int _visibleStart;
+    int _visibleCount;
 
     int _horizontalOffset;
     int _verticalOffset;
@@ -107,14 +114,14 @@ protected:
 
 typedef shared<Panel> PanelPtr;
 
-inline int Panel::GetStartLogicalIndex() const
+inline int Panel::GetVisibleStart() const
 {
-    return _startLogicalIndex;
+    return _visibleStart;
 }
 
-inline int Panel::GetEndLogicalIndex() const
+inline int Panel::GetVisibleCount() const
 {
-    return _endLogicalIndex;
+    return _visibleCount;
 }
 
 inline void Panel::SetHorizontalOffset(int val)
@@ -127,12 +134,12 @@ inline void Panel::SetVerticalOffset(int val)
     _verticalOffset = val;
 }
 
-inline suic::Element* Panel::GetLogicalChild(int index)
+inline suic::Element* Panel::GetChild(int index)
 {
     return _elementConnection->GetElement(index);
 }
 
-inline Int32 Panel::GetLogicalChildrenCount()
+inline Int32 Panel::GetChildrenCount()
 {
     return _elementConnection->GetCount();
 }

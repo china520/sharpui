@@ -81,17 +81,17 @@ protected:
 
     void OnRender(suic::DrawingContext * drawing);
 
-    virtual void OnMouseEnter(suic::MouseEventArg& e);
-    virtual void OnMouseMove(suic::MouseEventArg& e);
-    virtual void OnMouseLeave(suic::MouseEventArg& e);
+    void OnMouseEnter(suic::MouseEventArg& e);
+    void OnMouseMove(suic::MouseEventArg& e);
+    void OnMouseLeave(suic::MouseEventArg& e);
 
-    virtual void OnMouseLeftButtonDown(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonUp(suic::MouseEventArg& e);
+    void OnMouseLeftButtonDown(suic::MouseEventArg& e);
+    void OnMouseLeftButtonUp(suic::MouseEventArg& e);
 
-    virtual void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
+    void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
 
-    virtual void OnGotFocus(suic::FocusEventArg& e);
-    virtual void OnLostFocus(suic::FocusEventArg& e);
+    void OnGotFocus(suic::FocusEventArg& e);
+    void OnLostFocus(suic::FocusEventArg& e);
 };
 
 /// <summary>

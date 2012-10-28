@@ -80,11 +80,11 @@ void StackLayout::RelayoutHorizontal(const suic::Size& size)
     int nLeft = rcLay.left;
     int nRight = nLeft;
     
-    int iCount = GetLogicalChildrenCount();
+    int iCount = GetChildrenCount();
 
     for (int i = 0; i < iCount; ++i)
     {
-        suic::FrameworkElementPtr ePtr(GetLogicalChild(i));
+        suic::FrameworkElementPtr ePtr(GetChild(i));
 
         if (ePtr->IsVisible())
         {
@@ -105,11 +105,11 @@ void StackLayout::RelayoutHorizontal(const suic::Size& size)
                     CalcuItem item;
                     suic::Rect rcClip;
 
-                    ePtr = suic::ElementPtr::cast(GetLogicalChild(in));
+                    ePtr = suic::ElementPtr::cast(GetChild(in));
 
                     if (ePtr->IsVisible())
                     {
-                        CalcHorzElement(ePtr, rcLay, item.rect, rcClip);
+                        CalcHorzElement(ePtr, rcLay, item.rect);
 
                         item.index = in;
                         vecrc.push_back(item);
@@ -133,7 +133,7 @@ void StackLayout::RelayoutHorizontal(const suic::Size& size)
 
                 for (int j = 0; j < (int)vecrc.size(); ++j)
                 {
-                    ePtr = suic::ElementPtr::cast(GetLogicalChild(vecrc[j].index));
+                    ePtr = suic::ElementPtr::cast(GetChild(vecrc[j].index));
 
                     vecrc[j].rect.left += iGlue;
                     vecrc[j].rect.right += iGlue;
@@ -156,7 +156,7 @@ void StackLayout::RelayoutHorizontal(const suic::Size& size)
 
                     int iVert = eStretch->GetVerticalAlignment();
                     suic::Size szelem = ePtr->GetDesiredSize();
-                    ARRANGEVERTICALCHILDREN(iVert, rcLay, rcmgr, rc, rcClip);
+                    ARRANGEVERTICALCHILDREN(iVert, rcLay, rcmgr, rc);
 
                     rc.right -= rcmgr.right;
                     rc.left += rcmgr.left;
@@ -172,9 +172,8 @@ void StackLayout::RelayoutHorizontal(const suic::Size& size)
             }
 
             suic::Rect rc;
-            suic::Rect rcClip;
 
-            CalcHorzElement(ePtr, rcLay, rc, rcClip);
+            CalcHorzElement(ePtr, rcLay, rc);
 
             // 
             // 加入到可视树
@@ -199,11 +198,11 @@ void StackLayout::RelayoutVertical(const suic::Size& size)
     int iTop = rcLay.top;
     int iBottom = iTop;
 
-    int iCount = GetLogicalChildrenCount();
+    int iCount = GetChildrenCount();
 
     for (int i = 0; i < iCount; ++i)
     {
-        suic::FrameworkElementPtr ePtr(GetLogicalChild(i));
+        suic::FrameworkElementPtr ePtr(GetChild(i));
 
         if (ePtr->IsVisible())
         {
@@ -221,14 +220,13 @@ void StackLayout::RelayoutVertical(const suic::Size& size)
 
                 for (; in < iCount; ++in)
                 {
-                    suic::Rect rcClip;
                     CalcuItem item;
 
-                    ePtr = suic::ElementPtr::cast(GetLogicalChild(in));
+                    ePtr = suic::ElementPtr::cast(GetChild(in));
 
                     if (ePtr->IsVisible())
                     {
-                        CalcVertElement(ePtr, rcLay, item.rect, rcClip);
+                        CalcVertElement(ePtr, rcLay, item.rect);
 
                         item.index = in;
                         vecrc.push_back(item);
@@ -252,7 +250,7 @@ void StackLayout::RelayoutVertical(const suic::Size& size)
 
                 for (int j = 0; j < (int)vecrc.size(); ++j)
                 {
-                    ePtr = GetLogicalChild(vecrc[j].index);
+                    ePtr = GetChild(vecrc[j].index);
 
                     vecrc[j].rect.top += iGlue;
                     vecrc[j].rect.bottom += iGlue;
@@ -269,13 +267,11 @@ void StackLayout::RelayoutVertical(const suic::Size& size)
                     rcLay.top = iBeg;
                     rcLay.bottom = rcLay.top + iGlue;
                     suic::Rect rc = rcLay;
-                    suic::Rect rcClip = rc;
-
                     suic::Rect rcmgr = eStretch->GetMargin();
 
                     int iHorz = ePtr->GetHorizontalAlignment();
                     suic::Size szelem = ePtr->GetDesiredSize();
-                    ARRANGEHORIZONTALCHILDREN(iHorz, rcLay, rcmgr, rc, rcClip);
+                    ARRANGEHORIZONTALCHILDREN(iHorz, rcLay, rcmgr, rc);
 
                     rc.bottom -= rcmgr.bottom;
                     rc.top += rcmgr.top;
@@ -291,9 +287,8 @@ void StackLayout::RelayoutVertical(const suic::Size& size)
             }
 
             suic::Rect rc;
-            suic::Rect rcClip;
 
-            CalcVertElement(ePtr, rcLay, rc, rcClip);
+            CalcVertElement(ePtr, rcLay, rc);
 
             // 
             // 加入到可视树

@@ -37,11 +37,15 @@ public:
     /// <returns>true:设置成功；false:设置失败</returns>
     bool SetSource(suic::String source);
 
+    bool SetSourceFromMemory(const suic::Byte* pData, suic::Uint64 len);
+
     /// <summary>
     ///     取得图像控件源，其是一个图像对象
     /// </summary>
     /// <returns>图像对象</returns>
     suic::ImagePtr GetSource() const;
+
+    bool IsValid() const;
 
 protected:
 

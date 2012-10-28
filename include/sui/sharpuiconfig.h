@@ -11,10 +11,18 @@
 # ifndef _SHARPUICONFIG_H_
 # define _SHARPUICONFIG_H_
 
+#ifndef SHARPUI_LIB
+
 #ifdef SHARPUI_EXPORTS
 #define SHARPUI_API __declspec(dllexport)
 #else
 #define SHARPUI_API __declspec(dllimport)
+#endif
+
+#else
+
+#define SHARPUI_API
+
 #endif
 
 #include <suicore/suicoreinc.h>

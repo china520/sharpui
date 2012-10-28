@@ -13,7 +13,7 @@
 
 #include <sui/RangeBase.h>
 #include <sui/UIDefine.h>
-#include <sui/RepeatButton.h>
+#include <sui/RepeatedButton.h>
 
 namespace ui
 {
@@ -189,12 +189,12 @@ protected:
     ThumbButton _thumb;
 
     // 上箭头或左箭头
-    RepeatButton _decreaseBtn;
-    RepeatButton _increaseBtn;
+    RepeatedButton _decreaseBtn;
+    RepeatedButton _increaseBtn;
 
     // 页对象
-    RepeatButton _decreasePage;
-    RepeatButton _increasePage;
+    RepeatedButton _decreasePage;
+    RepeatedButton _increasePage;
 
     UIScrollInfo _scroInfo;
 

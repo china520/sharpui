@@ -102,11 +102,11 @@ void TreeView::OnUnselectTreeItem(TreeViewItem* pItem)
     }
 }
 
-void TreeView::OnItemsChanged(NotifyContainerChangedArg& e)
+void TreeView::OnItemsChanged(suic::NotifyCollectionChangedArg& e)
 {
     __super::OnItemsChanged(e);
 
-    if (e.GetAction() == NotifyContainerChangedAction::Add)
+    if (e.GetAction() == suic::NotifyCollectionChangedAction::Add)
     {
         for (int i = 0; i < e.NewItems()->GetCount(); ++i)
         {
@@ -138,7 +138,7 @@ void TreeView::OnRender(suic::DrawingContext * drawing)
 
 void TreeView::OnMouseWheel(suic::MouseWheelEventArg& e)
 {
-    _scrollView->OnMouseWheel(e);
+    _scrollHost->OnMouseWheel(e);
 
     /*int zDelta = e.Delta();
     int nPos = _vScroll->GetVisualPos();

@@ -182,10 +182,8 @@ ComboBox::ComboBox()
     _popup = new suic::UIPopup();
     _list = new ComboBoxListBox();
 
-    suic::VisualHelper::SetLogicalParent(this, _list.get());
-
     _textBox = new TextBox();
-    _container = _list->GetItems();
+    _items = _list->GetItems();
 
     // 支持鼠标传递绘制
     WriteFlag(CoreFlags::IsSupportMouseOver, true);
@@ -201,17 +199,17 @@ int ComboBox::AddText(const suic::String& text)
 
     item->SetText(text);
 
-    return _list->Add(item);
+    return _list->AddChild(item);
 }
 
-void ComboBox::AddLogicalChild(suic::Element* child)
+int ComboBox::AddChild(suic::ObjectPtr child)
 {
-    _list->AddLogicalChild(child);
+    return _list->AddChild(child);
 }
 
-void ComboBox::RemoveAll()
+void ComboBox::ClearChildren()
 {
-    _list->RemoveAll();
+    _list->ClearChildren();
 }
 
 void ComboBox::SetReadOnly(bool bOnly)

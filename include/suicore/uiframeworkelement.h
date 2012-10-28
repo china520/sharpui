@@ -181,18 +181,23 @@ public:
 
     virtual bool OnReadingChild(ObjectPtr& pChild, IMarkupNode* pNode);
 
-    virtual Size MeasureCore(const Size & availableSize);
-    virtual Size MeasureOverride(const Size& availableSize);
+    virtual void ArrangeVisual();
 
-    virtual void EndInit();
-    virtual void OnRender(DrawingContext * drawing);
+    Size MeasureCore(const Size & availableSize);
+    Size MeasureOverride(const Size& availableSize);
 
-    virtual void OnSetterChanged(SetterChangedEventArg& e);
-    virtual void OnGotFocus(suic::FocusEventArg& e);
-    virtual void OnMouseEnter(MouseEventArg& e);
-    virtual void OnSetCursor(CursorEventArg& e);
+    void EndInit();
+    void OnRender(DrawingContext * drawing);
+
+    void OnSetterChanged(SetterChangedEventArg& e);
+    void OnGotFocus(suic::FocusEventArg& e);
+    void OnMouseEnter(MouseEventArg& e);
+    void OnSetCursor(CursorEventArg& e);
 
     virtual void OnStyleUpdated();
+
+    virtual void OnScrollChanged(ScrollChangedEventArg& e);
+    virtual void MeasureInArranging(const Size& size);
 
 protected:
 

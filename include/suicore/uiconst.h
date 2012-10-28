@@ -81,6 +81,9 @@ public:
         IsSizeModing = 0x00080000,
         IsSelected = 0x00100000,
         IsTabStop = 0x00200000,
+
+        IsComposition = 0x00400000,
+        IsAllowDrop = 0x00800000,
     };
 };
 
@@ -168,5 +171,12 @@ struct Stretch
         UniformToFill = 3,
     };
 };
+
+namespace suic
+{
+
+static const int RESIZE_LEN = 4;
+
+}
 
 # endif

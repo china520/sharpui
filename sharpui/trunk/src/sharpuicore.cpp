@@ -12,6 +12,7 @@
 #include <sui/sharpuicore.h>
 
 #include <sui/button.h>
+#include <sui/repeatedbutton.h>
 #include <sui/captionbar.h>
 #include <sui/scrollviewer.h>
 #include <sui/wrappanel.h>
@@ -36,6 +37,7 @@
 #include <sui/separator.h>
 #include <sui/tabcontrol.h>
 #include <sui/tabitem.h>
+#include <sui/Splitter.h>
 
 #include <sui/activexcontrol.h>
 #include <sui/webbrowser.h>
@@ -66,7 +68,10 @@ suic::ObjectPtr __CreateContent(suic::ObjectPtr val)
 
 void SHARPUI_API CoreInitialize(const suic::String& resPath)
 {
+    suic::SystemHelper::suiInitialize();
+
     suic::Builder::RegisterElement(suic::BUTTON, &ui::Button::Create);
+    suic::Builder::RegisterElement(_T("RepeatedButton"), &ui::RepeatedButton::Create);
 
     suic::Builder::RegisterElement(_T("SystemMinButton"), &ui::SystemMinButton::Create);
     suic::Builder::RegisterElement(_T("SystemMaxButton"), &ui::SystemMaxButton::Create);
@@ -108,6 +113,8 @@ void SHARPUI_API CoreInitialize(const suic::String& resPath)
     suic::Builder::RegisterElement(_T("Slider"), &ui::Slider::Create);
     suic::Builder::RegisterElement(_T("ImageBox"), &ui::ImageBox::Create);
 
+    suic::Builder::RegisterElement(_T("Splitter"), &ui::Splitter::Create);
+
     suic::Builder::RegisterElement(_T("WebBrowser"), &ui::WebBrowser::Create);
     suic::Builder::RegisterElement(_T("RichTextBox"), &ui::RichTextBox::Create);
     suic::Builder::RegisterElement(_T("ActiveX"), &ui::ActiveX::Create);
@@ -115,5 +122,5 @@ void SHARPUI_API CoreInitialize(const suic::String& resPath)
     suic::Builder::RegisterElement(_T("HwndHost"), &ui::HwndHost::Create);
 
     suic::SystemHelper::ReadResource(resPath);
-    suic::SystemHelper::RegisterContent(__CreateContent);
+    //suic::SystemHelper::RegisterContent(__CreateContent);
 }

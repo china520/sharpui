@@ -545,7 +545,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\sui\RepeatButton.h"
+				RelativePath="..\..\include\sui\RepeatedButton.h"
 				>
 			</File>
 			<File
@@ -578,6 +578,10 @@
 			</File>
 			<File
 				RelativePath="..\..\include\sui\Slider.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\include\sui\Splitter.h"
 				>
 			</File>
 			<File
@@ -765,7 +769,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\RepeatButton.cpp"
+				RelativePath=".\src\RepeatedButton.cpp"
 				>
 			</File>
 			<File
@@ -794,6 +798,10 @@
 			</File>
 			<File
 				RelativePath=".\src\Slider.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Splitter.cpp"
 				>
 			</File>
 			<File

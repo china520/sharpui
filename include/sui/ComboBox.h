@@ -32,8 +32,6 @@ public:
 
     DECLAREBUILD(ComboBoxItem);
 
-    int AddText(const suic::String& text);
-
 protected:
 
     void OnSetterChanged(suic::SetterChangedEventArg& e);
@@ -90,7 +88,7 @@ public:
     ComboBox();
     virtual ~ComboBox();
 
-    void RemoveAll();
+    void ClearChildren();
 
     void SetReadOnly(bool bOnly);
     bool IsReadOnly() const;
@@ -121,7 +119,7 @@ public:
 
 public:
 
-    void AddLogicalChild(suic::Element* child);
+    int AddChild(suic::ObjectPtr child);
 
     void OnTextBoxCursor(suic::Element*, suic::CursorEventArg& e);
 

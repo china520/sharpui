@@ -23,7 +23,7 @@
 namespace ui
 {
 
-class ItemContainer;
+class ItemCollection;
 
 /// <summary>
 /// ItemsControl,所有选择项的基类。
@@ -35,12 +35,14 @@ public:
     ItemsControl();
     virtual ~ItemsControl();
 
+    suic::ObjectPtr FocusedItem() const;
+
 public:
 
     bool HasItems() const;
     bool IsGrouping() const;
 
-    ItemContainerPtr GetItems() const;
+    ItemCollectionPtr GetItems() const;
 
     int GetItemsCount() const;
 
@@ -54,27 +56,26 @@ public:
     ///     子项对象
     /// </param>
     /// <returns>子项对象索引</returns>
-    virtual int Add(suic::ObjectPtr value);
-    virtual int Insert(int index, suic::ObjectPtr value);
-    virtual int AddText(const suic::String& text);
+    int AddChild(suic::ObjectPtr value);
+    int InsertChild(int index, suic::ObjectPtr value);
+    int AddText(const suic::String& text);
+    
+    void RemoveChild(suic::ObjectPtr ePtr);
 
     virtual void RemoveAt(int iIndex);
-    virtual void Remove(suic::ObjectPtr ePtr);
-    virtual void RemoveAll();
+    virtual void ClearChildren();
 
     virtual suic::ObjectPtr GetItem(int iIndex) const;
     virtual suic::String GetItemText(int iIndex) const;
 
-    void OnNotifyContainerChanged(suic::ObjectPtr sender, NotifyContainerChangedArg& e);
+    virtual void OnNotifyCollectionChanged(suic::ObjectPtr sender, suic::NotifyCollectionChangedArg& e);
 
 public:
 
-    virtual void AddLogicalChild(suic::Element* child);
-    virtual void RemoveLogicalChild(suic::Element* child);
-    virtual suic::Element* GetLogicalChild(int index);
-    virtual suic::Int32 GetLogicalChildrenCount();
+    suic::Element* GetChild(int index);
+    suic::Int32 GetChildrenCount();
 
-    virtual void OnItemsChanged(NotifyContainerChangedArg& e);
+    virtual void OnItemsChanged(suic::NotifyCollectionChangedArg& e);
 
     virtual suic::Size MeasureOverride(const suic::Size& size);
     virtual suic::Size ArrangeOverride(const suic::Size& size);
@@ -106,15 +107,22 @@ protected:
 protected:
 
     // 元素存储容器
-    ItemContainerPtr _container;
+    ItemCollectionPtr _items;
     // 布局对象
-    suic::PanelPtr _panel;
+    suic::PanelPtr _itemsHost;
     // 视图对象
-    ScrollViewPtr _scrollView;
+    ScrollViewerPtr _scrollHost;
     //ScrollData _scrollData;
+    // 当前拥有焦点的子项元素
+    suic::ObjectPtr _focusedItem;
 };
 
 typedef suic::shared<ItemsControl> ItemsControlPtr;
+
+inline suic::ObjectPtr ItemsControl::FocusedItem() const
+{
+    return _focusedItem;
+}
 
 };
 

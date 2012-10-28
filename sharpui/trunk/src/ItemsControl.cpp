@@ -20,40 +20,40 @@ namespace ui
 /// <summary>
 ///  ItemContainer，Item的容器
 /// </summary>
-ItemContainer::ItemContainer(suic::Element* itemControl)
+ItemCollection::ItemCollection(suic::Element* itemControl)
     : _itemControl(itemControl)
 {
 
 }
 
-ItemContainer::~ItemContainer()
+ItemCollection::~ItemCollection()
 {
 }
 
-int ItemContainer::GetCount()
+int ItemCollection::GetCount()
 {
     return (int)_items.size();
 }
 
-suic::ObjectPtr ItemContainer::GetItem(int iIndex) const
+suic::ObjectPtr ItemCollection::GetItem(int iIndex) const
 {
     suic::ObjectPtr obj = _items[iIndex];
 
     return obj;
 }
 
-suic::String ItemContainer::GetItemText(int iIndex) const
+suic::String ItemCollection::GetItemText(int iIndex) const
 {
     return _items[iIndex]->ToString();
 }
 
-void ItemContainer::HandleItem(suic::ObjectPtr& obj)
+void ItemCollection::HandleItem(suic::ObjectPtr& obj)
 {
     suic::ElementPtr item(obj);
 
     if (item)
     {
-        suic::VisualHelper::SetLogicalParent(_itemControl, item.get());
+        _itemControl->AddLogicalChild(item.get());
 
         if (!item->IsInitialized())
         {
@@ -79,7 +79,7 @@ void ItemContainer::HandleItem(suic::ObjectPtr& obj)
 
     if (ContainerChanged)
     {
-        NotifyContainerChangedArg e(NotifyContainerChangedAction::Add);
+        suic::NotifyCollectionChangedArg e(suic::NotifyCollectionChangedAction::Add);
 
         e.AddNewItem(obj);
 
@@ -87,7 +87,7 @@ void ItemContainer::HandleItem(suic::ObjectPtr& obj)
     }
 }
 
-int ItemContainer::InsertItem(int index, suic::ObjectPtr item)
+int ItemCollection::InsertItem(int index, suic::ObjectPtr item)
 {
     _items.insert(_items.begin() + index, item);
 
@@ -96,7 +96,7 @@ int ItemContainer::InsertItem(int index, suic::ObjectPtr item)
     return index;
 }
 
-int ItemContainer::AddItem(suic::ObjectPtr item)
+int ItemCollection::AddItem(suic::ObjectPtr item)
 {
     int index = _items.size();
 
@@ -106,17 +106,17 @@ int ItemContainer::AddItem(suic::ObjectPtr item)
     return index;
 }
 
-void ItemContainer::Clear()
+void ItemCollection::Clear()
 {
     _items.clear();
 }
 
-bool ItemContainer::Contains(suic::ObjectPtr item)
+bool ItemCollection::Contains(suic::ObjectPtr item)
 {
     return (IndexOf(item) >= 0);
 }
 
-int ItemContainer::IndexOf(suic::ObjectPtr item) const
+int ItemCollection::IndexOf(suic::ObjectPtr item) const
 {
     for (int i = 0; i < (int)_items.size(); ++i)
     {
@@ -129,7 +129,7 @@ int ItemContainer::IndexOf(suic::ObjectPtr item) const
     return -1;
 }
 
-void ItemContainer::Remove(suic::ObjectPtr item)
+void ItemCollection::Remove(suic::ObjectPtr item)
 {
     for (int i = 0; i < (int)_items.size(); ++i)
     {
@@ -142,7 +142,7 @@ void ItemContainer::Remove(suic::ObjectPtr item)
     }
 }
 
-void ItemContainer::RemoveAt(int index)
+void ItemCollection::RemoveAt(int index)
 {
     suic::ObjectPtr itemPtr = _items[index];
 
@@ -150,7 +150,7 @@ void ItemContainer::RemoveAt(int index)
 
     if (ContainerChanged)
     {
-        NotifyContainerChangedArg e(NotifyContainerChangedAction::Remove);
+        suic::NotifyCollectionChangedArg e(suic::NotifyCollectionChangedAction::Remove);
 
         e.AddOldItem(itemPtr);
 
@@ -158,7 +158,7 @@ void ItemContainer::RemoveAt(int index)
     }
 }
 
-void ItemContainer::RemoveRange(int index, int count)
+void ItemCollection::RemoveRange(int index, int count)
 {
     _items.erase(_items.begin() + index, _items.begin() + index + count);
 }
@@ -170,8 +170,8 @@ ItemsControl::ItemsControl()
 {
     SetClassName(_T(""));
 
-    _container = new ItemContainer(this);
-    _container->ContainerChanged.Add(this, &ItemsControl::OnNotifyContainerChanged);
+    _items = new ItemCollection(this);
+    _items->ContainerChanged.Add(this, &ItemsControl::OnNotifyCollectionChanged);
 
     InitializeScrollView();
 }
@@ -182,10 +182,10 @@ ItemsControl::~ItemsControl()
 
 void ItemsControl::InitializeScrollView()
 {
-    _panel = new VisualizePanel(_container);
-    _scrollView = new ScrollViewer();
+    _itemsHost = new VisualizePanel(_items);
+    _scrollHost = new ScrollViewer();
 
-    _scrollView->SetContent(_panel);
+    _scrollHost->SetContent(_itemsHost);
 }
 
 bool ItemsControl::HasItems() const
@@ -198,9 +198,9 @@ bool ItemsControl::IsGrouping() const
     return false;
 }
 
-ItemContainerPtr ItemsControl::GetItems() const
+ItemCollectionPtr ItemsControl::GetItems() const
 {
-    return _container;
+    return _items;
 }
 
 void ItemsControl::CheckAddingItem(suic::ObjectPtr& itemObj)
@@ -213,14 +213,14 @@ int ItemsControl::GetItemsCount() const
     return GetItems()->GetCount();
 }
 
-int ItemsControl::Add(suic::ObjectPtr value)
+int ItemsControl::AddChild(suic::ObjectPtr value)
 {
     CheckAddingItem(value);
 
     return GetItems()->AddItem(value);
 }
 
-int ItemsControl::Insert(int index, suic::ObjectPtr value)
+int ItemsControl::InsertChild(int index, suic::ObjectPtr value)
 {
     CheckAddingItem(value);
 
@@ -237,17 +237,21 @@ void ItemsControl::RemoveAt(int iIndex)
     if (iIndex < GetItems()->GetCount() && iIndex >= 0)
     {        
         GetItems()->RemoveAt(iIndex);
+        InvalidateArrange();
     }
 }
 
-void ItemsControl::Remove(suic::ObjectPtr ePtr)
+void ItemsControl::RemoveChild(suic::ObjectPtr ePtr)
 {
     GetItems()->Remove(ePtr);
+    InvalidateArrange();
 }
 
-void ItemsControl::RemoveAll()
+void ItemsControl::ClearChildren()
 {
     GetItems()->Clear();
+
+    InvalidateArrange();
 }
 
 suic::ObjectPtr ItemsControl::GetItem(int iIndex) const
@@ -265,9 +269,9 @@ suic::String ItemsControl::GetItemText(int iIndex) const
 //
 suic::Size ItemsControl::MeasureOverride(const suic::Size& availableSize)
 {
-    _scrollView->Measure(availableSize);
+    _scrollHost->Measure(availableSize);
 
-    return _scrollView->GetDesiredSize();
+    return _scrollHost->GetDesiredSize();
 }
 
 suic::Size ItemsControl::ArrangeOverride(const suic::Size& availableSize)
@@ -276,7 +280,7 @@ suic::Size ItemsControl::ArrangeOverride(const suic::Size& availableSize)
 
     finalRect.Deflate(GetBorderThickness());
 
-    _scrollView->Arrange(finalRect);
+    _scrollHost->Arrange(finalRect);
 
     return availableSize;
 }
@@ -292,45 +296,39 @@ void ItemsControl::OnInitialized()
 {
     __super::OnInitialized();
 
-    suic::VisualHelper::SetLogicalParent(this, _scrollView.get());
     // 加入可视树
-    AddVisualChild(_scrollView.get());
+    AddVisualChild(_scrollHost.get());
+    AddLogicalChild(_scrollHost.get());
 
-    _scrollView->BeginInit();
-    _scrollView->EndInit();
+    _itemsHost->WriteFlag(CoreFlags::IsComposition, true);
+    _scrollHost->WriteFlag(CoreFlags::IsComposition, true);
 
-    _scrollView->SetHorizontalAlignment(suic::STRETCH);
-    _scrollView->SetVerticalAlignment(suic::STRETCH);
+    _scrollHost->BeginInit();
+    _scrollHost->EndInit();
 
-    _scrollView->SetMargin(GetMargin());
+    _scrollHost->SetHorizontalAlignment(suic::STRETCH);
+    _scrollHost->SetVerticalAlignment(suic::STRETCH);
+
+    _scrollHost->SetMargin(GetMargin());
+    _scrollHost->SetFocusable(false);
 }
 
-void ItemsControl::AddLogicalChild(suic::Element* child)
-{
-    Add(child);
-}
-
-void ItemsControl::RemoveLogicalChild(suic::Element* child)
-{
-    GetItems()->Remove(child);
-}
-
-suic::Element* ItemsControl::GetLogicalChild(int index)
+suic::Element* ItemsControl::GetChild(int index)
 {
     return dynamic_cast<suic::Element*>(GetItems()->GetItem(index).get());
 }
 
-suic::Int32 ItemsControl::GetLogicalChildrenCount()
+suic::Int32 ItemsControl::GetChildrenCount()
 {
     return GetItems()->GetCount();
 }
 
-void ItemsControl::OnNotifyContainerChanged(suic::ObjectPtr sender, NotifyContainerChangedArg& e)
+void ItemsControl::OnNotifyCollectionChanged(suic::ObjectPtr sender, suic::NotifyCollectionChangedArg& e)
 {
     OnItemsChanged(e);
 }
 
-void ItemsControl::OnItemsChanged(NotifyContainerChangedArg& e)
+void ItemsControl::OnItemsChanged(suic::NotifyCollectionChangedArg& e)
 {
     WriteFlag(CoreFlags::IsMeasureDirty, true);
 
@@ -338,14 +336,14 @@ void ItemsControl::OnItemsChanged(NotifyContainerChangedArg& e)
     {
         suic::Size availableSize;
 
-        if (e.GetAction() == NotifyContainerChangedAction::Add)
+        if (e.GetAction() == suic::NotifyCollectionChangedAction::Add)
         {
         }
     }
 
     if (e.OldItems()->GetCount() > 0)
     {
-        if (e.GetAction() == NotifyContainerChangedAction::Remove)
+        if (e.GetAction() == suic::NotifyCollectionChangedAction::Remove)
         {
         }
     }
@@ -358,12 +356,12 @@ void ItemsControl::OnRender(suic::DrawingContext * drawing)
 
 void ItemsControl::OnTextInput(suic::KeyEventArg& e)
 {
-    _scrollView->OnKeyDown(e);
+    _scrollHost->OnKeyDown(e);
 }
 
 void ItemsControl::OnKeyDown(suic::KeyEventArg& e)
 {
-    _scrollView->OnKeyDown(e);
+    _scrollHost->OnKeyDown(e);
 
     if (!e.Handled())
     {

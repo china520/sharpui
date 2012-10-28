@@ -12,7 +12,7 @@
 # define _UISTRUCTURE_H_
 
 #include <suicore/uiconst.h>
-#include <suicore/uiobject.h>
+#include <suicore/uievent.h>
 #include <util/vector.h>
 
 namespace suic 
@@ -179,6 +179,68 @@ protected:
 };
 
 typedef shared<UDouble> DoublePtr;
+
+class SUICORE_API ItemContentList
+{
+public:
+
+    ItemContentList();
+    virtual ~ItemContentList();
+
+    suic::Int32 GetCount();
+    suic::ObjectPtr GetAt(suic::Int32 index);
+    void Add(suic::ObjectPtr item);
+    bool Remove(suic::ObjectPtr item);
+    suic::ObjectPtr RemoveAt(suic::Int32 index);
+    void Reset();
+
+protected:
+
+    suic::EnumeratorPtr _items;
+};
+
+class SUICORE_API NotifyCollectionChangedAction
+{
+public:
+
+    enum eAction 
+    {
+        Add = 0,
+        Remove = 1,
+        Replace = 2,
+        Move = 3,
+        Reset = 4,
+    };
+};
+
+class SUICORE_API NotifyCollectionChangedArg : public suic::RoutedEventArg
+{
+public:
+
+    NotifyCollectionChangedArg(int ac);
+
+    int GetAction() const;
+
+    void AddNewItem(suic::ObjectPtr item);
+    void AddOldItem(suic::ObjectPtr item);
+
+    ItemContentList* NewItems();
+    ItemContentList* OldItems();
+
+protected:
+
+    int _action;
+    ItemContentList _newItems;
+    ItemContentList _oldItems;
+};
+
+inline int NotifyCollectionChangedArg::GetAction() const
+{
+    return _action;
+}
+
+typedef delegate<void(suic::ObjectPtr, NotifyCollectionChangedArg&)> NotifyCollectionChangedHandler;
+
 
 }
 

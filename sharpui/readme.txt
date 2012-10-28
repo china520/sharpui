@@ -17,3 +17,5 @@
    1. 加入TileBrush和Pen支持绘制。
    2. 修改直线绘制接口，使其支持Pen参数。
    3. 调整ListBox、ComboBox控件逻辑。
+   4. 加入Splitter控件，把RepeatButton改为RepeatedButton。
+   5. 修改Logical child相关访问方法。

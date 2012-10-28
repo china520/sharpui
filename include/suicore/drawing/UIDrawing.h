@@ -65,6 +65,7 @@ public:
     virtual ~DrawingContext() {};
 
     void SetOffset(int x, int y);
+    Point GetOffset() const;
 
     //---------------------------------------------------------------
 
@@ -113,6 +114,11 @@ inline void DrawingContext::SetOffset(int x, int y)
     _offset.y = y;
 }
 
+inline Point DrawingContext::GetOffset() const
+{
+    return _offset;
+}
+
 typedef shared<DrawingContext> DrawingContextPtr;
 
 class Image : public RefObject
@@ -128,7 +134,7 @@ public:
     virtual bool Load(Handle hRes, const String& strName, const String& strType) = 0;
     virtual bool LoadIcon(const Handle icon) = 0;
     virtual bool LoadHandle(const Handle bmp) = 0;
-    virtual bool Load(const Byte* data, Int32 size) = 0;
+    virtual bool Load(const Byte* data, suic::Uint64 size) = 0;
     virtual bool Load(const Byte* data, int w, int h) = 0;
 
     virtual bool Save(const String& filename, int iType) = 0;
@@ -147,4 +153,3 @@ typedef shared<Image> ImagePtr;
 };
 
 # endif
-

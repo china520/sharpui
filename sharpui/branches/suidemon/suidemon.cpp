@@ -61,6 +61,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
     suic::ApplicationPtr pApp = suic::Application::Current();
 
+    pApp->LoadCompleted += OnApplicationLoadCompleted;
+
     if (suic::Application::Current())
     {
         // 执行消息循环

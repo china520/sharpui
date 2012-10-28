@@ -73,7 +73,10 @@ public:
 
 protected:
 
+    // 临时资源读取回调接口
     ElementBuilder _builder;
+    // 临时元素创建监听注册接口
+    Map<suic::String, BuildListener> _builders;
 };
 
 };

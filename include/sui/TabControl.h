@@ -34,22 +34,30 @@ public:
     suic::ObjectPtr SelectedContent() const;
 
 protected:
-    
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
 
-    virtual void OnInitialized();
-    virtual void OnLoaded(suic::LoadedEventArg& e);
+    void ClearChildren();
+    void RemoveChild(suic::ObjectPtr child);
 
-    virtual void OnRender(suic::DrawingContext * drawing);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
-    virtual void OnItemsChanged(NotifyContainerChangedArg& e);    
-    virtual void OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e);
+    void OnInitialized();
+    void OnLoaded(suic::LoadedEventArg& e);
 
-    virtual void OnPreviewMouseLeftButtonDown(suic::MouseEventArg& e);
-    virtual void OnPreviewMouseLeftButtonUp(suic::MouseEventArg& e);
-    virtual void OnMouseEnter(suic::MouseEventArg& e);
-    virtual void OnMouseLeave(suic::MouseEventArg& e);
+    void OnStyleUpdated();
+
+    void OnRender(suic::DrawingContext * drawing);
+
+    void OnNotifyCollectionChanged(suic::ObjectPtr sender, suic::NotifyCollectionChangedArg& e);
+
+    void OnSetterChanged(suic::SetterChangedEventArg& e);
+    void OnItemsChanged(suic::NotifyCollectionChangedArg& e);    
+    void OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e);
+
+    void OnPreviewMouseLeftButtonDown(suic::MouseEventArg& e);
+    void OnPreviewMouseLeftButtonUp(suic::MouseEventArg& e);
+    void OnMouseEnter(suic::MouseEventArg& e);
+    void OnMouseLeave(suic::MouseEventArg& e);
 
 protected:
 

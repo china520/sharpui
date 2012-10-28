@@ -65,11 +65,16 @@ void ListBoxItem::OnRender(suic::DrawingContext * drawing)
         
         if (IsFocused())
         {
-            setter = GetStyle()->GetTrigger(suic::SELECTED);
+            setter = GetStyle()->GetTrigger(suic::FOCUSED);
         }
         else if (IsSelected())
         {
-            setter = GetStyle()->GetTrigger(suic::FOCUSED);
+            setter = GetStyle()->GetTrigger(suic::SELECTED);
+
+            if (!setter)
+            {
+                setter = GetStyle()->GetTrigger(suic::FOCUSED);
+            }
         }
         else if (IsMouseOver())
         {

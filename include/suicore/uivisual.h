@@ -73,6 +73,7 @@ public:
     /// <param name="pChild">资源对象</param>
     /// <returns>可视子索引</returns>
     virtual int GetVisualChildIndex(suic::Visual* pChild);
+    bool HitTestPoint(Point pt) const;
 
     /// <summary>
     ///     取得渲染数据对象。
@@ -89,6 +90,8 @@ public:
     virtual void OnVisualRenderChanged();
 
 protected:
+
+    virtual HitResult HitTestCore(Point pt);
 
     virtual void OnRender(suic::DrawingContext * drawing) = 0;
     virtual void AddVisualChild(suic::Visual* child);
@@ -119,6 +122,9 @@ protected:
 
     // 界面元素的内边距
     Rect _rectPadding;
+
+    // 在父元素中的索引
+    Uint32 _parentIndex;
 
     ObjectPtr _packaged;
     AssignerPtr _assigner;

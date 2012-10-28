@@ -174,6 +174,7 @@ SystemMinButton::SystemMinButton()
 {
     SetClassName(_T("SystemMinButton"));
     SetToolTip(new suic::UString(_T("最小化")));
+    SetFocusable(false);
 }
 
 SystemMinButton::~SystemMinButton()
@@ -190,6 +191,7 @@ void SystemMinButton::OnClick(suic::RoutedEventArg& e)
 SystemMaxButton::SystemMaxButton()
 {
     SetClassName(_T("SystemMaxButton"));
+    SetFocusable(false);
 }
 
 SystemMaxButton::~SystemMaxButton()
@@ -268,6 +270,7 @@ SystemCloseButton::SystemCloseButton()
 {
     SetClassName(_T("SystemCloseButton"));
     SetToolTip(new suic::UString(_T("关闭")));
+    SetFocusable(false);
 }
 
 SystemCloseButton::~SystemCloseButton()

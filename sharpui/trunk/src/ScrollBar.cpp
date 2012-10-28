@@ -12,7 +12,7 @@
 #include "stdafx.h"
 
 #include <sui/scrollbar.h>
-#include <sui/repeatbutton.h>
+#include <sui/repeatedbutton.h>
 #include <sui/stackpanel.h>
 #include <suicore/drawing/uirender.h>
 

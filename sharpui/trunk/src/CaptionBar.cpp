@@ -18,10 +18,9 @@ CaptionBar::CaptionBar()
 {
     SetClassName(_T("CaptionBar"));
 
-    _layout.SetAutoDelete(false);
     _title = TextBlockPtr(new TextBlock());
+    _title->SetFocusable(false);
 
-    suic::Panel::AddLogicalChild(&_layout);
 }
 
 CaptionBar::~CaptionBar()
@@ -30,7 +29,7 @@ CaptionBar::~CaptionBar()
 
 void CaptionBar::HideMinBox(bool value)
 {
-    suic::ElementPtr element = _layout.FindName(_T("MinBox"));
+    suic::ElementPtr element = FindName(_T("MinBox"));
 
     if (element)
     {
@@ -40,14 +39,14 @@ void CaptionBar::HideMinBox(bool value)
 
 void CaptionBar::HideMaxBox(bool value)
 {
-    suic::ElementPtr element = _layout.FindName(_T("MaxBox"));
+    suic::ElementPtr element = FindName(_T("MaxBox"));
 
     if (element)
     {
         element->SetVisible(value);
     }
 
-    element = _layout.FindName(_T("RestoreBox"));
+    element = FindName(_T("RestoreBox"));
 
     if (element)
     {
@@ -57,7 +56,7 @@ void CaptionBar::HideMaxBox(bool value)
 
 void CaptionBar::HideCloseBox(bool value)
 {
-    suic::ElementPtr element = _layout.FindName(_T("CloseBox"));
+    suic::ElementPtr element = FindName(_T("CloseBox"));
 
     if (element)
     {
@@ -70,37 +69,6 @@ static void OnHitTestResult(suic::Element* pSender, suic::HitResultEventArg& e)
     e.GetHitResult()->HitTestCode(HTCAPTION);
 }
 
-suic::PanelPtr CaptionBar::GetLayout()
-{
-    return (&_layout);
-}
-
-suic::Size CaptionBar::MeasureOverride(const suic::Size& size)
-{
-    _layout.WriteFlag(CoreFlags::IsMeasureDirty, true);
-    _layout.Measure(size);
-
-    return suic::Size(size.cx, _layout.GetDesiredSize().cy);
-}
-
-suic::Size CaptionBar::ArrangeOverride(const suic::Size& size)
-{
-    ClearVisualChildren();
-
-    suic::Rect finalRect(0, 0, size.cx, size.cy);
-
-    AddVisualChild(&_layout);
-
-    _layout.Arrange(finalRect);
-
-    return size;
-}
-
-void CaptionBar::AddLogicalChild(suic::Element* child)
-{
-    _layout.AddLogicalChild(child);
-}
-
 void CaptionBar::OnInitialized()
 {
     // 
@@ -108,17 +76,14 @@ void CaptionBar::OnInitialized()
     //
     __super::OnInitialized();
 
-    _layout.BeginInit();
-    _layout.EndInit();
-
     SystemCloseButton* closePtr(new SystemCloseButton());
     SystemMinButton* minPtr(new SystemMinButton());
     SystemMaxButton* maxPtr(new SystemMaxButton());
 
-    _layout.InsertLogicalChild(0, _title.get());
-    _layout.AddLogicalChild(minPtr);
-    _layout.AddLogicalChild(maxPtr);
-    _layout.AddLogicalChild(closePtr);
+    InsertChild(0, _title.get());
+    AddChild(minPtr);
+    AddChild(maxPtr);
+    AddChild(closePtr);
 
     _title->SetStyle(FindResource(_T("TextBlock")));
 
@@ -167,11 +132,6 @@ void CaptionBar::OnInitialized()
     _maxBtn = maxPtr;
 }
 
-void CaptionBar::OnStyleUpdated()
-{
-    _layout.UpdateStyle();
-}
-
 void CaptionBar::OnRender(suic::DrawingContext * drawing)
 {
     // 
@@ -179,7 +139,12 @@ void CaptionBar::OnRender(suic::DrawingContext * drawing)
     //
     FrameworkElement::OnRender(drawing);
 
-    suic::String strTitle = suic::VisualHelper::GetRootElement(this)->GetText();
+    suic::String strTitle = GetText();
+
+    if (suic::VisualHelper::GetRootElement(this) && strTitle.Empty())
+    {
+        strTitle = suic::VisualHelper::GetRootElement(this)->GetText();
+    }
 
     _title->SetText(strTitle);
 }

@@ -37,7 +37,7 @@ public:
     void OnHeaderChanged(suic::Element* oldHeader, suic::Element* newHeader);
     void OnHeaderClicked(suic::Element* header);
 
-    void AddLogicalChild(suic::Element* child);
+    int AddChild(suic::ObjectPtr child);
 
     suic::Size MeasureOverride(const suic::Size& size);
     suic::Size ArrangeOverride(const suic::Size& size);

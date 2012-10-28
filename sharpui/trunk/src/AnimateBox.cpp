@@ -26,7 +26,7 @@ void AnimateBox::Start()
 {
     if (FrameCount() > 0)
     {
-        suic::SystemHelper::SetTimer(_timerid, this, 10);
+        suic::SystemHelper::suiSetTimer(_timerid, this, 10);
     }
 }
 
@@ -34,7 +34,7 @@ void AnimateBox::Stop()
 {
     if (_timerid)
     {
-        suic::SystemHelper::KillTimer(_timerid);
+        suic::SystemHelper::suiKillTimer(_timerid);
     }
 }
 
@@ -243,7 +243,7 @@ void AnimateBox::OnTimer(int id)
     if (_timerid->elapse != CurrentElapse())
     {
         _timerid->elapse = CurrentElapse();
-        suic::SystemHelper::RestartTimer(_timerid);
+        suic::SystemHelper::suiRestartTimer(_timerid);
     }
 
     InvalidateVisual();

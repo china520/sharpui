@@ -21,6 +21,8 @@ ScrollViewer::ScrollViewer()
     : _iBegin(0)
     , _iCurPos(0)
     , _barVisible(Auto)
+    , _scrollLineDelta(16.0)
+    , _mouseWheelDelta(48.0)
 {
     SetClassName(_T("ScrollView"));
 
@@ -39,7 +41,7 @@ ScrollViewer::ScrollViewer()
     _vScroll->SetVisible(false);
     _hScroll->SetVisible(false);
 
-    SetFocusable(false);
+    SetFocusable(true);
 }
 
 ScrollViewer::~ScrollViewer()
@@ -136,14 +138,44 @@ void ScrollViewer::ScrollToBottom()
     _vScroll->ScrollToEnd();
 }
 
-void ScrollViewer::ScrollToHorizontalPos(double offset)
+void ScrollViewer::ScrollToHorizontalPos(double Pos, bool bRepaint)
 {
-    _hScroll->ScrollTo(offset);
+    _hScroll->ScrollTo(Pos, false);
+
+    if (bRepaint)
+    {
+        UpdateLayout();
+    }
 }
 
-void ScrollViewer::ScrollToVerticalPos(double offset)
+void ScrollViewer::ScrollToVerticalPos(double Pos, bool bRepaint)
 {
-    _vScroll->ScrollTo(offset);
+    _vScroll->ScrollTo(Pos, false);
+
+    if (bRepaint)
+    {
+        UpdateLayout();
+    }
+}
+
+void ScrollViewer::ScrollToHorizontalOffset(double offset, bool bRepaint)
+{
+    _hScroll->ScrollTo((int)((double)offset / (double)_hScroll->GetScrollStep()), false);
+
+    if (bRepaint)
+    {
+        UpdateLayout();
+    }
+}
+
+void ScrollViewer::ScrollToVerticalOffset(double offset, bool bRepaint)
+{
+    _vScroll->ScrollTo((int)((double)offset / (double)_vScroll->GetScrollStep()), false);
+
+    if (bRepaint)
+    {
+        UpdateLayout();
+    }
 }
 
 void ScrollViewer::OnHorizontalScroll(suic::ElementPtr eScroll, ScrollEventArg& scroll)
@@ -280,10 +312,12 @@ suic::Size ScrollViewer::ArrangeOverride(const suic::Size& availableSize)
 {
     ClearVisualChildren();
 
-    suic::ElementPtr cont(GetContent());
+    suic::FrameworkElementPtr cont(GetContent());
 
     if (cont)
     {
+        cont->MeasureInArranging(availableSize);
+
         suic::Rect rect;
 
         rect.right = availableSize.cx;
@@ -302,19 +336,16 @@ suic::Size ScrollViewer::ArrangeOverride(const suic::Size& availableSize)
 
         ComputeScrollBar(rect.right, rect.bottom, desiredSize.cx, desiredSize.cy);
 
-        suic::PanelPtr lay(cont);
+        suic::ScrollChangedEventArg sce(_hScroll->GetScrollSize(), _vScroll->GetScrollSize());
 
-        if (lay)
-        {
-            lay->SetHorizontalOffset(_hScroll->GetScrollSize());
-            lay->SetVerticalOffset(_vScroll->GetScrollSize());
-        }
+        cont->OnScrollChanged(sce);
 
         rect.left += _contentOffset.x;
         rect.top += _contentOffset.y;
 
         if (rect.bottom > rect.top)
         {
+            rect.Deflate(GetPadding());
             AddVisualChild(cont.get());
             cont->Arrange(rect);
         }
@@ -343,10 +374,6 @@ void ScrollViewer::OnInitialized()
     _vScroll->Scroll.Add(this, &ScrollViewer::OnVerticalScroll);
 
     _iCurPos = GetBorderThickness().top;
-}
-
-void ScrollViewer::AddLogicalChild(suic::Element* child)
-{
 }
 
 void ScrollViewer::OnRender(suic::DrawingContext * drawing)

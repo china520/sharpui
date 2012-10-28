@@ -37,17 +37,18 @@ public:
 
 public:
 
-    virtual void OnHeaderChanged(suic::Element* oldHeader, suic::Element* newHeader);
+    int AddChild(suic::ObjectPtr child);
 
-    virtual void AddLogicalChild(suic::Element* child);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    void OnInitialized();
+    void OnRender(suic::DrawingContext * drawing);
 
-    virtual void OnInitialized();
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnSetterChanged(suic::SetterChangedEventArg& e);
+    void OnHeaderChanged(suic::Element* oldHeader, suic::Element* newHeader);
 
-    virtual void OnPreviewMouseLeftButtonDown(suic::MouseEventArg& e);
+    void OnPreviewMouseLeftButtonDown(suic::MouseEventArg& e);
 
 protected:
 

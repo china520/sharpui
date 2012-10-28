@@ -14,6 +14,7 @@
 #include <sui/sharpuiconfig.h>
 #include <sui/selector.h>
 #include <sui/checkbutton.h>
+#include <sui/imagebox.h>
 #include <sui/headeritemscontrol.h>
 
 namespace ui
@@ -67,7 +68,7 @@ public:
 
     void ExpandSubtree();
 
-    suic::ImageBrush* GetIcon();
+    ImageBox* GetIcon();
 
     void ShowDotLine(bool show);
     void ShowExpandedButton(bool show);
@@ -80,7 +81,7 @@ protected:
 
     bool CanExpand() const;
 
-    void OnItemsChanged(NotifyContainerChangedArg& e);
+    void OnItemsChanged(suic::NotifyCollectionChangedArg& e);
     void OnInitialized();
     void OnStyleUpdated();
 
@@ -110,7 +111,7 @@ protected:
     // Ñ¡Ôñ°´Å¥
     ui::CheckButton _check;
     // Í¼±ê
-    suic::ImageBrushPtr _icon;
+    ui::ImageBox _icon;
 
     bool _showDotLine;
 };

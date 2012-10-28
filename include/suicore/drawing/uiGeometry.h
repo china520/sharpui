@@ -20,7 +20,8 @@ class SUICORE_API Geometry : public Object
 {
 public:
 
-    virtual ~Geometry() {}
+    Geometry();
+    virtual ~Geometry();
 
     Rect GetBounds() const;
     bool PointIn(Point pt) const;

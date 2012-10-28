@@ -37,17 +37,17 @@ public:
 
 public:
 
-    virtual void AddLogicalChild(suic::Element* child);
+    int AddChild(suic::ObjectPtr child);
    
-    virtual void OnInitialized();
-    virtual void OnLoaded(suic::LoadedEventArg& e);
+    void OnInitialized();
+    void OnLoaded(suic::LoadedEventArg& e);
 
-    virtual void OnStyleUpdated();
+    void OnStyleUpdated();
 
-    virtual void OnSetterChanged(suic::SetterChangedEventArg& e);
-    virtual void OnTabContentChanged(suic::Element* oldVal, suic::Element* newVal);
+    void OnSetterChanged(suic::SetterChangedEventArg& e);
+    void OnTabContentChanged(suic::Element* oldVal, suic::Element* newVal);
 
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnRender(suic::DrawingContext * drawing);
 
     void OnMouseEnter(suic::MouseEventArg& e);
     void OnMouseMove(suic::MouseEventArg& e);

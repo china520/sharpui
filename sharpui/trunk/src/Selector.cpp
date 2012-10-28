@@ -31,12 +31,12 @@ void SelectionChangedEventArg::AddItem(suic::ObjectPtr item, bool bAdd)
     }
 }
 
-ItemContentList* SelectionChangedEventArg::AddedItems()
+suic::ItemContentList* SelectionChangedEventArg::AddedItems()
 {
     return &_addItems;
 }
 
-ItemContentList* SelectionChangedEventArg::RemovedItems()
+suic::ItemContentList* SelectionChangedEventArg::RemovedItems()
 {
     return &_removeItems;
 }
@@ -46,7 +46,6 @@ ItemContentList* SelectionChangedEventArg::RemovedItems()
 
 Selector::Selector()
     : _selectMode(SelectionMode::Single)
-    , _focusItem(NULL)
 {
 }
 
@@ -97,13 +96,20 @@ void Selector::SetItemFocus(suic::ElementPtr focusItem)
 
     if (focusItem && pSelector)
     {
-        suic::Element* oldFocus = pSelector->_focusItem;
+        suic::ElementPtr oldFocus(pSelector->_focusedItem);
 
-        pSelector->_focusItem = focusItem.get();
-        pSelector->_focusItem->Focus();
+        pSelector->_focusedItem = focusItem.get();
+        focusItem->Focus();
 
-        pSelector->OnItemFocusChanged(focusItem.get(), oldFocus);
+        pSelector->OnItemFocusChanged(focusItem.get(), oldFocus.get());
     }
+}
+
+void Selector::SetItemFocus(int index)
+{
+    suic::ElementPtr viewPtr(GetItems()->GetItem(index));
+
+    SetItemFocus(viewPtr);
 }
 
 int Selector::SelectedIndex()
@@ -151,9 +157,11 @@ void Selector::UnselectAllItems()
 
     _selectedItems.Reset();
 
-    if (_focusItem)
+    suic::FrameworkElementPtr frame(_focusedItem);
+
+    if (frame)
     {
-        _focusItem->WriteFlag(CoreFlags::IsSelected, false);
+        frame->WriteFlag(CoreFlags::IsSelected, false);
     }
 }
 
@@ -161,15 +169,15 @@ void Selector::UnselectAllItems()
 //
 void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
 {
-    suic::Element* oldFocus = _focusItem;
+    suic::ElementPtr oldFocus(_focusedItem);
     SelectionChangedEventArg ec;
     suic::Element* pItem = dynamic_cast<suic::Element*>(item.get());
 
     if (e.IsSelected())
     {
-        if (_focusItem != pItem)
+        if (_focusedItem != pItem)
         {
-            _focusItem = pItem;
+            _focusedItem = pItem;
         }
 
         if (ItemSelected)
@@ -179,9 +187,9 @@ void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
     }
     else
     {
-        if (_focusItem == pItem)
+        if (_focusedItem == pItem)
         {
-            _focusItem = NULL;
+            _focusedItem = NULL;
         }
 
         if (ItemUnselected)
@@ -193,9 +201,11 @@ void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
     ec.AddItem(item, e.IsSelected());
     OnSelectionChanged(ec);
 
-    if (_focusItem && _focusItem != oldFocus)
+    suic::FrameworkElementPtr frame(_focusedItem);
+
+    if (frame && _focusedItem != oldFocus)
     {
-        _focusItem->Focus();
+        frame->Focus();
     }
 }
 
@@ -247,8 +257,8 @@ void Selector::OnItemFocusChanged(suic::Element* newFocus, suic::Element* oldFoc
 
 void Selector::ScrollByUpDown(suic::Element* pElem, bool bUp)
 {
-    double val = _scrollView->VerticalScrollBar()->GetScrollPos();
-    double step = _scrollView->VerticalScrollBar()->GetScrollStep();
+    double val = _scrollHost->VerticalScrollBar()->GetScrollPos();
+    double step = _scrollHost->VerticalScrollBar()->GetScrollStep();
     double pos = (double)pElem->GetDesiredSize().cy / step + 0.5;
 
     if (bUp)
@@ -258,8 +268,8 @@ void Selector::ScrollByUpDown(suic::Element* pElem, bool bUp)
 
     SetItemFocus(pElem);
 
-    _scrollView->ScrollToVerticalPos(val + pos);
-    _scrollView->InvalidateArrange();
+    _scrollHost->ScrollToVerticalPos(val + pos);
+    _scrollHost->InvalidateArrange();
 }
 
 void Selector::OnInitialized()
@@ -281,45 +291,42 @@ void Selector::OnInitialized()
 void Selector::OnTextInput(suic::KeyEventArg& e)
 {
     __super::OnTextInput(e);
-
-    double val = _scrollView->HorizontalScrollBar()->GetScrollSize();
-    double step = _scrollView->HorizontalScrollBar()->GetScrollStep();
-
-    if (e.IsLeftArrow())
-    {
-        _scrollView->ScrollToHorizontalPos(val - 1);
-    }
-    else if (e.IsRightArrow())
-    {
-        _scrollView->ScrollToHorizontalPos(val + 1);
-    }
-
-    e.Handled(true);
 }
 
 void Selector::OnKeyDown(suic::KeyEventArg& e)
 {
     if (e.IsLeftArrow() || e.IsRightArrow())
     {
-        OnTextInput(e);
-        _scrollView->LineLeft();
+        double val = _scrollHost->HorizontalScrollBar()->GetScrollSize();
+        double step = _scrollHost->HorizontalScrollBar()->GetScrollStep();
+
+        if (e.IsLeftArrow())
+        {
+            _scrollHost->ScrollToHorizontalPos(val - 1);
+        }
+        else if (e.IsRightArrow())
+        {
+            _scrollHost->ScrollToHorizontalPos(val + 1);
+        }
     }
     else if (e.IsUpArrow())
     {
-        if (!_focusItem)
+        if (!_focusedItem)
         {
             if (GetVisualEndIndex() > 0)
             {
-                SetItemFocus(_panel->GetVisualChild(GetVisualEndIndex() - 1));
+                SetItemFocus(_itemsHost->GetVisualChild(GetVisualEndIndex() - 1));
             }
         }
         else
         {
-            int index = _panel->GetVisualChildIndex(_focusItem);
+            suic::ElementPtr frame(_focusedItem);
+            //BringIntoView
+            int index = _itemsHost->GetVisualChildIndex(frame.get());
 
             if (index > GetVisualStartIndex())
             {
-                suic::ElementPtr pElem(_panel->GetVisualChild(index - 1));
+                suic::ElementPtr pElem(_itemsHost->GetVisualChild(index - 1));
 
                 if (index == GetVisualStartIndex() + 1)
                 {
@@ -332,37 +339,38 @@ void Selector::OnKeyDown(suic::KeyEventArg& e)
             }
             else
             {
-                index = _panel->GetStartLogicalIndex();
+                index = _itemsHost->GetVisibleStart();
 
                 if (index > 0)
                 {
-                    ScrollByUpDown(GetLogicalChild(index - 1), true);
+                    ScrollByUpDown(GetChild(index - 1), true);
                 }
                 else
                 {
-                    ScrollByUpDown(GetLogicalChild(0), true);
+                    ScrollByUpDown(GetChild(0), true);
                 }
             }
         }
 
-        _scrollView->InvalidateVisual();
+        _scrollHost->InvalidateVisual();
     }
     else if (e.IsDownArrow())
     {
-        if (!_focusItem)
+        if (!_focusedItem)
         {
-            if (_panel->GetVisualChildrenCount() > 0)
+            if (_itemsHost->GetVisualChildrenCount() > 0)
             {
                 SetItemFocus(GetVisualChild(0));
             }
         }
         else
         {
-            int index = _panel->GetVisualChildIndex(_focusItem);
+            suic::ElementPtr frame(_focusedItem);
+            int index = _itemsHost->GetVisualChildIndex(frame.get());
 
             if (index < GetVisualEndIndex() - 1)
             {
-                suic::ElementPtr pElem(_panel->GetVisualChild(index + 1));
+                suic::ElementPtr pElem(_itemsHost->GetVisualChild(index + 1));
 
                 if (index == GetVisualEndIndex() - 2)
                 {
@@ -375,19 +383,19 @@ void Selector::OnKeyDown(suic::KeyEventArg& e)
             }
             else
             {
-                index = _panel->GetEndLogicalIndex();
+                index = _itemsHost->GetVisibleStart() + _itemsHost->GetVisibleCount();
 
                 if (index < GetItemsCount() - 1)
                 {
-                    ScrollByUpDown(GetLogicalChild(index + 1), false);
+                    ScrollByUpDown(GetChild(index + 1), false);
                 }
                 else
                 {
-                    ScrollByUpDown(GetLogicalChild(GetItemsCount() - 1), false);
+                    ScrollByUpDown(GetChild(GetItemsCount() - 1), false);
                 }
             }
 
-            _scrollView->InvalidateVisual();
+            _scrollHost->InvalidateVisual();
         }
     }
     else if (e.IsPageup())

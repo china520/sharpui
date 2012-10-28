@@ -23,11 +23,11 @@ namespace ui
 suic::StringMapPtr GlyphFactory::_glyphs;
 static HFONT DefFont = (HFONT)::GetStockObject(DEFAULT_GUI_FONT);
 
-static suic::Int32 DefTextColor = ARGB(255,0, 0, 0);
+static suic::Int32 DefTextColor = ARGB(255,0,0,0);
 static suic::Int32 DefInactivateSelTextBkColor = ARGB(255,191,205,219);
-static suic::Int32 DefSelTextBkColor = ARGB(255,51, 153, 255);
-static suic::Int32 DefSelTextColor = ARGB(255,255, 255, 255);
-static suic::Int32 DefInactivateSelTextColor = ARGB(255,67, 78, 84);
+static suic::Int32 DefSelTextBkColor = ARGB(255,51,153,255);
+static suic::Int32 DefSelTextColor = ARGB(255,20,20,255);
+static suic::Int32 DefInactivateSelTextColor = ARGB(255,67,78,84);
 
 void GlyphFactory::Initialize()
 {

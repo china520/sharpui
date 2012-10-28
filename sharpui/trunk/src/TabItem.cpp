@@ -49,15 +49,19 @@ suic::ElementPtr TabItem::FindName(const suic::String& strName)
     }
 }
 
-void TabItem::AddLogicalChild(suic::Element* child)
+int TabItem::AddChild(suic::ObjectPtr child)
 {
-    if (child->GetWrapper().Equals(_T("TabContent")))
+    suic::ElementPtr pElem(child);
+
+    if (pElem->GetWrapper().Equals(_T("TabContent")))
     {
         SetTabContent(child);
+
+        return 0;
     }
     else
     {
-        __super::AddLogicalChild(child);
+        return __super::AddChild(child);
     }
 }
 

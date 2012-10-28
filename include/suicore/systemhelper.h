@@ -23,12 +23,16 @@ class SUICORE_API SystemHelper : public Object
 {
 public:
 
-    static void* Malloc(int);
-    static void Free(void*);
+    static void* suiMalloc(int);
+    static void suiFree(void*);
 
-    static void Trace(suic::Char * format, ...);
+    static void suiTrace(suic::Char * format, ...);
 
-    static String CalculatePath(const String& path);
+    static String suiCalculatePath(const String& path);
+
+    static void suiInitialize();
+    static void suiClear();
+
     static bool ReadResource(const String& path);
 
     static ObjectPtr GetRefObj(Element*, const String&);
@@ -41,37 +45,16 @@ public:
 
     static DrawingContextPtr GetRenderContext(Element* pElem);
 
-    static void SetTimer(TimerIdentityPtr&, suic::Element*, suic::Uint32, int iPriority=-10);
-    static void RestartTimer(TimerIdentityPtr& tip);
-    static void KillTimer(TimerIdentityPtr& tip);
+    static void suiSetTimer(TimerIdentityPtr&, suic::Element*, suic::Uint32, int iPriority=-10);
+    static void suiRestartTimer(TimerIdentityPtr& tip);
+    static void suiKillTimer(TimerIdentityPtr& tip);
 
     static suic::ImagePtr GetImage();
     static void LoadGif(const suic::String& path, GifDescriptor& gd, suic::Vector<AnimateItem>& anis);
 
-    /// <summary>
-    ///     解析样式描述文件并返回根元素
-    /// </summary>
-    /// <remarks>
-    ///     此函数解析资源文件生成界面元素，外部可以传入
-    ///     根元素的实现类，系统将使用此类关联根元素，也可
-    ///     以传入一个公共的资源对象，这样，系统将使用传入的
-    ///     资源对象初始化元素样式，否则使用系统默认（建议传入）
-    /// </remarks>
-    /// <param name="resid">
-    ///     资源对象标识
-    /// </param>
-    /// <param name="main">
-    ///     根元素实现类
-    /// </param>
-    /// <param name="xml">
-    ///     资源描述文件
-    /// </param>
-    /// <returns>根元素对象，如果main不为空，则为main</returns>
-
     static suic::ImagePtr RenderToImage(suic::FrameworkElementPtr root);
 
     static void RegisterInitializeHook(suic::InitializeHookPtr);
-
     static void RegisterHwndMessageSystemHook(suic::HwndAdapterHookPtr hook);
     static void RemoveHwndMessageSystemHook(suic::HwndAdapterHookPtr hook);
     static void RegisterHwndMessageHook(suic::ElementPtr, suic::HwndAdapterHookPtr);

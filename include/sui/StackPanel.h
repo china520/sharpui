@@ -32,15 +32,13 @@ protected:
 
     void OnRender(suic::DrawingContext * drawing);
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
 protected:
 
-    void CalcHorzElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay
-        , suic::Rect& rc, suic::Rect& rcClip);
-    void CalcVertElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay
-        , suic::Rect& rc, suic::Rect& rcClip);
+    void CalcHorzElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay, suic::Rect& rc);
+    void CalcVertElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay, suic::Rect& rc);
 
 private:
 

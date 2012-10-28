@@ -33,6 +33,8 @@ public:
     virtual Point ToPoint();
     virtual Color ToColor();
 
+    String& operator*() { return _value; }
+
 protected:
 
     String _value;

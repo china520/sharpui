@@ -11,11 +11,25 @@
 # ifndef _SHARPUIINC_H_
 # define _SHARPUIINC_H_
 
+#include <suicore/suicoreinc.h>
+
+#ifndef SHARPUI_LIB
+
 #ifdef SHARPUI_EXPORTS
 #define SHARPUI_API __declspec(dllexport)
 #else
 #define SHARPUI_API __declspec(dllimport)
 #endif
+
+#else
+
+#define SHARPUI_API
+
+#endif
+
+//---------------------------------------------------
+
+#ifndef SHARPUI_LIB
 
 #ifdef _DEBUG
 #pragma comment(lib, "sharpuiud.lib")
@@ -23,7 +37,17 @@
 #pragma comment(lib, "sharpuiu.lib")
 #endif
 
-#include <suicore/suicoreinc.h>
+#else
+
+#ifdef _DEBUG
+#pragma comment(lib, "sharpui_80sud.lib")
+#else
+#pragma comment(lib, "sharpui_80su.lib")
+#endif
+
+#endif
+
+//---------------------------------------------------
 
 #include <sui/animatebox.h>
 #include <sui/button.h>

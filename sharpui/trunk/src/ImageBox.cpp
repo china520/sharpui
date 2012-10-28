@@ -38,11 +38,22 @@ ImageBox::~ImageBox()
 
 bool ImageBox::SetSource(suic::String source)
 {
-    if ( _source->Load(source))
+    if (_source->Load(source))
     {
-        SetWidth(_source->Width());
-        SetHeight(_source->Height());
+        InvalidateMeasure();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
+bool ImageBox::SetSourceFromMemory(const suic::Byte* pData, suic::Uint64 len)
+{
+    if (_source->Load(pData, len))
+    {
+        InvalidateMeasure();
         return true;
     }
     else
@@ -56,9 +67,21 @@ suic::ImagePtr ImageBox::GetSource() const
     return _source;
 }
 
+bool ImageBox::IsValid() const
+{
+    return (_source->Width() > 0 && _source->Height() > 0);
+}
+
 suic::Size ImageBox::MeasureOverride(const suic::Size& availableSize)
 {
-    return suic::Size(GetWidth(), GetHeight());
+    if (_source)
+    {
+        return suic::Size(_source->Width(), _source->Height());
+    }
+    else
+    {
+        return suic::Size(GetWidth(), GetHeight());
+    }
 }
 
 void ImageBox::OnInitialized()
@@ -72,8 +95,6 @@ void ImageBox::OnInitialized()
 
         if (img)
         {
-            SetWidth(_source->Width());
-            SetHeight(_source->Height());
         }
         else if (obj)
         {
@@ -89,16 +110,18 @@ void ImageBox::OnLoaded(suic::LoadedEventArg& e)
 
 void ImageBox::OnRender(suic::DrawingContext * drawing)
 {
-    suic::Rect elemrect(0, 0, RenderSize().cx, RenderSize().cy);
-
     if (_source)
     {
+        int iWid = _source->Width();
+        int iHei = _source->Height();
+
+        suic::Rect elemrect;
         suic::Rect rcImg(0, 0, _source->Width(), _source->Height());
 
-        elemrect.left = (elemrect.Width() - _source->Width()) / 2;
-        elemrect.top = (elemrect.Height() - _source->Height()) / 2;
-        elemrect.right = elemrect.left + _source->Width();
-        elemrect.bottom = elemrect.top + _source->Height();
+        elemrect.left = (RenderSize().cx - _source->Width()) / 2;
+        elemrect.top = (RenderSize().cy - _source->Height()) / 2;
+        elemrect.right = elemrect.left + RenderSize().cx;
+        elemrect.bottom = elemrect.top + RenderSize().cy;
 
         drawing->DrawImage(_source, &elemrect, &rcImg, GetOpacity() * 255);
     }

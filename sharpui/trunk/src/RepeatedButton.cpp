@@ -7,14 +7,14 @@
 // ======================================================================
 
 //////////////////////////////////////////////////////////////////////////////
-// RepeatButton.cpp
+// RepeatedButton.cpp
 
-#include <sui/RepeatButton.h>
+#include <sui/RepeatedButton.h>
 
 namespace ui
 {
 
-RepeatButton::RepeatButton()
+RepeatedButton::RepeatedButton()
 {
     int iTime = (int)::GetDoubleClickTime();
 
@@ -22,11 +22,11 @@ RepeatButton::RepeatButton()
     _iInterval = iTime / 6;
 }
 
-RepeatButton::~RepeatButton()
+RepeatedButton::~RepeatedButton()
 {
 }
 
-void RepeatButton::OnInitialized()
+void RepeatedButton::OnInitialized()
 {
     // 
     // 调用基类进行事件分发处理
@@ -34,15 +34,15 @@ void RepeatButton::OnInitialized()
     Element::OnInitialized();
 }
 
-void RepeatButton::OnUnloaded(suic::LoadedEventArg& e)
+void RepeatedButton::OnUnloaded(suic::LoadedEventArg& e)
 {
     __super::OnUnloaded(e);
 
-    suic::SystemHelper::KillTimer(_iTimer300);
-    suic::SystemHelper::KillTimer(_iTimer301);
+    suic::SystemHelper::suiKillTimer(_iTimer300);
+    suic::SystemHelper::suiKillTimer(_iTimer301);
 }
 
-void RepeatButton::OnRender(suic::DrawingContext * drawing)
+void RepeatedButton::OnRender(suic::DrawingContext * drawing)
 {
     // 
     // 直接调用基类进行绘制
@@ -50,40 +50,40 @@ void RepeatButton::OnRender(suic::DrawingContext * drawing)
     Button::OnRender(drawing);
 }
 
-void RepeatButton::OnMouseLeftButtonDown(suic::MouseEventArg& e)
+void RepeatedButton::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 {
-    suic::SystemHelper::KillTimer(_iTimer301);
-    suic::SystemHelper::SetTimer(_iTimer300, this, _iDelay);
+    suic::SystemHelper::suiKillTimer(_iTimer301);
+    suic::SystemHelper::suiSetTimer(_iTimer300, this, _iDelay);
 
     __super::OnMouseLeftButtonDown(e);
 }
 
-void RepeatButton::OnMouseLeftButtonUp(suic::MouseEventArg& e)
+void RepeatedButton::OnMouseLeftButtonUp(suic::MouseEventArg& e)
 {
-    suic::SystemHelper::KillTimer(_iTimer301);
+    suic::SystemHelper::suiKillTimer(_iTimer301);
 
     __super::OnMouseLeftButtonUp(e);
 }
 
-void RepeatButton::OnMouseEnter(suic::MouseEventArg& e)
+void RepeatedButton::OnMouseEnter(suic::MouseEventArg& e)
 {
     if (IsMouseDown())
     {
-        suic::SystemHelper::KillTimer(_iTimer301);
-        suic::SystemHelper::SetTimer(_iTimer301, this, _iInterval);
+        suic::SystemHelper::suiKillTimer(_iTimer301);
+        suic::SystemHelper::suiSetTimer(_iTimer301, this, _iInterval);
     }
 
     __super::OnMouseEnter(e);
 }
 
-void RepeatButton::OnMouseLeave(suic::MouseEventArg& e)
+void RepeatedButton::OnMouseLeave(suic::MouseEventArg& e)
 {
-    suic::SystemHelper::KillTimer(_iTimer301);
+    suic::SystemHelper::suiKillTimer(_iTimer301);
 
     __super::OnMouseLeave(e);
 }
 
-void RepeatButton::OnClick(suic::RoutedEventArg& e)
+void RepeatedButton::OnClick(suic::RoutedEventArg& e)
 {
     // 
     // 启动定时器，激发OnClick事件
@@ -91,15 +91,15 @@ void RepeatButton::OnClick(suic::RoutedEventArg& e)
     __super::OnClick(e);
 }
 
-void RepeatButton::OnTimer(int id)
+void RepeatedButton::OnTimer(int id)
 {
     if (_iTimer300 && id == _iTimer300->id)
     {
-        suic::SystemHelper::KillTimer(_iTimer300);
+        suic::SystemHelper::suiKillTimer(_iTimer300);
 
         if (IsMouseDown())
         {
-            suic::SystemHelper::SetTimer(_iTimer301, this, _iInterval);
+            suic::SystemHelper::suiSetTimer(_iTimer301, this, _iInterval);
         }
     }
 
@@ -113,7 +113,7 @@ void RepeatButton::OnTimer(int id)
     }
 }
 
-void RepeatButton::OnRepeated(bool bMouseIn)
+void RepeatedButton::OnRepeated(bool bMouseIn)
 {
     if (bMouseIn && MouseLButtonDown)
     {
@@ -127,12 +127,12 @@ void RepeatButton::OnRepeated(bool bMouseIn)
 //////////////////////////////////////////////////////////////////////////////////////////////
 //
 
-void RepeatButton::SetDelay(int iDelay)
+void RepeatedButton::SetDelay(int iDelay)
 {
     _iDelay = iDelay;
 }
 
-void RepeatButton::SetInterval(int iInterval)
+void RepeatedButton::SetInterval(int iInterval)
 {
     _iInterval = iInterval;
 }

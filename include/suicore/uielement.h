@@ -100,8 +100,15 @@ public:
     KeyEventHandler PreKeyUp;
 
     // 拖动事件
-    DragEventHandler Drag;
-    DragEventHandler PreDrag;
+    DragEventHandler Drop;
+    DragEventHandler DragEnter;
+    DragEventHandler DragLeave;
+    DragEventHandler DragOver;
+
+    DragEventHandler PreDrop;
+    DragEventHandler PreDragEnter;
+    DragEventHandler PreDragLeave;
+    DragEventHandler PreDragOver;
 
     // 初始化事件，界面元素完成内部初始化后第一次调用
     // 此事件仅仅触发一次
@@ -167,7 +174,6 @@ public:
     /// <param name="finalRect">父界面元素给出的最终位置大小</param>
     /// <returns>无</returns> 
     virtual void Arrange(const Rect & finalRect);
-    virtual void ArrangeVisual();
 
     /// <summary>
     ///     设置是否裁剪子界面元素到本界面元素的区域
@@ -233,6 +239,8 @@ public:
     /// <param name="val">可见标志</param>
     /// <returns>返回上次界面元素可见状态</returns> 
     virtual bool SetVisible(bool val);
+
+    bool IsLogicalElement() const;
 
     /// <summary>
     ///     触发元素事件
@@ -510,6 +518,13 @@ public:
     virtual void OnDragOver(DragEventArg& e);
     virtual void OnDrop(DragEventArg& e);
 
+    // 拖动预览事件定义
+    virtual void OnPreviewDragEnter(DragEventArg& e);
+    virtual void OnPreviewDragLeave(DragEventArg& e);
+    virtual void OnPreviewDragOver(DragEventArg& e);
+    virtual void OnPreviewDrop(DragEventArg& e);
+
+
     // 键盘事件定义
     virtual void OnTextInput(KeyEventArg& e);
     virtual void OnKeyDown(KeyEventArg& e);
@@ -579,8 +594,6 @@ public:
     virtual void OnStateChanged(StateChangedEventArg& e);
     virtual void OnValueChanged(ValueChangedEventArg& e);
 
-    virtual void OnScrollPosChanged(ScrollPosChangedEventArg& e);
-
     virtual void OnHitTest(HitResultEventArg& e);
 
     /// <summary>
@@ -607,6 +620,8 @@ public:
     bool ReadFlag(int key) const;
     void WriteFlag(int key, bool add);
 
+    void InputHitTest(Point pt, ElementPtr& enabledHit, ElementPtr& rawHit);
+
     virtual void RaisedMeasureDirty();
 
 public:
@@ -629,45 +644,56 @@ public:
     virtual void OnRender(DrawingContext * drawing);
 
     /// <summary>
-    ///     增加逻辑元素。
+    /// 增加逻辑元素，此方法设置元素的逻辑父元素。
+    /// 在逻辑树层次上调用了此方法元素将会被视作逻辑上
+    /// 独立的元素，其表现形式在逻辑上是一个整体。
     /// </summary>
     /// <param name="child">子元素</param>
     /// <returns>无</returns>
-    virtual void AddLogicalChild(suic::Element* child);
+    void AddLogicalChild(suic::Element* child);
 
     /// <summary>
-    ///     在指定位置插入逻辑元素。
+    ///     增加一个子元素
     /// </summary>
     /// <param name="index">插入索引位置</param>
     /// <param name="child">子元素</param>
     /// <returns>无</returns>
-    virtual void InsertLogicalChild(int index, suic::Element* child);
+    virtual int AddChild(ObjectPtr obj);
+    virtual int AddText(const String& val);
+
+    /// <summary>
+    ///     在指定位置插入子元素。
+    /// </summary>
+    /// <param name="index">插入索引位置</param>
+    /// <param name="child">子元素</param>
+    /// <returns>插入后元素索引</returns>
+    virtual int InsertChild(int index, suic::ObjectPtr child);
 
     /// <summary>
     ///     清除所有逻辑元素。
     /// </summary>
     /// <returns>无</returns>
-    virtual void ClearLogicalChildren();
+    virtual void ClearChildren();
 
     /// <summary>
-    ///     移除指定逻辑元素。
+    ///     移除指定子元素。
     /// </summary>
     /// <param name="child">子元素</param>
     /// <returns>无</returns>
-    virtual void RemoveLogicalChild(suic::Element* child);
+    virtual void RemoveChild(suic::ObjectPtr child);
 
     /// <summary>
-    ///     获取逻辑元素。
+    ///     获取逻辑元素,派生类请返回适合自己的逻辑子元素
     /// </summary>
     /// <param name="index">索引位置</param>
     /// <returns>子元素</returns>
-    virtual suic::Element* GetLogicalChild(int index);
+    virtual Element* GetChild(int index);
 
     /// <summary>
     ///     获取逻辑元素个数。
     /// </summary>
     /// <returns>逻辑元素个数</returns>
-    virtual Int32 GetLogicalChildrenCount();
+    virtual Int32 GetChildrenCount();
 
 public:
 
@@ -704,6 +730,9 @@ public:
     /// </summary>
     /// <returns>界面元素标识</returns> 
     String GetName();
+
+    bool IsAllowDrop() const;
+    void SetAllowDrop(bool val);
 
     void SetWrapper(const String & name);
     String GetWrapper();
@@ -793,6 +822,9 @@ protected:
     // 计算后界面元素期望的大小,此大小可能会和渲染区域大小不一样
     // 因为其可能会被其父界面元素改变。
     Size _desiredSize;
+
+    // 上一次测量数据
+    Size _previousAvailableSize; 
 };
 
 inline String Element::GetClassName() const

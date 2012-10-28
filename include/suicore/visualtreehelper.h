@@ -45,8 +45,8 @@ public:
     static bool CursorPointIsInWindow(Element*);
     static bool CursorPointIsInElement(Element*);
 
-    static void SetLogicalParent(Element* pParent, Element* pChild);
-    static void SetVisualParent(Element* pParent, Element* pChild);
+    //static void SetLogicalParent(Element* pParent, Element* pChild);
+    //static void SetVisualParent(Element* pParent, Element* pChild);
     static void AddVisualChild(Visual* pParent, Visual* pChild);
     static void InsertVisualChild(Visual* pParent, Visual* pPos, Visual* pChild, bool bAfter);
     static void InsertVisualChild(Visual* pParent, int iPos, Visual* pChild, bool bAfter);

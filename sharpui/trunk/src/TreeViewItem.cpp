@@ -172,6 +172,8 @@ static TreeView* GetParentTreeView(suic::Element* pElem)
 TreeViewItem::TreeViewItem()
     : _showDotLine(false)
 {
+    SetIndent(20);
+
     SetHorizontalContentAlignment(suic::LEFT);
     SetVerticalContentAlignment(suic::CENTER);
 
@@ -181,6 +183,7 @@ TreeViewItem::TreeViewItem()
 
     _header = pHeader;
     _check.SetAutoDelete(false);
+    _icon.SetAutoDelete(false);
 
     pHeader->SetMinHeight(18);
 }
@@ -265,15 +268,14 @@ static void DrawHorzTreeDot(suic::DrawingContext * drawing, int bx, int ex, int 
     }
 }
 
-suic::ImageBrush* TreeViewItem::GetIcon()
+ImageBox* TreeViewItem::GetIcon()
 {
-    return _icon.get();
+    return &_icon;
 }
 
 void TreeViewItem::
 OnHeaderChanged(suic::Element* oldHeader, suic::Element* newHeader)
 {
-    suic::VisualHelper::SetLogicalParent(this, newHeader);
     TreeItemHeaderPtr itemHead(_header);
 
     itemHead->SetContent(newHeader);
@@ -289,6 +291,18 @@ void TreeViewItem::OnSetterChanged(suic::SetterChangedEventArg& e)
         TreeItemHeaderPtr itemHead(_header);
 
         itemHead->SetText(e.GetSetter()->ToString());
+    }
+    else if (e.GetName().Equals(_T("Icon")))
+    {
+        _icon.SetSource(e.GetSetter()->ToString());
+    }
+    else if (e.GetName().Equals(_T("CheckButton")))
+    {
+        _check.SetVisible(e.GetSetter()->ToBool());
+    }
+    else if (e.GetName().Equals(_T("Indent")))
+    {
+        SetIndent(e.GetSetter()->ToInt32());
     }
     else
     {
@@ -337,8 +351,6 @@ void TreeViewItem::OnInitialized()
     itemHead->SetStyle(FindResource(itemHead->GetClassName()));
 
     SetText(_T(""));
-
-    _icon = suic::ImageBrushPtr::cast(GetStyle()->GetValue(_T("Icon")));
 
     _check.SetStyle(FindResource(_check.GetClassName()));
     _check.BeginInit();
@@ -421,10 +433,17 @@ suic::Size TreeViewItem::ArrangeOverride(const suic::Size& finalSize)
         finalRect.left = finalRect.right;
     }
 
-    if (_icon)
+    if (_icon.IsValid())
     {
         // ²¼¾ÖÍ¼±ê
-        suic::Rect rcIcon(_icon->GetContentBrounds());
+
+        finalRect.right = finalRect.left + _icon.GetSource()->Width();
+        finalRect.bottom = _icon.GetSource()->Height();
+
+        AddVisualChild(&_icon);
+        _icon.Arrange(finalRect);
+
+        finalRect.left = finalRect.right + 8;
     }
 
     finalRect.right = finalRect.left + _header->GetDesiredSize().cx;
@@ -484,11 +503,11 @@ void TreeViewItem::OnLostFocus(suic::FocusEventArg& e)
 {
 }
 
-void TreeViewItem::OnItemsChanged(NotifyContainerChangedArg& e)
+void TreeViewItem::OnItemsChanged(suic::NotifyCollectionChangedArg& e)
 {
     __super::OnItemsChanged(e);
 
-    if (e.GetAction() == NotifyContainerChangedAction::Add)
+    if (e.GetAction() == suic::NotifyCollectionChangedAction::Add)
     {
         for (int i = 0; i < e.NewItems()->GetCount(); ++i)
         {

@@ -12,6 +12,7 @@
 # define _UIELEMENTCOLLECTION_H_
 
 #include <suicore/uielement.h>
+#include <suicore/uistructure.h>
 
 namespace suic
 {
@@ -20,8 +21,19 @@ class SUICORE_API ElementCollection : public RefObject
 {
 public:
 
+    enum eAction 
+    {
+        eAdd = 0,
+        eRemove = 1,
+    };
+
+    NotifyCollectionChangedHandler NotifyCollectionChanged;
+
     ElementCollection(ElementPtr virtualParent, ElementPtr logicParent);
     virtual ~ElementCollection();
+
+    void SetVirtualParent(ElementPtr virtualParent);
+    void SetLogicalParent(ElementPtr logicParent);
 
     int GetCapacity();
     void SetCapacity(int iCapacity);
@@ -38,11 +50,15 @@ public:
     void CopyTo(ElementPtr array[], int index);
 
     int IndexOf(ElementPtr element);
-    void Insert(int index, ElementPtr element);
+    int Insert(int index, ElementPtr element);
 
     void Remove(ElementPtr element) ;
     void RemoveAt(int index);
     void RemoveRange(int index, int count); 
+
+protected:
+
+    void InternalAdd(ElementPtr element);
 
 protected:
 

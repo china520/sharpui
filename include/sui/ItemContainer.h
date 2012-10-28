@@ -13,6 +13,7 @@
 
 #include <sui/sharpuiconfig.h>
 #include <suicore/uicontentcontrol.h>
+#include <suicore/uistructure.h>
 
 namespace ui
 {
@@ -47,75 +48,14 @@ protected:
 static const int MENUITEM_MINHEIGHT = 18;
 static const int MENUITEM_ICONSIZE = 18;
 
-class SHARPUI_API ItemContentList
+class SHARPUI_API ItemCollection : public suic::RefObject
 {
 public:
 
-    ItemContentList();
-    virtual ~ItemContentList();
+    suic::NotifyCollectionChangedHandler ContainerChanged;
 
-    suic::Int32 GetCount();
-    suic::ObjectPtr GetAt(suic::Int32 index);
-    void Add(suic::ObjectPtr item);
-    bool Remove(suic::ObjectPtr item);
-    suic::ObjectPtr RemoveAt(suic::Int32 index);
-    void Reset();
-
-protected:
-
-    suic::EnumeratorPtr _items;
-};
-
-class SHARPUI_API NotifyContainerChangedAction
-{
-public:
-
-    enum eAction 
-    {
-        Add = 0,
-        Remove = 1,
-        Replace = 2,
-        Move = 3,
-        Reset = 4,
-    };
-};
-
-class SHARPUI_API NotifyContainerChangedArg : public suic::RoutedEventArg
-{
-public:
-
-    NotifyContainerChangedArg(int ac);
-
-    int GetAction() const;
-
-    void AddNewItem(suic::ObjectPtr item);
-    void AddOldItem(suic::ObjectPtr item);
-
-    ItemContentList* NewItems();
-    ItemContentList* OldItems();
-
-protected:
-
-    int _action;
-    ItemContentList _newItems;
-    ItemContentList _oldItems;
-};
-
-inline int NotifyContainerChangedArg::GetAction() const
-{
-    return _action;
-}
-
-typedef delegate<void(suic::ObjectPtr, NotifyContainerChangedArg&)> NotifyContainerChangedHandler;
-
-class SHARPUI_API ItemContainer : public suic::RefObject
-{
-public:
-
-    NotifyContainerChangedHandler ContainerChanged;
-
-    ItemContainer(suic::Element* itemControl);
-    virtual ~ItemContainer();
+    ItemCollection(suic::Element* itemControl);
+    virtual ~ItemCollection();
 
     int GetCount();
 
@@ -144,7 +84,7 @@ protected:
     suic::Vector<suic::ObjectPtr> _items;
 };
 
-typedef suic::shared<ItemContainer> ItemContainerPtr;
+typedef suic::shared<ItemCollection> ItemCollectionPtr;
 
 };
 

@@ -38,14 +38,14 @@ void StackPanel::OnRender(suic::DrawingContext * drawing)
 
 suic::Size StackPanel::MeasureOverride(const suic::Size& availableSize)
 {
-    int iCount = GetLogicalChildrenCount();
+    int iCount = GetChildrenCount();
     suic::Size childSize;
 
     if (GetOrientation() == CoreFlags::Horizontal)
     {
         for (int i = 0; i < iCount; ++i)
         {
-            suic::FrameworkElementPtr child(GetLogicalChild(i));
+            suic::FrameworkElementPtr child(GetChild(i));
 
             if (child->IsVisible())
             {
@@ -73,7 +73,7 @@ suic::Size StackPanel::MeasureOverride(const suic::Size& availableSize)
     {
         for (int i = 0; i < iCount; ++i)
         {
-            suic::FrameworkElementPtr child(GetLogicalChild(i));
+            suic::FrameworkElementPtr child(GetChild(i));
 
             if (child->IsVisible())
             {
@@ -123,8 +123,7 @@ suic::Size StackPanel::ArrangeOverride(const suic::Size& size)
 }
 
 void StackPanel::
-CalcHorzElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay
-                , suic::Rect& rc, suic::Rect& rcClip)
+CalcHorzElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay, suic::Rect& rc)
 {
 	// 取得其离父窗口边距
 	suic::Rect rcmgr = ePtr->GetMargin();
@@ -132,34 +131,13 @@ CalcHorzElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay
 	
 	rc = rcLay;
 
-	// 水平对齐方式
-	int iHorz = ePtr->GetHorizontalAlignment();
-
 	// 垂直对齐方式
 	int iVert = ePtr->GetVerticalAlignment();
 
-    ARRANGEVERTICALCHILDREN(iVert, rcLay, rcmgr, rc, rcClip);
+    ARRANGEVERTICALCHILDREN(iVert, rcLay, rcmgr, rc);
 
 	rc.left = rcLay.left + rcmgr.left;
 	rc.right = rc.left + szelem.cx;
-
-	if (rcClip.right > rcLay.right - rcmgr.right)
-	{
-		rcClip.right = rcLay.right - rcmgr.right;
-	}
-	else
-	{
-		rcClip.right = min(rcLay.right, rc.right);
-	}
-
-	if (rcClip.left < rcLay.left + rcmgr.left)
-	{
-		rcClip.left = rcLay.left + rcmgr.left;
-	}
-	else
-	{
-		rcClip.left = max(rcLay.left, rc.left);
-	}
 
 	rcLay.left = rc.right + rcmgr.right;
 }
@@ -185,36 +163,41 @@ void StackPanel::RelayoutHorizontal(const suic::Size& size)
     int iLeft = rcLay.left + _horizontalOffset;
     int iWid = 0;
     
-    int iCount = GetLogicalChildrenCount();
+    int iCount = GetChildrenCount();
 
     for (i = 0; i < iCount; ++i)
     {
-        suic::FrameworkElementPtr ePtr(GetLogicalChild(i));
+        suic::FrameworkElementPtr ePtr(GetChild(i));
 
         if (ePtr->IsVisible())
         {
+            const suic::Rect & rcMgr = ePtr->GetMargin();
+            int iTm = rcMgr.left + rcMgr.right + ePtr->GetDesiredSize().cx;
+
+            iWid += iTm;
+
             if (iWid >= iLeft)
             {
-                rcLay.left = iLeft - iWid;
+                rcLay.left = iWid - iLeft - iTm;
+                rcLay.right = size.cx;
                 break;
             }
-
-            const suic::Rect & rcMgr = ePtr->GetMargin();
-
-            iWid += rcMgr.left + rcMgr.right + ePtr->GetWidth();
         }
     }
 
+    rcLay.top -= _verticalOffset;
+    //rcLay.bottom = size.cy;
+
     for (i = 0; i < iCount; ++i)
     {
-        suic::FrameworkElementPtr ePtr(GetLogicalChild(i));
+        suic::FrameworkElementPtr ePtr(GetChild(i));
 
         if (ePtr->IsVisible())
         {
             suic::Rect rc;
-            suic::Rect rcClip;
-
-            CalcHorzElement(ePtr, rcLay, rc, rcClip);
+  
+            //rcLay.bottom = rcLay.top + ePtr->GetDesiredSize().cy;
+            CalcHorzElement(ePtr, rcLay, rc);
 
             // 
             // 加入到可视树
@@ -231,15 +214,14 @@ void StackPanel::RelayoutHorizontal(const suic::Size& size)
 }
 
 void StackPanel::
-CalcVertElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay
-                , suic::Rect& rc, suic::Rect& rcClip)
+CalcVertElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay, suic::Rect& rc)
 {
 	// 
     // 取得其离父窗口边距
     //
 	suic::Rect rcmgr = ePtr->GetMargin();
 	suic::Size szelem = ePtr->GetDesiredSize();
-	
+
 	rc = rcLay;
 
 	// 
@@ -247,33 +229,10 @@ CalcVertElement(suic::FrameworkElement* ePtr, suic::Rect& rcLay
     //
 	int iHorz = ePtr->GetHorizontalAlignment();
 
-	// 
-    // 垂直对齐方式
-    //
-	int iVert = ePtr->GetVerticalAlignment();
-
-    ARRANGEHORIZONTALCHILDREN(iHorz, rcLay, rcmgr, rc, rcClip);
+    ARRANGEHORIZONTALCHILDREN(iHorz, rcLay, rcmgr, rc);
 
 	rc.top = rcLay.top + rcmgr.top;
 	rc.bottom = rc.top + szelem.cy;
-
-	if (rcClip.bottom > rcLay.bottom - rcmgr.bottom)
-	{
-		rcClip.bottom = rcLay.bottom - rcmgr.bottom;
-	}
-	else
-	{
-		rcClip.bottom = min(rcLay.bottom, rc.bottom);
-	}
-
-	if (rcClip.top < rcLay.top + rcmgr.top)
-	{
-		rcClip.top = rcLay.top + rcmgr.top;
-	}
-	else
-	{
-		rcClip.top = max(rcLay.top, rc.top);
-	}
 
 	rcLay.top = rc.bottom + rcmgr.bottom;
 }
@@ -286,37 +245,43 @@ void StackPanel::RelayoutVertical(const suic::Size& size)
 
     int i = 0;
     int iTop = rcLay.top + _verticalOffset;
-    int iCount = GetLogicalChildrenCount();
+    int iCount = GetChildrenCount();
     int iHei = 0;
 
     for (i = 0; i < iCount; ++i)
     {
-        suic::FrameworkElementPtr ePtr(GetLogicalChild(i));
+        suic::FrameworkElementPtr ePtr(GetChild(i));
 
         if (ePtr->IsVisible())
         {
+            const suic::Rect & rcMgr = ePtr->GetMargin();
+            int iTm = rcMgr.top + rcMgr.bottom + ePtr->GetDesiredSize().cy;
+
+            iHei += iTm;
+
             if (iHei >= iTop)
             {
-                rcLay.top = iTop - iHei;
+                rcLay.top = iHei - iTop - iTm;
+                rcLay.bottom = size.cy;
                 break;
             }
-
-            const suic::Rect & rcMgr = ePtr->GetMargin();
-
-            iHei += rcMgr.top + rcMgr.bottom + ePtr->GetHeight();
         }
     }
 
+    //rcLay.left -= _horizontalOffset;
+
     for (; i < iCount; ++i)
     {
-        suic::FrameworkElementPtr ePtr(GetLogicalChild(i));
+        suic::FrameworkElementPtr ePtr(GetChild(i));
 
         if (ePtr->IsVisible())
         {
             suic::Rect rc;
-            suic::Rect rcClip;
 
-            CalcVertElement(ePtr, rcLay, rc, rcClip);
+            CalcVertElement(ePtr, rcLay, rc);
+
+            rc.left -= _horizontalOffset;
+            rc.right -= _horizontalOffset;
 
             // 
             // 加入到可视树

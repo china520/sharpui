@@ -77,9 +77,9 @@ suic::Size WrapPanel::ArrangeOverride(const suic::Size& size)
     rect.left = GetBorderThickness().left + _horizontalSpace;
     rect.top = GetBorderThickness().top + _verticalSpace;
 
-    for (int i = 0; i < GetLogicalChildrenCount(); ++i)
+    for (int i = 0; i < GetChildrenCount(); ++i)
     {
-        suic::Element* pElem = GetLogicalChild(i);
+        suic::Element* pElem = GetChild(i);
 
         if (pElem->IsVisible())
         {

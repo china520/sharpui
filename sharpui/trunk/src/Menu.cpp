@@ -46,7 +46,6 @@ void Menu::AddSubMenu(MenuItemPtr item, MenuPtr subMenu)
     if (!item->_submenuPopup)
     {
         item->_submenuPopup = new suic::UIPopup();
-        suic::VisualHelper::SetLogicalParent(item.get(), item->_submenuPopup.get());
     }
 
     if (!subMenu->GetStyle())
@@ -160,7 +159,7 @@ void Menu::OnItemLeftButtonDown(MenuItem* item, suic::MouseEventArg& e)
     e.Handled(true);
     e.SetSource(this);
 
-    _focusItem = item;
+    _focusedItem = item;
 
     if (GetTrackMenu() == item->_submenuPopup 
         && item->IsSubmenuOpen())
@@ -250,11 +249,11 @@ void Menu::OnMouseMove(suic::MouseEventArg& e)
         }
     }
 
-    if (pOver != _focusItem)
+    if (pOver != _focusedItem)
     {
-        if (_focusItem)
+        if (_focusedItem)
         {
-            Selector::SelectItem(_focusItem, false);
+            Selector::SelectItem(_focusedItem, false);
         }
 
         if (pOver)
@@ -263,7 +262,7 @@ void Menu::OnMouseMove(suic::MouseEventArg& e)
             suic::MouseDriver::HandleMouseEnter(pOver, e.MousePoint());
         }
 
-        _focusItem = pOver;
+        _focusedItem = pOver;
     }
 
     e.Handled(true);
@@ -273,13 +272,15 @@ void Menu::OnMouseLeave(suic::MouseEventArg& e)
 {
     __super::OnMouseLeave(e);
 
-    if (_focusItem)
+    suic::FrameworkElementPtr frame(_focusedItem);
+
+    if (frame)
     {
         suic::MouseEventArg ef(NULL, e.MousePoint());
-        ef.SetSource(_focusItem);
-        _focusItem->OnMouseLeave(ef);
+        ef.SetSource(frame);
+        frame->OnMouseLeave(ef);
 
-        _focusItem = NULL;
+        _focusedItem = NULL;
     }
 }
 

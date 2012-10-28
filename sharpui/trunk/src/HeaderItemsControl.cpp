@@ -21,7 +21,7 @@ namespace ui
 {
 
 HeaderedItemsControl::HeaderedItemsControl()
-    : _indent(20)
+    : _indent(0)
 {
     SetClassName(_T("HeaderItemsControl"));
 }
@@ -134,6 +134,11 @@ suic::Size HeaderedItemsControl::ArrangeOverride(const suic::Size& availableSize
     return availableSize;
 }
 
+void HeaderedItemsControl::OnSetterChanged(suic::SetterChangedEventArg& e)
+{
+    __super::OnSetterChanged(e);
+}
+
 void HeaderedItemsControl::OnInitialized()
 {
     suic::ObjectPtr headerPtr = GetStyle()->GetValue(_T("Header"));
@@ -163,20 +168,22 @@ void HeaderedItemsControl::OnPreviewMouseLeftButtonDown(suic::MouseEventArg& e)
 void HeaderedItemsControl::
 OnHeaderChanged(suic::Element* oldHeader, suic::Element* newHeader)
 {
-    suic::VisualHelper::SetLogicalParent(this, newHeader);
-
     _header = newHeader;
 }
 
-void HeaderedItemsControl::AddLogicalChild(suic::Element* child)
+int HeaderedItemsControl::AddChild(suic::ObjectPtr child)
 {
-    if (child->GetWrapper().Equals(_T("Header")))
+    suic::ElementPtr pElem(child);
+
+    if (pElem->GetWrapper().Equals(_T("Header")))
     {
         SetHeader(child);
+
+        return 0;
     }
     else
     {
-        __super::AddLogicalChild(child);
+        return __super::AddChild(child);
     }
 }
 

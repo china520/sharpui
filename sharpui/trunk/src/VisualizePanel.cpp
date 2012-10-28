@@ -17,7 +17,7 @@ namespace ui
 //////////////////////////////////////////////////////////////
 // VisualizeLayout
 //
-VisualizePanel::VisualizePanel(ItemContainerPtr container)
+VisualizePanel::VisualizePanel(ItemCollectionPtr container)
     :  _container(container)
 {
     SetClassName(_T("VisualizePanel"));
@@ -107,8 +107,7 @@ suic::Size VisualizePanel::ArrangeHorizontal(const suic::Size& size)
         }
     }
 
-    _startLogicalIndex = i;
-    _endLogicalIndex = _container->GetCount() - 1;
+    _visibleStart = i;
 
     suic::Rect rect(iWid - _horizontalOffset, -_verticalOffset, 0, size.cy + _verticalOffset);
 
@@ -128,10 +127,11 @@ suic::Size VisualizePanel::ArrangeHorizontal(const suic::Size& size)
 
         if (rect.left >= size.cx)
         {
-            _endLogicalIndex = i;
             break;
         }
     }
+
+    _visibleCount = i - _visibleStart;
 
     return size;
 }
@@ -161,8 +161,7 @@ suic::Size VisualizePanel::ArrangeVertical(const suic::Size& size, int iOffset)
         }
     }
 
-    _startLogicalIndex = i;
-    _endLogicalIndex = _container->GetCount() - 1;
+    _visibleStart = i;
 
     suic::Rect rect(-_horizontalOffset, iHei - _verticalOffset + iOffset, size.cx + _horizontalOffset, 0);
 
@@ -182,10 +181,11 @@ suic::Size VisualizePanel::ArrangeVertical(const suic::Size& size, int iOffset)
 
         if (rect.top >= size.cy)
         {
-            _endLogicalIndex = i;
             break;
         }
     }
+
+    _visibleCount = i - _visibleStart;
 
     return size;
 }
@@ -206,7 +206,7 @@ suic::Size VisualizePanel::ArrangeOverride(const suic::Size& size)
 
 //====================================================
 //
-VisualizeHeaderPanel::VisualizeHeaderPanel(ItemContainerPtr container)
+VisualizeHeaderPanel::VisualizeHeaderPanel(ItemCollectionPtr container)
     : VisualizePanel(container)
 {
 }

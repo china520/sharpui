@@ -33,10 +33,23 @@
 #endif
 
 #pragma comment(lib, "msimg32.lib")
+
+#ifndef SUICORE_LIB
+
 #ifdef _DEBUG
 #pragma comment(lib, "suicoreud.lib")
 #else
 #pragma comment(lib, "suicoreu.lib")
+#endif
+
+#else
+
+#ifdef _DEBUG
+#pragma comment(lib, "suicore_80sud.lib")
+#else
+#pragma comment(lib, "suicore_80su.lib")
+#endif
+
 #endif
 
 #ifndef SUICORE_LIB

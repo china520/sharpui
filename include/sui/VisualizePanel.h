@@ -13,10 +13,24 @@
 
 #include <sui/sharpuiconfig.h>
 #include <sui/itemcontainer.h>
+#include <sui/ScrollViewer.h>
+
 #include <suicore/uipanel.h>
 
 namespace ui
 {
+
+class ScrollData
+{
+public:
+
+    suic::Size _viewport;
+    ScrollViewerPtr _scrollOwner;
+    suic::Size _maxDesiredSize;
+
+    bool _allowHorizontal;
+    bool _allowVertical;
+};
 
 /// <summary>
 /// VisualizePanel
@@ -25,7 +39,7 @@ class SHARPUI_API VisualizePanel : public suic::Panel
 {
 public:
 
-    VisualizePanel(ItemContainerPtr container);
+    VisualizePanel(ItemCollectionPtr container);
     virtual ~VisualizePanel();
 
 protected:
@@ -43,7 +57,9 @@ protected:
 
 protected:
 
-    ItemContainerPtr _container;
+    ItemCollectionPtr _container;
+
+    ScrollData _scrollData;
 };
 
 typedef suic::shared<VisualizePanel> VisualizePanelPtr;
@@ -52,7 +68,7 @@ class SHARPUI_API VisualizeHeaderPanel : public VisualizePanel
 {
 public:
 
-    VisualizeHeaderPanel(ItemContainerPtr container);
+    VisualizeHeaderPanel(ItemCollectionPtr container);
 
     suic::FrameworkElementPtr GetHeader();
     void SetHeader(suic::FrameworkElementPtr val);

@@ -39,7 +39,7 @@ public:
 
 protected:
 
-    void OnItemsChanged(NotifyContainerChangedArg& e);
+    void OnItemsChanged(suic::NotifyCollectionChangedArg& e);
 
     virtual void OnInitialized();
     virtual void OnRender(suic::DrawingContext * drawing);

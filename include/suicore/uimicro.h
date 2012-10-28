@@ -20,13 +20,13 @@
 #define HandleToHdc(dc) ((HDC)(ULONG_PTR)dc)
 #define HdcToHandle(dc) ((suic::Handle)(ULONG_PTR)dc)
 
-#define GetAlpha(clr) (LOBYTE((clr)>>24))
-#define GetRed(clr) (LOBYTE((clr)>>16))
-#define GetGreen(clr) (LOBYTE((clr)>>8))
-#define GetBlue(clr) (LOBYTE(clr))
+#define UIGetAlpha(clr) (LOBYTE((clr)>>24))
+#define UIGetRed(clr) (LOBYTE((clr)>>16))
+#define UIGetGreen(clr) (LOBYTE((clr)>>8))
+#define UIGetBlue(clr) (LOBYTE(clr))
 
-#define ARGB(a,r,g,b)  ((COLORREF)(((BYTE)(r)|((WORD)((BYTE)(g))<<8))|(((DWORD)(BYTE)(b))<<16)|(((DWORD)(BYTE)(a))<<24)))
-#define ARGBTORGB(clr) ((Color)((((WORD)GetBlue(clr)) << 16) | (((WORD)GetGreen(clr)) << 8) | GetRed(clr)))
+#define ARGB(a,r,g,b)  ((COLORREF)(((BYTE)(b)|((WORD)((BYTE)(g))<<8))|(((DWORD)(BYTE)(r))<<16)|(((DWORD)(BYTE)(a))<<24)))
+#define ARGBTORGB(clr) ((Color)((((WORD)UIGetBlue(clr)) << 16) | (((WORD)UIGetGreen(clr)) << 8) | UIGetRed(clr)))
 #define ALPHACOLOR(d,o,alpha) ((BYTE)(((suic::Uint32)(d * (255.0 - alpha) + o * alpha)) >> 8))
 #define UStr(val) L(val)
 
@@ -37,7 +37,7 @@
 #define DECLAREBUILD(c) static suic::ElementPtr Create() { return new c(); }
 #define ELEMENTBUILD(c) c::Create
 
-#define ARRANGEHORIZONTALCHILDREN(horz, rcelem, rcmgr, rc, rcclip)\
+#define ARRANGEHORIZONTALCHILDREN(horz, rcelem, rcmgr, rc)\
 {\
     if (horz == CoreFlags::Stretch)\
     {\
@@ -56,15 +56,12 @@
     }\
     else\
     {\
-        rc.left += (rc.Width() - szelem.cx) / 2;\
+        rc.left += (rcelem.Width() - szelem.cx) / 2;\
         rc.right = rc.left + szelem.cx;\
     }\
-    \
-    rcclip.left = max(rc.left, rcelem.left);\
-    rcclip.right = min(rc.right, rcelem.right);\
 }
 
-#define ARRANGEVERTICALCHILDREN(vert, rcelem, rcmgr, rc, rcclip)\
+#define ARRANGEVERTICALCHILDREN(vert, rcelem, rcmgr, rc)\
 {\
     if (vert == CoreFlags::Stretch)\
     {\
@@ -78,7 +75,7 @@
     }\
     else if (CoreFlags::Center == vert)\
     {\
-        rc.top += (rc.Height() - szelem.cy) / 2;\
+        rc.top += (rcelem.Height() - szelem.cy) / 2;\
         rc.bottom = rc.top + szelem.cy;\
     }\
     else\
@@ -86,8 +83,6 @@
         rc.top += rcmgr.top;\
         rc.bottom = rc.top + szelem.cy;\
     }\
-    rcclip.top = max(rc.top, rcelem.top);\
-    rcclip.bottom = min(rc.bottom, rcelem.bottom);\
 }
 
 # endif

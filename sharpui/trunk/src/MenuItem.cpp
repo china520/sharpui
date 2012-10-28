@@ -110,9 +110,9 @@ suic::ElementPtr MenuItem::FindName(const suic::String& strName)
     }
 }
 
-void MenuItem::AddLogicalChild(suic::Element* child)
+int MenuItem::AddChild(suic::ObjectPtr child)
 {
-    MenuItem* pItem = dynamic_cast<MenuItem*>(child);
+    MenuItem* pItem = dynamic_cast<MenuItem*>(child.get());
 
     if (pItem)
     {
@@ -125,11 +125,13 @@ void MenuItem::AddLogicalChild(suic::Element* child)
 
             _submenuPopup = new suic::UIPopup();
             _submenuPopup->SetPopupRoot(subMenu.get());
-
-            suic::VisualHelper::SetLogicalParent(this, _submenuPopup.get());
         }
 
-        _submenuPopup->GetPopupRoot()->AddLogicalChild(child);
+        return _submenuPopup->GetPopupRoot()->AddChild(child);
+    }
+    else
+    {
+        return 0;
     }
 }
 

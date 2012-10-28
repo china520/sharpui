@@ -33,21 +33,21 @@ int ListBox::AddText(const suic::String& text)
 
     item->SetText(text);
 
-    return GetItems()->AddItem(item);
+    return AddChild(item);
 }
 
 void ListBox::OnInitialized()
 {
     __super::OnInitialized();
 
-    _panel->SetOrientation(GetOrientation());
+    _itemsHost->SetOrientation(GetOrientation());
 }
 
 void ListBox::OnUnloaded(suic::LoadedEventArg& e)
 {
     __super::OnUnloaded(e);
 
-    suic::SystemHelper::KillTimer(_timerid);
+    suic::SystemHelper::suiKillTimer(_timerid);
 }
 
 void ListBox::OnRender(suic::DrawingContext * drawing)
@@ -64,22 +64,22 @@ void ListBox::OnTimer(int iTimerId)
 
         if (pt.y > rect.bottom)
         {
-            _scrollView->LineDown();
+            _scrollHost->LineDown();
         }
 
         if (pt.y < rect.top)
         {
-            _scrollView->LineUp();
+            _scrollHost->LineUp();
         }
 
         if (pt.x > rect.right)
         {
-            _scrollView->LineRight();
+            _scrollHost->LineRight();
         }
 
         if (pt.x < rect.left)
         {
-            _scrollView->LineLeft();
+            _scrollHost->LineLeft();
         }
     }
 }
@@ -118,34 +118,34 @@ void ListBox::OnMouseMove(suic::MouseEventArg& e)
 
     if (!IsMouseCaptured())
     {
-        suic::SystemHelper::KillTimer(_timerid);
+        suic::SystemHelper::suiKillTimer(_timerid);
         SetCaptureMouse();
     }
 
     suic::Rect rect(suic::VisualHelper::GetRenderRect(this));
 
-    suic::SystemHelper::Trace(_T("L:%d;T:%d;R:%d;B:%d; x:%d;y:%d\n")
+    suic::SystemHelper::suiTrace(_T("L:%d;T:%d;R:%d;B:%d; x:%d;y:%d\n")
         , rect.left, rect.top, rect.right, rect.bottom,
         e.MousePoint().x, e.MousePoint().y);
 
     if (rect.PointIn(e.MousePoint()) && 
         e.MousePoint().y < 0)
     {
-        suic::SystemHelper::KillTimer(_timerid);
+        suic::SystemHelper::suiKillTimer(_timerid);
     }
     else
     {
         if (!_timerid || _timerid->id == 0)
         {
-            suic::SystemHelper::SetTimer(_timerid, this, 50, -1);
+            suic::SystemHelper::suiSetTimer(_timerid, this, 50, -1);
         }
     }
 
     suic::Element* pOver = NULL;
 
-    for (int i = 0; i < _panel->GetVisualChildrenCount(); ++i)
+    for (int i = 0; i < _itemsHost->GetVisualChildrenCount(); ++i)
     {
-        suic::ElementPtr pItem(_panel->GetVisualChild(i));
+        suic::ElementPtr pItem(_itemsHost->GetVisualChild(i));
 
         if (pItem)
         {
@@ -158,11 +158,11 @@ void ListBox::OnMouseMove(suic::MouseEventArg& e)
         }
     }
 
-    if (pOver != _focusItem)
+    if (pOver != _focusedItem.get())
     {
-        if (_focusItem)
+        if (_focusedItem)
         {
-            Selector::SelectItem(_focusItem, false);
+            Selector::SelectItem(_focusedItem, false);
         }
 
         if (pOver)
@@ -171,7 +171,7 @@ void ListBox::OnMouseMove(suic::MouseEventArg& e)
             suic::MouseDriver::HandleMouseEnter(pOver, e.MousePoint());
         }
 
-        _focusItem = pOver;
+        _focusedItem = pOver;
     }
 
     e.Handled(true);
@@ -180,14 +180,14 @@ void ListBox::OnMouseMove(suic::MouseEventArg& e)
 void ListBox::OnMouseWheel(suic::MouseWheelEventArg& e)
 {
     // 转发消息给视图类处理
-    _scrollView->OnMouseWheel(e);
+    _scrollHost->OnMouseWheel(e);
 }
 
 void ListBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 {
     __super::OnMouseLeftButtonDown(e);
 
-    suic::SystemHelper::KillTimer(_timerid);
+    suic::SystemHelper::suiKillTimer(_timerid);
 
     SetCaptureMouse();
 }
@@ -198,7 +198,7 @@ void ListBox::OnMouseLeftButtonUp(suic::MouseEventArg& e)
 
     ReleaseCaptureMouse();
 
-    suic::SystemHelper::KillTimer(_timerid);
+    suic::SystemHelper::suiKillTimer(_timerid);
 }
 
 void ListBox::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)

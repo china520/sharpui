@@ -33,8 +33,8 @@ public:
 
     ColumnHeaderCollectionPtr& Columns();
 
-    int Add(suic::ObjectPtr value);
-    int Insert(int index, suic::ObjectPtr value);
+    int AddChild(suic::ObjectPtr value);
+    int InsertChild(int index, suic::ObjectPtr value);
     int AddText(const suic::String& text);
 
     void SetLargeImageList();

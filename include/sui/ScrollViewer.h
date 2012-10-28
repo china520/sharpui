@@ -55,6 +55,9 @@ public:
     void SetHorizontalStep(int iStep);
     void SetVerticalStep(int iStep);
 
+    double GetHorizontalStep() const;
+    double GetVerticalStep() const;
+
     ScrollBar* HorizontalScrollBar();
     ScrollBar* VerticalScrollBar();
 
@@ -68,34 +71,37 @@ public:
     void PageDown();
     void PageLeft();
     void PageRight();
+
     void ScrollToLeftEnd();
     void ScrollToRightEnd();
     void ScrollToHome();
     void ScrollToEnd();
     void ScrollToTop();
     void ScrollToBottom();
-    void ScrollToHorizontalPos(double offset);
-    void ScrollToVerticalPos(double offset);
+
+    void ScrollToHorizontalPos(double pos, bool bRepaint=true);
+    void ScrollToVerticalPos(double pos, bool bRepaint=true);
+
+    void ScrollToHorizontalOffset(double offset, bool bRepaint=true);
+    void ScrollToVerticalOffset(double offset, bool bRepaint=true);
 
     void InvalidateScrollBar();
 
 public:
 
-    virtual void AddLogicalChild(suic::Element* child);
+    void OnHorizontalScroll(suic::ElementPtr, ScrollEventArg&);
+    void OnVerticalScroll(suic::ElementPtr, ScrollEventArg&);
 
-    virtual void OnHorizontalScroll(suic::ElementPtr, ScrollEventArg&);
-    virtual void OnVerticalScroll(suic::ElementPtr, ScrollEventArg&);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    void OnInitialized();
+    void OnRender(suic::DrawingContext * drawing);
 
-    virtual void OnInitialized();
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnTextInput(suic::KeyEventArg& e);
+    void OnKeyDown(suic::KeyEventArg& e);
 
-    virtual void OnTextInput(suic::KeyEventArg& e);
-    virtual void OnKeyDown(suic::KeyEventArg& e);
-
-    virtual void OnMouseWheel(suic::MouseWheelEventArg& e);
+    void OnMouseWheel(suic::MouseWheelEventArg& e);
 
 protected:
 
@@ -106,6 +112,9 @@ protected:
     int _iBegin;
     int _iCurPos;
 
+    double _scrollLineDelta;
+    double _mouseWheelDelta;
+
     ScrollBarPtr _hScroll;
     ScrollBarPtr _vScroll;
 
@@ -113,7 +122,17 @@ protected:
     eScrollBarVisibility _barVisible;
 };
 
-typedef suic::shared<ScrollViewer> ScrollViewPtr;
+typedef suic::shared<ScrollViewer> ScrollViewerPtr;
+
+inline double ScrollViewer::GetHorizontalStep() const
+{
+    return _hScroll->GetScrollStep();
+}
+
+inline double ScrollViewer::GetVerticalStep() const
+{
+    return _vScroll->GetScrollStep();
+}
 
 inline ScrollBar* ScrollViewer::HorizontalScrollBar()
 {

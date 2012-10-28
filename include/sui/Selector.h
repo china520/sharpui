@@ -25,13 +25,13 @@ public:
 
     void AddItem(suic::ObjectPtr item, bool bAdd);
 
-    ItemContentList* AddedItems();
-    ItemContentList* RemovedItems();
+    suic::ItemContentList* AddedItems();
+    suic::ItemContentList* RemovedItems();
 
 protected:
 
-    ItemContentList _addItems;
-    ItemContentList _removeItems;
+    suic::ItemContentList _addItems;
+    suic::ItemContentList _removeItems;
 };
 
 class Selector;
@@ -90,7 +90,7 @@ public:
     /// <returns>无</returns> 
     static void SelectItem(suic::ObjectPtr item, bool selected);
     static void SetItemFocus(suic::ElementPtr focusItem);
-
+    
     SelectionMode::eSelectionMode GetSelectionMode() const;
 
     int SelectedIndex();
@@ -98,6 +98,8 @@ public:
 
     suic::ObjectPtr SelectedItem();
     void SelectedItem(suic::ObjectPtr obj);
+
+    void SetItemFocus(int index);
 
     /// <summary>
     ///     取消所有的选择项
@@ -125,12 +127,9 @@ protected:
 
 protected:
 
-    int _iHot;
     int _iSelected;
 
-    // 当前拥有焦点的子项元素
-    suic::Element* _focusItem;
-    ItemContentList _selectedItems;
+    suic::ItemContentList _selectedItems;
     // 选择模式
     SelectionMode::eSelectionMode _selectMode;
 };
@@ -147,7 +146,7 @@ inline int Selector::GetVisualStartIndex()
 
 inline int Selector::GetVisualEndIndex()
 {
-    return _panel->GetVisualChildrenCount();
+    return _itemsHost->GetVisualChildrenCount();
 }
 
 };
