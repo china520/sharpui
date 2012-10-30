@@ -114,16 +114,16 @@ void PasswordBox::SetText(const suic::String & text)
 
 void PasswordBox::OnRender(suic::DrawingContext * drawing)
 {
-    suic::TriggerPtr setter(suic::Render::GetTriggerByStatus(this, GetStyle()));        
+    suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));        
     suic::Rect rcdraw(0, 0, RenderSize().cx, RenderSize().cy);
 
     // 先填充背景
-    suic::Render::DrawBackground(drawing, setter, &rcdraw);
+    suic::Render::DrawBackground(drawing, trg, &rcdraw);
 
     // 绘制文本
 
     suic::Color clrText(ARGB(255,0,0,0));
-    suic::ObjectPtr oValue = setter->GetValue(suic::FOREGROUND);
+    suic::ObjectPtr oValue = trg->GetValue(suic::FOREGROUND);
 
     if (oValue)
     {
@@ -140,7 +140,10 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
         rcCtrl.Deflate(GetBorderThickness());
         rcCtrl.Deflate(GetPadding());
 
-        drawing->PushClip(&rcCtrl);
+        rcdraw = rcCtrl;
+        rcdraw.Offset(drawing->GetOffset());
+
+        drawing->PushClip(&rcdraw);
 
         rcCtrl.left -= _horizontalOffset * sizeChar.cx;
 
@@ -158,7 +161,7 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
                 strDraw = suic::String(_passwordChar, iStart);
                 rcCtrl.right = rcCtrl.left + sizeChar.cx * iStart;
 
-                suic::Render::DrawText(drawing, this, strDraw, setter, &rcCtrl);
+                suic::Render::DrawText(drawing, this, strDraw, trg, &rcCtrl);
 
                 rcCtrl.left = rcCtrl.right;
             }
@@ -178,20 +181,37 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
                 rcCtrl.left = rcCtrl.right;
                 rcCtrl.right += sizeChar.cx * iCount;
 
-                suic::Render::DrawText(drawing, this, strDraw, setter, &rcCtrl);
+                suic::Render::DrawText(drawing, this, strDraw, trg, &rcCtrl);
             }
         }
         else
         {
             suic::String strDraw(_passwordChar, _password.Length());
 
-            suic::Render::DrawText(drawing, this, strDraw, setter, &rcCtrl);
+            suic::FormattedText tra;
+            suic::ObjectPtr brPtr = trg->GetValue(suic::FOREGROUND);
+            suic::FontPtr pFont(trg->GetValue(_T("Font")));
+
+            tra.horzAlign = CoreFlags::Left;
+            tra.vertAlign = CoreFlags::Center;
+
+            if (brPtr)
+            {
+                tra.color = brPtr->ToColor();
+            }
+
+            if (pFont)
+            {
+                tra.font = pFont->GetFont();
+            }
+
+            drawing->DrawText(strDraw.c_str(), strDraw.Length(), &rcCtrl, &tra);
         }
 
         drawing->Pop();
     }
 
-    suic::Render::DrawBorderBrush(drawing, setter, &rcdraw);
+    suic::Render::DrawBorderBrush(drawing, trg, &rcdraw);
 }
 
 bool PasswordBox::InSelectMode() const

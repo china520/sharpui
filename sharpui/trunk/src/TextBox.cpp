@@ -324,12 +324,22 @@ void TextBox::OnMenuItemSelected(suic::ObjectPtr mPtr, MenuItemPtr itemPtr)
 
 void TextBox::OnRender(suic::DrawingContext * drawing)
 {
+    if (IsFocused())
+    {
+        WndHelper(this).HideCaret();
+    }
+
     suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));        
     suic::Rect rcdraw(0, 0, RenderSize().cx, RenderSize().cy);
 
     // œ»ÃÓ≥‰±≥æ∞
     suic::Render::DrawBackground(drawing, trg, &rcdraw);
     suic::Render::DrawBorderBrush(drawing, trg, &rcdraw);
+
+    if (IsFocused())
+    {
+        WndHelper(this).ShowCaret();
+    }
 }
 
 static suic::Uint32 WCharToChar(wchar_t w, suic::Byte * asc)   
@@ -927,13 +937,13 @@ void TextBox::UpdateScrollInfo(bool bUpdate)
         _view.InvalidateArrange();
     }
 
-    _view.ScrollToVerticalPos(iVert);
-    _view.ScrollToHorizontalPos(iHorz);
+    _view.ScrollToVerticalPos(iVert, false);
+    _view.ScrollToHorizontalPos(iHorz, false);
 
     _eDoc.SetVertScrollPos(_view.VerticalVisualPos());
     _eDoc.SetHorzScrollPos(_view.HorizontalVisualPos());
 
-    _view.InvalidateScrollBar();
+    //_view.InvalidateScrollBar();
 }
 
 }

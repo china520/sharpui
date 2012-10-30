@@ -98,6 +98,21 @@ void MainFrame::OnInitialized()
 
         item->AddColumn(_T("真心英雄"));
         item->AddColumn(_T("周华健"));
+
+        // 使用资源文件定义样式动态设置ListViewItem
+        item->SetStyle(FindResource(_T("SelfDefStyle")));
+
+        index = listPtr->AddChild(new ui::ListViewItem());
+        item = listPtr->GetItem(index);
+
+        item->AddColumn(_T("动态样式"));
+        item->AddColumn(_T("周华健"));
+
+        // 单独设置ListViewItem样式
+        // 动态增加的样式自动使用共享资源
+        // 这里copy一个新的样式
+        item->SetStyle(item->GetStyle()->Clone());
+        item->SetValue(suic::BACKGROUND, new suic::SolidColorBrush(ARGB(255,22,88,200)));
     }
 }
 

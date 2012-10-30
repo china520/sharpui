@@ -149,7 +149,7 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="../../lib"
 				GenerateDebugInformation="true"
-				SubSystem="2"
+				SubSystem="0"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				ImportLibrary="..\..\lib\$(ProjectName)u.lib"

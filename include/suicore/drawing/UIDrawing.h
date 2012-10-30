@@ -42,7 +42,7 @@ typedef struct tagFormattedText
     Handle font;
 
     tagFormattedText()
-        : color(ARGB(255,0,0,0))
+        : color(ARGB(255,0,0,1))
         , bkcolor(-1)
         , single(true)
         , ellipsis(false)
@@ -70,6 +70,7 @@ public:
     //---------------------------------------------------------------
 
     virtual Handle GetHandle() const = 0;
+    virtual Rect GetClip() = 0;
 
     virtual Size CalculateText(const Char * text, int size, const FormattedText* att) = 0;
 
@@ -105,6 +106,7 @@ public:
 
 protected:
 
+    // »­²¼Æ«ÒÆ
     Point _offset;
 };
 
