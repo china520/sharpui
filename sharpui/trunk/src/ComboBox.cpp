@@ -500,7 +500,7 @@ void ComboBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 
         if (!_textBox->IsReadOnly() && _textBox->IsEnabled())
         {
-            _textBox->Focus();
+            //_textBox->Focus();
         }
     }
 }

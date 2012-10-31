@@ -130,9 +130,9 @@ void DoubleAnimation::OnStart(suic::FrameworkElement* pElem)
     }
 }
 
-void DoubleAnimation::OnEnd(suic::FrameworkElement* pElem)
+void DoubleAnimation::OnFinish(suic::FrameworkElement* pElem)
 {
-    __super::OnEnd(pElem);
+    __super::OnFinish(pElem);
 
     suic::String strVal;
 

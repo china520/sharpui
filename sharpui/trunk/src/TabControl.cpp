@@ -17,7 +17,7 @@ namespace ui
 {
 
 TabControl::TabControl()
-    : _isAverage(true)
+    : _isAverage(false)
     , _headerHeight(25)
 {
     SetClassName(_T("TabControl"));

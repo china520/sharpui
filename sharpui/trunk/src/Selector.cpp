@@ -205,7 +205,10 @@ void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
 
     if (frame && _focusedItem != oldFocus)
     {
-        frame->Focus();
+        if (frame->IsFocusable())
+        {
+            frame->Focus();
+        }
     }
 }
 

@@ -193,6 +193,12 @@ bool HwndSourceHookMenuPopup::OnFilterMessage(suic::ObjectPtr sender, suic::Mess
     case WM_NCMOUSEMOVE:
         handled = HandleMouseMove(mp);
         break;
+
+    case WM_MOUSEACTIVATE:
+        mp.result = MA_NOACTIVATE;
+        handled = true;
+        break;
+
     case WM_CLOSE:
         ClosePopup(rootElement.get());
         break;
@@ -389,6 +395,8 @@ int InternalTrackPopupMenu(MenuPtr mainMenu)
         }
         g_trackmenupopup = new HwndSourceHookMenuPopup(menuPop, trMenu);
 
+        // È¥µô½¹µã
+        menuPop->SetFocusable(false);
         menuPop->WriteFlag(CoreFlags::IsLayeredWindow, true);
         menuPop->TrackingPopup(g_x, g_y, true, cx, cy, g_trackmenupopup.get());
 

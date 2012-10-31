@@ -803,9 +803,9 @@ void TextBox::OnMouseRightButtonUp(suic::MouseEventArg& e)
 
         OnTrackingMenu(editMenu);
 
-        Menu::TrackPopupMenu(pt.x, pt.y, editMenu);
-
         Focus();
+
+        Menu::TrackPopupMenu(pt.x, pt.y, editMenu);
     }
 }
 

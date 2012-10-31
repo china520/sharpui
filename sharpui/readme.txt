@@ -19,3 +19,7 @@
    3. 调整ListBox、ComboBox控件逻辑。
    4. 加入Splitter控件，把RepeatButton改为RepeatedButton。
    5. 修改Logical child相关访问方法。
+
+0.1.2.5
+   1. 修正菜单和组合框下拉框焦点问题。
+   2. 解决界面元素鼠标邮件绘制问题。

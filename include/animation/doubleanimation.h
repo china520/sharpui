@@ -34,7 +34,7 @@ public:
     /// <param name="pElem">目标元素</param>
     /// <returns>无</returns>
     virtual void OnStart(suic::FrameworkElement* pElem);
-    virtual void OnEnd(suic::FrameworkElement* pElem);
+    virtual void OnFinish(suic::FrameworkElement* pElem);
 
     double GetFrom() const;
     void SetFrom(double val);

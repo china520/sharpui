@@ -18,9 +18,15 @@
 namespace suic
 {
 
+typedef delegate<void(FrameworkElement*)> StartAnimationHandler;
+typedef delegate<void(FrameworkElement*)> FinishAnimationHandler;
+
 class SUICORE_API Animation : public Timeline
 {
 public:
+
+    StartAnimationHandler StartAnimation;
+    FinishAnimationHandler FinishAnimation;
 
     Animation();
     virtual ~Animation();
@@ -71,7 +77,7 @@ public:
     /// </summary>
     /// <param name="pElem">目标元素</param>
     /// <returns>无</returns>
-    virtual void OnEnd(suic::FrameworkElement* pElem);
+    virtual void OnFinish(suic::FrameworkElement* pElem);
 
     /// <summary>
     ///     动画暂停时回调

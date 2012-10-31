@@ -37,6 +37,7 @@ int Menu::TrackPopupMenu(int x, int y, MenuPtr menu)
 {
     suic::PopupPtr menuPopup(new suic::UIPopup());
     menuPopup->SetPopupRoot(menu.get());
+    menuPopup->SetFocusable(false);
 
     return TrackPopupMenuItem(NULL, x, y, NULL, menuPopup);
 }
