@@ -33,6 +33,7 @@ public:
     int GetIndent() const;
     void SetIndent(int val);
 
+    void SetText(const suic::String & text);
     suic::String GetText();
 
 public:

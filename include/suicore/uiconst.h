@@ -84,6 +84,7 @@ public:
 
         IsComposition = 0x00400000,
         IsAllowDrop = 0x00800000,
+        IsNotRender = 0x01000000,
     };
 };
 

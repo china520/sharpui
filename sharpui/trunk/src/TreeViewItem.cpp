@@ -111,6 +111,13 @@ TreeItemHeader::TreeItemHeader()
     WriteFlag(CoreFlags::IsSupportMouseOver, true);
 }
 
+TreeItemHeader::TreeItemHeader(const suic::String& text)
+{
+    this->TreeItemHeader::TreeItemHeader();
+
+    SetText(text);
+}
+
 void TreeItemHeader::OnRender(suic::DrawingContext * drawing)
 {
     if (IsEnabled())
@@ -167,6 +174,13 @@ static TreeView* GetParentTreeView(suic::Element* pElem)
     }
 
     return pTree;
+}
+
+TreeViewItem::TreeViewItem(const suic::String& text)
+{
+    this->TreeViewItem::TreeViewItem();
+
+    SetText(text);
 }
 
 TreeViewItem::TreeViewItem()
@@ -349,8 +363,6 @@ void TreeViewItem::OnInitialized()
     TreeItemHeaderPtr itemHead(_header);
 
     itemHead->SetStyle(FindResource(itemHead->GetClassName()));
-
-    SetText(_T(""));
 
     _check.SetStyle(FindResource(_check.GetClassName()));
     _check.BeginInit();

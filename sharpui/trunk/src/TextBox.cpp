@@ -70,6 +70,10 @@ suic::Size TextBoxPanel::ArrangeOverride(const suic::Size& size)
     return size;
 }
 
+void TextBoxPanel::OnRenderSizeChanged(suic::RenderSizeChangedEventArg& e)
+{
+}
+
 void TextBoxPanel::OnRender(suic::DrawingContext * drawing)
 {
     suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));        

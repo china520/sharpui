@@ -27,6 +27,8 @@ public:
 
     TextBoxPanel();
 
+    bool IsRender() const;
+
     void SetTextBox(TextBox* textBox);
 
     void OnSetCursor(suic::CursorEventArg& e);
@@ -34,14 +36,19 @@ public:
     suic::Size MeasureOverride(const suic::Size& size);
     suic::Size ArrangeOverride(const suic::Size& size);
 
+    void OnRenderSizeChanged(suic::RenderSizeChangedEventArg& e);
     void OnRender(suic::DrawingContext * drawing);
-
     void OnMouseRightButtonUp(suic::MouseEventArg& e);
 
 protected:
 
     TextBox* _textBox;
 };
+
+inline bool TextBoxPanel::IsRender() const
+{
+    return true;
+}
 
 class SHARPUI_API TextBox : public suic::Control
 {

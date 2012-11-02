@@ -342,6 +342,11 @@ void SetTrackMenu(suic::PopupPtr menu)
 
 void SetPopupMenu(MenuItemPtr itemPtr, int x, int y, suic::PopupPtr menu)
 {
+    if (g_menuPop)
+    {
+        g_menuPop->Close();
+    }
+
     g_x = x;
     g_y = y;
     g_menuPop = menu;

@@ -81,7 +81,9 @@ public:
     Size MeasureOverride(const Size& availableSize);
     suic::Size ArrangeOverride(const suic::Size& size);
 
+    void OnSetterChanged(suic::SetterChangedEventArg& e);
     void OnScrollChanged(ScrollChangedEventArg& e);
+    void OnRenderSizeChanged(RenderSizeChangedEventArg& e);
 
     void OnRender(DrawingContext * drawing);
 
@@ -108,8 +110,13 @@ protected:
     int _visibleStart;
     int _visibleCount;
 
+    // 水平偏移位置
     int _horizontalOffset;
+    // 垂直偏移位置
     int _verticalOffset;
+
+    // 面板背景色
+    ImagePtr _cavas;
 };
 
 typedef shared<Panel> PanelPtr;

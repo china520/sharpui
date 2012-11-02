@@ -69,11 +69,14 @@ public:
 
 protected:
     
+    void UpdateBackground(const Size& size);
+
     suic::Size MeasureOverride(const suic::Size& size);
     suic::Size ArrangeOverride(const suic::Size& size);
 
     void OnLoaded(suic::LoadedEventArg& e);
 
+    void OnStyleUpdated();
     void OnSetterChanged(SetterChangedEventArg& e);
 
     void OnRenderSizeChanged(RenderSizeChangedEventArg& e);

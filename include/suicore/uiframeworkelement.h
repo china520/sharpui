@@ -124,6 +124,8 @@ public:
     virtual void SetText(const String & text);
     virtual String GetText();
 
+    bool IsRender() const;
+
     CursorPtr GetCursor();
 
     /// <summary>
@@ -239,6 +241,11 @@ protected:
     CursorPtr _cursor;
 
 };
+
+inline bool FrameworkElement::IsRender() const
+{
+    return !ReadFlag(CoreFlags::IsNotRender);
+}
 
 inline String FrameworkElement::ToString()
 {

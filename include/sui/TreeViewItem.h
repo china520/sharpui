@@ -23,11 +23,12 @@ namespace ui
 class TreeViewItem;
 typedef suic::shared<TreeViewItem> TreeViewItemPtr;
 
-class TreeItemHeader : public suic::ContentControl
+class SHARPUI_API TreeItemHeader : public suic::ContentControl
 {
 public:
 
     TreeItemHeader();
+    TreeItemHeader(const suic::String& text);
 
 protected: 
 
@@ -39,11 +40,10 @@ typedef suic::shared<TreeItemHeader> TreeItemHeaderPtr;
 
 typedef delegate<void(TreeViewItem*)> SelectTreeItemHandler;
 
-// =======================================================
-// TreeViewItem，实现树节点。
-// =======================================================
-
-class TreeViewItem : public HeaderedItemsControl
+/// <summary>
+///  TreeViewItem，实现树节点。
+/// </summary>
+class SHARPUI_API TreeViewItem : public HeaderedItemsControl
 {
 public:
 
@@ -51,6 +51,7 @@ public:
     SelectTreeItemHandler ItemSelected;
 
     TreeViewItem();
+    TreeViewItem(const suic::String& text);
 
     DECLAREBUILD(TreeViewItem)
 

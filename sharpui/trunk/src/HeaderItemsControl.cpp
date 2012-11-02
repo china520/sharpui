@@ -43,6 +43,16 @@ void HeaderedItemsControl::SetHeader(suic::ElementPtr val)
     }
 }
 
+void HeaderedItemsControl::SetText(const suic::String & text)
+{
+    suic::FrameworkElementPtr frame(_header);
+
+    if (frame)
+    {
+        frame->SetText(text);
+    }
+}
+
 suic::String HeaderedItemsControl::GetText()
 {
     suic::FrameworkElementPtr frame(_header);
@@ -146,10 +156,6 @@ void HeaderedItemsControl::OnInitialized()
     if (headerPtr)
     {
         SetText(headerPtr->ToString());
-    }
-    else
-    {
-        SetText(_T(""));
     }
 
     __super::OnInitialized();
