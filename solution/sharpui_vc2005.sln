@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sharpui", "..\sharpui\trunk\sharpui.vcproj", "{F64B1FFB-8586-4424-B8ED-BD58AE9C5B54}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "suidemon", "..\sharpui\branches\suidemon\suidemon.vcproj", "{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F64B1FFB-8586-4424-B8ED-BD58AE9C5B54} = {F64B1FFB-8586-4424-B8ED-BD58AE9C5B54}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

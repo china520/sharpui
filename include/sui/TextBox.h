@@ -129,6 +129,7 @@ protected:
 
     TextBoxPanel _panel;
     ScrollViewer _view;
+    suic::CaretElement _caret;
 
     friend class TextBoxPanel;
 };

@@ -10,7 +10,6 @@
 // WindowHelper.cpp
 
 #include <sui/WindowHelper.h>
-#include <suicore/carethelper.h>
 
 namespace ui
 {
@@ -83,8 +82,6 @@ int WndHelper::PasteText(suic::String & text)
         BYTE * arColBlk = (BYTE*)::GlobalLock(hMem_TextBlok);
     }
 
-    HideCaret();
-
     HGLOBAL hmem = NULL;
     if (::IsClipboardFormatAvailable(CF_UNICODETEXT))
     {
@@ -156,36 +153,6 @@ int WndHelper::CopyText(const suic::String & text)
     ::SetClipboardData(CF_OEMTEXT, hMBCSMem);
 
     return 0;
-}
-
-bool WndHelper::CreateSolidCaret(int w, int h)
-{
-    return suic::CaretHelper::CreateCaret(ePtr.get(), w, h);
-}
-
-bool WndHelper::DestroyCaret()
-{
-    return ::DestroyCaret() ? true : false;
-}
-
-void WndHelper::ShowCaret()
-{
-    suic::CaretHelper::ShowCaret(ePtr.get());
-}
-
-void WndHelper::HideCaret()
-{
-    suic::CaretHelper::HideCaret(ePtr.get());
-}
-
-void WndHelper::SetCaretPos(int x, int y)
-{
-    suic::CaretHelper::SetCaretPos(ePtr.get(), x, y);
-}
-
-bool WndHelper::GetCaretPos(suic::Point & pt)
-{
-    return ::GetCaretPos(&pt) ? true : false;
 }
 
 };

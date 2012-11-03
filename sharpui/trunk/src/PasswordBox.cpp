@@ -26,6 +26,8 @@ PasswordBox::PasswordBox()
     , _horizontalOffset(0)
 {
     SetClassName(_T("PasswordBox"));
+
+    _caret.SetAutoDelete(false);
 }
 
 PasswordBox::~PasswordBox()
@@ -51,7 +53,8 @@ void PasswordBox::Copy()
     if (InSelectMode())
     {
         ui::WndHelper helper(this);
-        helper.HideCaret();
+
+        _caret.Hide();
 
         if (!helper.OpenClipboard())
         {
@@ -87,7 +90,7 @@ void PasswordBox::Paste()
 
 void PasswordBox::SelectAll()
 {
-    WndHelper(this).HideCaret();
+    _caret.Hide();
 
     _startSel = 0;
     _selCount = _password.Length() - _startSel;
@@ -266,9 +269,7 @@ void PasswordBox::GetSelectRange(int& iStart, int& iCount)
 
 void PasswordBox::ResetCaretPos()
 {
-    ui::WndHelper helper(this);
-
-    helper.HideCaret();
+    _caret.Hide();
 
     suic::Size size(suic::Render::MeasureTextSize(suic::String(_passwordChar, 1), GetStyle()->GetTrigger()));
     suic::Point pt = PointToScreen(suic::Point());
@@ -299,9 +300,10 @@ void PasswordBox::ResetCaretPos()
 
     rcCaret.Offset(-pt.x, -pt.y);
 
-    helper.CreateSolidCaret(1, rcCaret.Height());
-    helper.SetCaretPos(rcCaret.left, rcCaret.top);
-    helper.ShowCaret();
+    rcCaret.right = rcCaret.left + 1;
+
+    _caret.Arrange(rcCaret);
+    _caret.Show();
 }
 
 int PasswordBox::CalcCaretPos(int xOffset)
@@ -432,7 +434,7 @@ void PasswordBox::OnTextInput(suic::KeyEventArg& e)
 
 void PasswordBox::OnKeyDown(suic::KeyEventArg& e)
 {
-    WndHelper(this).HideCaret();
+    _caret.Hide();
 
     e.Handled(true);
 
@@ -533,7 +535,7 @@ void PasswordBox::OnGotFocus(suic::FocusEventArg& e)
 {
     e.Handled(true);
 
-    WndHelper(this).HideCaret();
+    _caret.Hide();
 
     InvalidateVisual();
     ResetCaretPos();
@@ -541,9 +543,8 @@ void PasswordBox::OnGotFocus(suic::FocusEventArg& e)
 
 void PasswordBox::OnLostFocus(suic::FocusEventArg& e)
 {
-    WndHelper(this).HideCaret();
+    _caret.Hide();
 
-    DestroyCaret();
     InvalidateVisual();
 
     __super::OnLostFocus(e);
@@ -554,8 +555,7 @@ void PasswordBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
     SetCaptureMouse();
 
     e.Handled(true);
-
-    WndHelper(this).HideCaret();
+    _caret.Hide();
 
     int code = e.State();
 
@@ -653,6 +653,8 @@ void PasswordBox::OnInitialized()
     {
         _passwordChar = obj->ToString()[0];
     }
+
+    AddVisualChild(&_caret);
 }
 
 }

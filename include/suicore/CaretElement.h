@@ -27,7 +27,14 @@ public:
 
 protected:
 
+    void OnTimer(int id);
+    void OnUnloaded(LoadedEventArg& e);
+    void OnInitialized();
     void OnRender(DrawingContext * drawing);
+
+protected:
+
+    TimerIdentityPtr _timer;
 
 };
 

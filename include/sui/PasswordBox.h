@@ -79,6 +79,8 @@ protected:
     int _selCount;
     int _caretPos;
     int _horizontalOffset;
+
+    suic::CaretElement _caret;
 };
 
 typedef suic::shared<PasswordBox> PasswordBoxPtr;

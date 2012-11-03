@@ -34,13 +34,6 @@ public:
     int CutText(suic::String & text);
     int CopyText(const suic::String & text);
 
-    bool CreateSolidCaret(int w, int h);
-    bool DestroyCaret();
-    void ShowCaret();
-    void HideCaret();
-    void SetCaretPos(int x, int y);
-    bool GetCaretPos(suic::Point & pt);
-
 protected:
 
     suic::ElementPtr ePtr;

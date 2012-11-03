@@ -128,17 +128,14 @@ TextBox::TextBox()
     _view.SetAutoDelete(false);
 
     _panel.SetTextBox(this);
+    _caret.SetAutoDelete(false);
 }
 
 TextBox::TextBox(suic::Uint32 eStyle)
     : _isSingle(true)
     , _eStyle(0)
 {
-    SetClassName(_T("TextBox"));
-    _eDoc.SetAutoDelete(false);
-    SetMinHeight(16);
-
-    _panel.SetTextBox(this);
+    this->TextBox::TextBox();
 }
 
 TextBox::~TextBox()
@@ -228,8 +225,10 @@ void TextBox::Copy()
     {
         return;
     }
+
+    _caret.Hide();
+
     ui::WndHelper helper(this);
-    helper.HideCaret();
 
     if (!helper.OpenClipboard())
     {
@@ -240,7 +239,6 @@ void TextBox::Copy()
     _eDoc.GetSelectText(strSel);
 
     helper.CopyText(strSel);
-
     helper.CloseClipboard();
 }
 
@@ -278,7 +276,8 @@ void TextBox::Paste()
 
 void TextBox::SelectAll()
 {
-    WndHelper(this).HideCaret();
+    _caret.Hide();
+
     _eDoc.SelectAll();
     UpdateScrollInfo(false);
     _panel.InvalidateVisual();
@@ -330,7 +329,7 @@ void TextBox::OnRender(suic::DrawingContext * drawing)
 {
     if (IsFocused())
     {
-        WndHelper(this).HideCaret();
+        //_caret.Hide();
     }
 
     suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));        
@@ -342,7 +341,7 @@ void TextBox::OnRender(suic::DrawingContext * drawing)
 
     if (IsFocused())
     {
-        WndHelper(this).ShowCaret();
+        //_caret.Show();
     }
 }
 
@@ -438,7 +437,7 @@ void TextBox::OnKeyDown(suic::KeyEventArg& e)
         return;
     }
 
-    WndHelper(this).HideCaret();
+    _caret.Hide();
 
     int state = e.State();
     int ch = e.GetKey();
@@ -591,7 +590,7 @@ void TextBox::OnMouseMove(suic::MouseEventArg& e)
 
     if (IsMouseCaptured())
     {
-        WndHelper(this).HideCaret();
+        _caret.Hide();
 
         suic::Rect rc(DocumentRect(PointToScreen(suic::Point())));
 
@@ -631,19 +630,16 @@ void TextBox::OnGotFocus(suic::FocusEventArg& e)
 {
     e.Handled(true);
 
-    WndHelper(this).HideCaret();
+    _caret.Hide();
 
     _panel.InvalidateVisual();
 
-    WndHelper(this).CreateSolidCaret(1, 16);
     ResetCaretPos();
 }
 
 void TextBox::OnLostFocus(suic::FocusEventArg& e)
 {
-    WndHelper(this).HideCaret();
-    DestroyCaret();
-
+    _caret.Hide();
     _panel.InvalidateVisual();
 
     __super::OnLostFocus(e);
@@ -670,9 +666,11 @@ void TextBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 
     if (!rcClnt.PointIn(e.MousePoint()))
     {
+        _caret.Hide();
         return;
     }
-    WndHelper(this).HideCaret();
+
+    //_caret.Hide();
 
     int code = e.State();
 
@@ -701,13 +699,13 @@ void TextBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
         bValid = _eDoc.SetCaret(&tmPt);
     }
 
+    ResetCaretPos();
+
     if (bValid)
     {
         UpdateScrollInfo(false);
         _panel.InvalidateVisual();
     }
-
-    ResetCaretPos();
 }
 
 void TextBox::OnMouseLeftButtonDbclk(suic::MouseEventArg& e)
@@ -857,6 +855,8 @@ void TextBox::OnInitialized()
         _eDoc.SetSingleLine(true);
         _view.SetScrollBarVisibility(ScrollViewer::Hidden);
     }
+
+    AddVisualChild(&_caret);
 }
 
 void TextBox::ResetCaretPos(bool bUpDown)
@@ -865,7 +865,7 @@ void TextBox::ResetCaretPos(bool bUpDown)
     {
         ui::WndHelper helper(this);
 
-        helper.HideCaret();
+        _caret.Hide();
 
         suic::Point pt = PointToScreen(suic::Point());
         suic::Rect rc(DocumentRect(suic::Point()));
@@ -890,7 +890,7 @@ void TextBox::ResetCaretPos(bool bUpDown)
         if (rcCaret.left < 0 || rcCaret.left > rc.Width() ||
             rcCaret.bottom < 0 || rcCaret.top > rc.Height())
         {
-            helper.HideCaret();
+            _caret.Hide();
             return;
         }
 
@@ -921,9 +921,12 @@ void TextBox::ResetCaretPos(bool bUpDown)
         }
 
         //SetCaretBlinkTime
-        helper.CreateSolidCaret(1, rcCaret.Height());
-        helper.SetCaretPos(rcCaret.left, rcCaret.top);
-        helper.ShowCaret();
+        rcCaret.right = rcCaret.left + 1;
+
+        //_caret.InvalidateVisual();
+        _caret.Arrange(rcCaret);
+        _caret.Show();
+        _caret.InvalidateVisual();
     }
 }
 

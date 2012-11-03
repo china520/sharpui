@@ -96,6 +96,8 @@
 #include <suicore/uipanel.h>
 #include <suicore/uiobject.h>
 
+#include <suicore/caretelement.h>
+
 #include <suicore/drawing/uidrawing.h>
 #include <suicore/drawing/uiImageBrush.h>
 #include <suicore/drawing/uiLinearGradientBrush.h>
