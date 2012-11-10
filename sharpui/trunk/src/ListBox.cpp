@@ -50,6 +50,11 @@ void ListBox::OnUnloaded(suic::LoadedEventArg& e)
     suic::SystemHelper::suiKillTimer(_timerid);
 }
 
+void ListBox::CheckAddingItem(suic::ObjectPtr& itemObj)
+{
+    IMPLCHECKITEMS(ListBoxItem,itemObj);
+}
+
 void ListBox::OnRender(suic::DrawingContext * drawing)
 {
     __super::OnRender(drawing);

@@ -30,6 +30,10 @@ TreeView::~TreeView()
 {
 }
 
+void TreeView::CheckAddingItem(suic::ObjectPtr& itemObj)
+{
+}
+
 static void DrawVertTreeDot(suic::DrawingContext * drawing, int by, int ey, int x)
 {
     for (int i = by; i <= ey; ++i)
@@ -46,13 +50,50 @@ static void DrawHorzTreeDot(suic::DrawingContext * drawing, int bx, int ex, int 
     }
 }
 
+bool TreeView::RemoveItem(TreeViewItem* pItem)
+{
+    bool bRet = false;
+    int count = GetItems()->GetCount();
+
+    for (int i = 0; i < count; ++i)
+    {
+        TreeViewItemPtr treePtr(GetItems()->GetItem(i));
+
+        if (treePtr && treePtr->RemoveItem(pItem))
+        {
+            bRet = true;
+            break;
+        }
+    }
+
+    return bRet;
+}
+
+TreeViewItemPtr TreeView::HitTreeItem(suic::Point pt)
+{
+    TreeViewItemPtr ret;
+    int count = GetItems()->GetCount();
+
+    for (int i = 0; i < count; ++i)
+    {
+        TreeViewItemPtr treePtr(GetItems()->GetItem(i));
+
+        if (treePtr && (ret=treePtr->HitTreeItem(pt)))
+        {
+            break;
+        }
+    }
+
+    return ret;
+}
+
 void TreeView::ExpandSubtrees()
 {
     int count = GetItems()->GetCount();
 
     for (int i = 0; i < count; ++i)
     {
-        TreeViewItemPtr treePtr = TreeViewItemPtr::cast(GetItems()->GetItem(i));
+        TreeViewItemPtr treePtr(GetItems()->GetItem(i));
 
         if (treePtr)
         {
@@ -139,27 +180,11 @@ void TreeView::OnRender(suic::DrawingContext * drawing)
 void TreeView::OnMouseWheel(suic::MouseWheelEventArg& e)
 {
     _scrollHost->OnMouseWheel(e);
+}
 
-    /*int zDelta = e.Delta();
-    int nPos = _vScroll->GetVisualPos();
-
-    if (zDelta < 0)
-    {
-        _vScroll->ScrollTo(nPos + 4, false);
-    }
-    else
-    {
-        _vScroll->ScrollTo(nPos - 4, false);
-    }
-
-    if (_vScroll->GetVisualPos() != nPos)
-    {
-        _vScroll->UpdateScrollBar();
-
-        UpdateLayout();
-    }
-
-    e.Handled(true);*/
+void TreeView::OnMouseRightButtonDown(suic::MouseEventArg& e)
+{
+    e.Handled(true);
 }
 
 void TreeView::OnTextInput(suic::KeyEventArg& e)
@@ -185,4 +210,4 @@ void TreeView::OnLostFocus(suic::FocusEventArg& e)
     __super::OnLostFocus(e);
 }
 
-};
+}

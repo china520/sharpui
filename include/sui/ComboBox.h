@@ -152,6 +152,8 @@ public:
 
 protected:
 
+    void CheckAddingItem(suic::ObjectPtr& itemObj);
+
     suic::Size MeasureOverride(const suic::Size& size);
     suic::Size ArrangeOverride(const suic::Size& size);
 

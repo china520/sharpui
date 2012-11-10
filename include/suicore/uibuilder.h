@@ -39,11 +39,11 @@ public:
     /// <param name="parent">
     ///     根元素实现类
     /// </param>
-    /// <param name="resLocater">
+    /// <param name="res">
     ///     资源描述文件
     /// </param>
     /// <returns>根元素对象，如果main不为空，则为main</returns>
-    ObjectPtr Build(ObjectPtr parent, const String& resLocater);
+    ObjectPtr Build(ObjectPtr parent, const AsciiStr& res);
 
     /// <summary>
     ///     元素创建侦听类接口

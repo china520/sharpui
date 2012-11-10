@@ -33,6 +33,9 @@ public:
     static void suiInitialize();
     static void suiClear();
 
+    static void SetTrackingPopup(FrameworkElement*);
+    static FrameworkElementPtr GetTrackingPopup();
+
     static bool ReadResource(const String& path);
 
     static ObjectPtr GetRefObj(Element*, const String&);

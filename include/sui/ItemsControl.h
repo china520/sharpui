@@ -20,6 +20,15 @@
 #include <sui/VisualizePanel.h>
 #include <sui/ScrollViewer.h>
 
+#define IMPLCHECKITEMS(dr,cr)\
+    dr* pItem = dynamic_cast<dr*>(cr.get());\
+    if (!pItem)\
+    {\
+        pItem = new dr();\
+        pItem->SetContent(cr);\
+        cr = pItem;\
+    }\
+
 namespace ui
 {
 

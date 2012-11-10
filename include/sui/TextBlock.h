@@ -26,6 +26,9 @@ public:
 
     virtual ~TextBlock();
 
+    bool IsSingle() const;
+    void SetSingle(bool val);
+
     DECLAREBUILD(TextBlock)
 
 protected:
@@ -34,9 +37,25 @@ protected:
 
     void OnInitialized();
     void OnRender(suic::DrawingContext * drawing);
+
+    void OnSetterChanged(suic::SetterChangedEventArg& e);
+
+protected:
+
+    bool _single;
 };
 
 typedef suic::shared<TextBlock> TextBlockPtr;
+
+inline bool TextBlock::IsSingle() const
+{
+    return _single;
+}
+
+inline void TextBlock::SetSingle(bool val)
+{
+    _single = val;
+}
 
 };
 

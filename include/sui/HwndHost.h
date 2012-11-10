@@ -20,7 +20,7 @@ namespace ui
 /// <summary>
 /// 适配真实窗口句柄，在排列时放大或缩小窗口。
 /// </summary>
-class SHARPUI_API HwndHost : public suic::Control
+class SHARPUI_API HwndHost : public suic::FrameworkElement
 {
 public:
 
@@ -41,10 +41,17 @@ protected:
     suic::Size MeasureOverride(const suic::Size& size);
     suic::Size ArrangeOverride(const suic::Size& size);
 
+private:
+
+    void BuildOrReparentWindow();
+    void BuildWindow(suic::Handle hwndParent);
+
 protected:
 
     // 真实窗口句柄
     suic::Handle _handle;
+    // 是否为内部创建句柄
+    bool _selfHost;
 };
 
 typedef suic::shared<HwndHost> HwndHostPtr;

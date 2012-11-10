@@ -39,6 +39,10 @@ public:
 
     int AddText(const suic::String& text);
 
+protected:
+
+    void CheckAddingItem(suic::ObjectPtr& itemObj);
+
 public:
 
     virtual void OnInitialized();

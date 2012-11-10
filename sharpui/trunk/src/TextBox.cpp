@@ -634,7 +634,7 @@ void TextBox::OnGotFocus(suic::FocusEventArg& e)
 
     _panel.InvalidateVisual();
 
-    ResetCaretPos();
+    //ResetCaretPos();
 }
 
 void TextBox::OnLostFocus(suic::FocusEventArg& e)
@@ -670,7 +670,7 @@ void TextBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
         return;
     }
 
-    //_caret.Hide();
+    _caret.Hide();
 
     int code = e.State();
 
@@ -699,7 +699,7 @@ void TextBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
         bValid = _eDoc.SetCaret(&tmPt);
     }
 
-    ResetCaretPos();
+    //ResetCaretPos();
 
     if (bValid)
     {
@@ -741,11 +741,17 @@ void TextBox::OnMouseLeftButtonUp(suic::MouseEventArg& e)
     }
 
     ReleaseCaptureMouse();
+    ResetCaretPos();
 }
 
 void TextBox::OnTrackingMenu(ui::MenuPtr& menu)
 {
 
+}
+
+void TextBox::OnMouseRightButtonDown(suic::MouseEventArg& e)
+{
+    e.Handled(true);
 }
 
 void TextBox::OnMouseRightButtonUp(suic::MouseEventArg& e)
@@ -926,7 +932,6 @@ void TextBox::ResetCaretPos(bool bUpDown)
         //_caret.InvalidateVisual();
         _caret.Arrange(rcCaret);
         _caret.Show();
-        _caret.InvalidateVisual();
     }
 }
 

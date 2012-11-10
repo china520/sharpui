@@ -18,7 +18,7 @@
 # define _UITHREAD_H_
 
 #include <suicore/uiobject.h>
-#include <suicore/uilocker.h>
+#include <util/locker.h>
 
 namespace suic {
 
@@ -137,7 +137,7 @@ private:
     void operator=(const Thread&); 
 };
 
-typedef Shared<Thread> ThreadPtr;
+typedef shared<Thread> ThreadPtr;
 
 }
 

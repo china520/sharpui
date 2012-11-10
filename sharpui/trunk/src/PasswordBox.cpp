@@ -164,7 +164,7 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
                 strDraw = suic::String(_passwordChar, iStart);
                 rcCtrl.right = rcCtrl.left + sizeChar.cx * iStart;
 
-                suic::Render::DrawText(drawing, this, strDraw, trg, &rcCtrl);
+                suic::Render::DrawText(drawing, this, strDraw, trg, &rcCtrl, true);
 
                 rcCtrl.left = rcCtrl.right;
             }
@@ -184,7 +184,7 @@ void PasswordBox::OnRender(suic::DrawingContext * drawing)
                 rcCtrl.left = rcCtrl.right;
                 rcCtrl.right += sizeChar.cx * iCount;
 
-                suic::Render::DrawText(drawing, this, strDraw, trg, &rcCtrl);
+                suic::Render::DrawText(drawing, this, strDraw, trg, &rcCtrl, true);
             }
         }
         else

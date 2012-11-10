@@ -30,8 +30,8 @@ public:
     static void DrawBackground(DrawingContext* drawing, TriggerPtr& trigger, const Rect* rc);
     static void DrawBorderBrush(DrawingContext* drawing, TriggerPtr& trigger, const Rect* rc);
 
-    static void DrawText(DrawingContext* drawing, FrameworkElement* obj, String& text, TriggerPtr& trigger, const Rect* rc);
-    static void DrawText(DrawingContext* drawing, FrameworkElement* obj, String& text);
+    static void DrawText(DrawingContext* drawing, FrameworkElement* obj, String& text, TriggerPtr& trigger, const Rect* rc, bool bSingle);
+    static void DrawText(DrawingContext* drawing, FrameworkElement* obj, String& text, bool bSingle);
 
     static TriggerPtr GetTriggerByStatus(FrameworkElement* obj, suic::StylePtr& style);
     static Size MeasureImageSize(const TriggerPtr& trigger);

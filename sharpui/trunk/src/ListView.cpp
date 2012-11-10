@@ -172,7 +172,7 @@ int ListView::GetVisualEndIndex()
 
 void ListView::CheckAddingItem(suic::ObjectPtr& itemObj)
 {
-    ;
+    IMPLCHECKITEMS(ListViewItem,itemObj);
 }
 
 void ListView::OnInitialized()

@@ -161,7 +161,7 @@ void CheckButton::OnRender(suic::DrawingContext * drawing)
     drawrect.left = drawrect.right + GetPadding().left;
     drawrect.right = RenderSize().cx;
 
-    suic::Render::DrawText(drawing, this, GetText(), trg, &drawrect);
+    suic::Render::DrawText(drawing, this, GetText(), trg, &drawrect, true);
 }
 
 void CheckButton::OnKeyDown(suic::KeyEventArg& e)
@@ -202,4 +202,4 @@ void CheckButton::OnLostFocus(suic::FocusEventArg& e)
 {
 }
 
-};
+}

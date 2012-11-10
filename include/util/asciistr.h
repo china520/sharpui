@@ -3,22 +3,22 @@
 
 #include <suicore/uicoreconfig.h>
 
-class SUICORE_API Multistr
+class SUICORE_API AsciiStr
 {
 public:
 
-  	typedef size_t size_type;
+  	typedef unsigned int size_type;
 
-	static const size_type npos;
+    static const size_type npos;
 
-	Multistr();
+	AsciiStr();
+	AsciiStr(const AsciiStr & copy);
 
-	Multistr(const Multistr & copy);
-	explicit Multistr(const char * copy);
-    explicit Multistr(const wchar_t * copy, int code=1);
-	explicit Multistr(const char * str, size_type len);
+	explicit AsciiStr(const char * copy);
+    explicit AsciiStr(const wchar_t * copy, int code = 1);
+	explicit AsciiStr(const char * str, size_type len);
 
-	~Multistr();
+	~AsciiStr();
 
     void SetCode(int code);
     int GetCode() const;
@@ -43,9 +43,10 @@ public:
 
 	void reserve(size_type cap);
 
-	Multistr& assign(const char* str, size_type len);
-	Multistr& append(const char* str, size_type len);
-	void swap (Multistr& other);
+	AsciiStr& assign(const char* str, size_type len);
+	AsciiStr& append(const char* str, size_type len);
+
+	void swap (AsciiStr& other);
 
 private:
 
@@ -71,57 +72,57 @@ private:
 	static Rep _nullrep;
 };
 
-inline const char * Multistr::c_str() const 
+inline const char * AsciiStr::c_str() const 
 { 
     return _rep->str; 
 }
 
-inline const char * Multistr::data() const 
+inline const char * AsciiStr::data() const 
 { 
     return _rep->str; 
 }
 
-inline Multistr::size_type Multistr::length() const 
+inline AsciiStr::size_type AsciiStr::length() const 
 { 
     return _rep->size; 
 }
 
-inline Multistr::size_type Multistr::size() const 
+inline AsciiStr::size_type AsciiStr::size() const 
 { 
     return _rep->size; 
 }
 
-inline bool Multistr::empty() const 
+inline bool AsciiStr::empty() const 
 { 
     return _rep->size == 0; 
 }
 
-inline Multistr::size_type Multistr::capacity() const 
+inline AsciiStr::size_type AsciiStr::capacity() const 
 { 
     return _rep->capacity; 
 }
 
-inline void Multistr::init(size_type sz) 
+inline void AsciiStr::init(size_type sz) 
 { 
     init(sz, sz); 
 }
 
-inline void Multistr::set_size(size_type sz) 
+inline void AsciiStr::set_size(size_type sz) 
 { 
     _rep->str[_rep->size=sz] = '\0'; 
 }
 
-inline char* Multistr::start() const 
+inline char* AsciiStr::start() const 
 { 
     return _rep->str; 
 }
 
-inline char* Multistr::finish() const 
+inline char* AsciiStr::finish() const 
 { 
     return _rep->str + _rep->size; 
 }
 
-inline void Multistr::swap(Multistr& other)
+inline void AsciiStr::swap(AsciiStr& other)
 {
     Rep* r = _rep;
     _rep = other._rep;

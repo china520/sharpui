@@ -95,7 +95,7 @@ void ProgressBar::OnRender(suic::DrawingContext * drawing)
         }
     }
 
-    suic::Render::DrawText(drawing, this, GetText(), trg, &elemrect);
+    suic::Render::DrawText(drawing, this, GetText(), trg, &elemrect, true);
 }
 
 void ProgressBar::OnMaximumChanged(double oldMaximum, double newMaximum)

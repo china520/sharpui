@@ -21,6 +21,35 @@ namespace suic
 typedef delegate<void(FrameworkElement*)> StartAnimationHandler;
 typedef delegate<void(FrameworkElement*)> FinishAnimationHandler;
 
+/// <summary>
+/// 动画绘制动作
+/// </summary>
+class SUICORE_API AnimateAction
+{
+public:
+
+    // 绘制偏移
+    Point offset;
+
+    // 旋转角度
+    double radio;
+
+    // 透明度
+    double alpha;
+
+    // 宽度和高度缩放比率
+    double widRadio;
+    double heiRadio;
+
+    // 用户对图像自定义处理
+    ImagePtr image;
+
+    // 使用image绘制
+    bool useimage;
+
+    AnimateAction();
+};
+
 class SUICORE_API Animation : public Timeline
 {
 public:
@@ -63,7 +92,7 @@ public:
     /// </remarks>
     /// <param name="pImage">关键帧对象</param>
     /// <returns>无</returns>
-    virtual void OnFrame(ImagePtr& pImage);
+    virtual void OnFrame(FrameworkElement* pElem, AnimateAction& act);
 
     /// <summary>
     ///     动画开始时回调

@@ -39,13 +39,14 @@
 #include <sui/tabitem.h>
 #include <sui/Splitter.h>
 
-#include <sui/activexcontrol.h>
+#include <sui/activexhost.h>
 #include <sui/webbrowser.h>
 #include <sui/richtextbox.h>
 #include <sui/PasswordBox.h>
 #include <sui/AnimateBox.h>
 
 #include <sui/HwndHost.h>
+#include <sui/MessageBox.h>
 
 namespace ui
 {
@@ -113,11 +114,13 @@ void SHARPUI_API CoreInitialize(const suic::String& resPath)
     suic::Builder::RegisterElement(_T("Slider"), &ui::Slider::Create);
     suic::Builder::RegisterElement(_T("ImageBox"), &ui::ImageBox::Create);
 
+    suic::Builder::RegisterElement(_T("MessageBox"), &ui::MsgBox::Create);
+
     suic::Builder::RegisterElement(_T("Splitter"), &ui::Splitter::Create);
 
     suic::Builder::RegisterElement(_T("WebBrowser"), &ui::WebBrowser::Create);
     suic::Builder::RegisterElement(_T("RichTextBox"), &ui::RichTextBox::Create);
-    suic::Builder::RegisterElement(_T("ActiveX"), &ui::ActiveX::Create);
+    suic::Builder::RegisterElement(_T("ActiveXHost"), &ui::ActiveXHost::Create);
 
     suic::Builder::RegisterElement(_T("HwndHost"), &ui::HwndHost::Create);
 

@@ -12,7 +12,7 @@
 # define _STRINGCORE_H_
 
 #include <suicore/uitypes.h>
-#include <util/Multistr.h>
+#include <util/AsciiStr.h>
 
 namespace suic
 {
@@ -61,7 +61,7 @@ public:
     double ToDouble();
 
     Char* c_str() const;
-    Multistr utf8_str() const;
+    AsciiStr utf8_str() const;
 
     bool operator <(const String& Other);
     bool operator >(const String& Other);

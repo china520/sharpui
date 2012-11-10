@@ -12,16 +12,15 @@
 # define _UIWEBBROWSER_H_
 
 #include <sui/sharpuiconfig.h>
-#include <suicore/uicontrol.h>
+#include <sui/ActiveXHost.h>
 
 namespace ui
 {
 
-// ============================================================================
-// WebBrowser，实现标准的WEB控件。
-// ============================================================================
-
-class SHARPUI_API WebBrowser : public suic::Control
+/// <summary>
+///  WebBrowser，实现标准的WEB控件。
+/// </summary>
+class SHARPUI_API WebBrowser : public ActiveXHost
 {
 public:
 
@@ -30,28 +29,50 @@ public:
 
     DECLAREBUILD(WebBrowser)
 
-protected:
+    bool CanGoBack() const;
+    bool CanGoForward() const;
 
-    virtual void OnInitialized();
+    suic::String GetSource() const;
+    void SetSource(suic::String uri);
 
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void GoBack();
+    void GoForward();
 
-    virtual void OnTextInput(suic::KeyEventArg& e);
-    virtual void OnKeyDown(suic::KeyEventArg& e);
+    suic::ObjectPtr InvokeScript(suic::String scriptName);
 
-    virtual void OnGotFocus(suic::FocusEventArg& e);
-    virtual void OnLostFocus(suic::FocusEventArg& e);
+    void Navigate(suic::String source);
 
-    virtual void OnSetCursor(suic::CursorEventArg& e);
+    void Refresh();
 
-    virtual void OnMouseEnter(suic::MouseEventArg& e);
-    virtual void OnMouseMove(suic::MouseEventArg& e);
-    virtual void OnMouseLeave(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonDown(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonUp(suic::MouseEventArg& e);
+    bool OpenUri(const suic::String& uri);
 
 protected:
+
+    suic::Size ArrangeOverride(const suic::Size& size);
+
+    void OnInitialized();
+    void OnLoaded(suic::LoadedEventArg& e);
+
+    void OnRender(suic::DrawingContext * drawing);
+
+    void OnTextInput(suic::KeyEventArg& e);
+    void OnKeyDown(suic::KeyEventArg& e);
+
+    void OnGotFocus(suic::FocusEventArg& e);
+    void OnLostFocus(suic::FocusEventArg& e);
+
+    void OnSetCursor(suic::CursorEventArg& e);
+
+    void OnMouseEnter(suic::MouseEventArg& e);
+    void OnMouseMove(suic::MouseEventArg& e);
+    void OnMouseLeave(suic::MouseEventArg& e);
+    void OnMouseLeftButtonDown(suic::MouseEventArg& e);
+    void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
+    void OnMouseLeftButtonUp(suic::MouseEventArg& e);
+
+protected:
+
+    void* _webHost;
 };
 
 typedef suic::shared<WebBrowser> WebBrowserPtr;

@@ -218,6 +218,33 @@ inline ObjectPtr RoutedEventArg::GetOriginalSource() const
     return _originalSource;
 }
 
+class SUICORE_API ContextMenuEventArg : public RoutedEventArg
+{
+public:
+
+    ContextMenuEventArg(ObjectPtr source, double cursorLeft, double cursorTop)
+        : RoutedEventArg(source)
+        , _cursorLeft(cursorLeft)
+        , _cursorTop(cursorTop)
+    {
+    }
+
+    double CursorLeft() const
+    {
+        return _cursorLeft;
+    }
+
+    double CursorTop() const
+    {
+        return _cursorTop;
+    }
+
+protected:
+
+    double _cursorLeft;
+    double _cursorTop;
+};
+
 class SUICORE_API HitResultEventArg : public RoutedEventArg
 {
 public:

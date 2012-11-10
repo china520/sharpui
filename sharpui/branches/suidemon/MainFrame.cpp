@@ -16,6 +16,11 @@ MainFrame::~MainFrame()
 {
 }
 
+void MainFrame::OnFinishAni(suic::FrameworkElement* pElem)
+{
+    SetValue(suic::ISLAYEREDWINDOW, new suic::UString(_T("False")));
+}
+
 void MainFrame::OnInitialized()
 {
     __super::OnInitialized();
@@ -149,14 +154,14 @@ void MainFrame::OnTreeItemSelect(ui::TreeViewItem* pItem)
 {
     suic::String text = pItem->GetText();
 
-    ui::MsgBox::Show(_T("Info"), text);
+    ui::MsgBox::Show(_T("提示"), text, ui::MsgBox::YESNO);//_T("suic::ResourceDictionaryPtr resPtr\n(suic::Application::LoadComponent(NULL, resStr))"));
 }
 
 void MainFrame::OnTestAni(suic::ElementPtr pElem)
 {
     suic::FrameworkElementPtr frame(pElem.get());
-
-    suic::ResourceDictionaryPtr resPtr(suic::Application::LoadComponent(NULL, _T("主界面/resource1.xml")));
+    AsciiStr resStr("主界面/resource1.xml");
+    suic::ResourceDictionaryPtr resPtr(suic::Application::LoadComponent(NULL, resStr));
 
     if (resPtr)
     {
@@ -182,11 +187,15 @@ void MainFrame::OnChangeSkin(suic::ElementPtr pElem)
     // 下面切换系统资源，进行动态换肤
     if (_bDefault)
     {
-        CoreApp::Current()->SetResources(_T("res/black_res.xml"));
+        AsciiStr resStr("res/black_res.xml");
+
+        CoreApp::Current()->SetResources(resStr);
     }
     else
     {
-        CoreApp::Current()->SetResources(_T("res/default.xml"));
+        AsciiStr resStr("res/default.xml");
+
+        CoreApp::Current()->SetResources(resStr);
     }
 
     _bDefault = !_bDefault;
@@ -261,8 +270,10 @@ void MainFrame::OnTestWndAni(suic::ElementPtr pElem)
     pSb->Add(pAni);
     pSb->Start(pSln.get());
 
+    AsciiStr resStr("主界面/resource.xml");
+
     // 下面切换系统资源，进行动态换肤
-    suic::ResourceDictionaryPtr resPtr(CoreApp::LoadComponent(NULL, _T("主界面/resource.xml")));
+    suic::ResourceDictionaryPtr resPtr(CoreApp::LoadComponent(NULL, resStr));
 
     if (resPtr)
     {
@@ -287,6 +298,8 @@ void MainFrame::OnLoaded(suic::LoadedEventArg& e)
     // 创建一个Double渐变动画
     suic::Animation* pAni = new ui::DoubleAnimation(suic::OPACITY, 0, 1);
 
+    pAni->FinishAnimation += suic::FinishAnimationHandler(this, &MainFrame::OnFinishAni);
+
     // 设置速率为60毫秒
     pAni->SetSpeedRatio(60);
     // 设置执行时间段为2秒
@@ -297,4 +310,5 @@ void MainFrame::OnLoaded(suic::LoadedEventArg& e)
     // 启动动画，加入到演示版的每个动画都会启动
     // 一个独立的定时器
     pSb->Start(this);
+
 }

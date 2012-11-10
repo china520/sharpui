@@ -83,7 +83,7 @@ static String OPACITYMASK = _T("OpacityMask");
 
 static String TEXT = _T("Text");
 static String NAME = _T("Name");
-static String ENABLE = _T("Enable");
+static String ISENABLED = _T("IsEnabled");
 static String TOOLTIP = _T("ToolTip");
 static String VISIBILITY = _T("Visibility");
 static String ORIENTATION = _T("Orientation");

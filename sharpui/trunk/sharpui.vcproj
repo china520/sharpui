@@ -421,7 +421,7 @@
 			Name="sui"
 			>
 			<File
-				RelativePath="..\..\include\sui\ActiveXControl.h"
+				RelativePath="..\..\include\sui\ActiveXHost.h"
 				>
 			</File>
 			<File
@@ -641,7 +641,7 @@
 			Name="src"
 			>
 			<File
-				RelativePath=".\src\ActiveXControl.cpp"
+				RelativePath=".\src\ActiveXHost.cpp"
 				>
 			</File>
 			<File
@@ -850,6 +850,14 @@
 			</File>
 			<File
 				RelativePath=".\src\WebBrowser.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\WebWrapper.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\WebWrapper.h"
 				>
 			</File>
 			<File

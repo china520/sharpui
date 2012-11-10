@@ -79,9 +79,11 @@ public:
     /// <param name="pAni">播放的动画对象</param>
     /// <returns>无</returns>
     void Add(Animation* pAni);
+    void Remove(Animation* pAni);
     
     int GetCount();
-    Animation* GetAni(int index);
+    Animation* GetAnimate(int index);
+    Animation* CurrentAnimate();
 
     /// <summary>
     ///     清除加入的所有动画
@@ -94,11 +96,24 @@ protected:
     // 存放播放的动画对象
     Vector<AniItem> _anis;
     FrameworkElement* _owner;
+    Animation* _currentAnimate;
+
     int _state;
     Mutex _locker;
 };
 
 typedef shared<StoryBoard> StoryBoardPtr;
+
+
+class SUICORE_API StoryBoardInfo : public RefObject
+{
+public:
+
+    StoryBoardPtr stb;
+    AnimationPtr ani;
+};
+
+typedef shared<StoryBoardInfo> StoryBoardInfoPtr;
 
 }
 

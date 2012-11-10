@@ -61,6 +61,9 @@ public:
     void SetCheck(bool value);
     bool IsChecked() const;
 
+    bool RemoveItem(TreeViewItem* pItem);
+    TreeViewItemPtr HitTreeItem(suic::Point pt);
+
     void Expand();
     void Collapse();
 
@@ -113,6 +116,9 @@ protected:
     ui::CheckButton _check;
     // 图标
     ui::ImageBox _icon;
+
+    // 子节点偏移
+    int _internalIndent;
 
     bool _showDotLine;
 };

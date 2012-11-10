@@ -39,6 +39,8 @@ public:
 
     void OnLoaded(suic::LoadedEventArg& e);
 
+    void OnFinishAni(suic::FrameworkElement* pElem);
+
 protected:
 
     bool _bDefault;

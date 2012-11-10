@@ -21,12 +21,18 @@ namespace suic
 class FrameworkElement;
 typedef shared<FrameworkElement> FrameworkElementPtr;
 
+typedef delegate<void(suic::Element*, ContextMenuEventArg&)> ContextMenuEventHandler;
+
 /// <summary>
 /// 框架界面元素类的基类，实现框架界面元素的公共操作和接口.
 /// </summary>
 class SUICORE_API FrameworkElement : public Element
 {
 public:
+
+    ContextMenuEventHandler ContextMenuClosing;
+    ContextMenuEventHandler ContextMenu;
+    ContextMenuEventHandler ContextMenuOpening;
 
     FrameworkElement();
 
@@ -180,6 +186,10 @@ public:
     void SetBorderThickness(Rect border);
 
 public:
+
+    virtual void OnContextMenuClosing(ContextMenuEventArg& e);
+    virtual void OnContextMenu(ContextMenuEventArg& e);
+    virtual void OnContextMenuOpening(ContextMenuEventArg& e);
 
     virtual bool OnReadingChild(ObjectPtr& pChild, IMarkupNode* pNode);
 

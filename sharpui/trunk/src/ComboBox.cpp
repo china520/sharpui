@@ -202,6 +202,11 @@ int ComboBox::AddText(const suic::String& text)
     return _list->AddChild(item);
 }
 
+void ComboBox::CheckAddingItem(suic::ObjectPtr& itemObj)
+{
+    IMPLCHECKITEMS(ComboBoxItem,itemObj);
+}
+
 int ComboBox::AddChild(suic::ObjectPtr child)
 {
     return _list->AddChild(child);

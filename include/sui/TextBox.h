@@ -81,31 +81,34 @@ public:
 
 public:
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
     void OnMenuItemSelected(suic::ObjectPtr mPtr, MenuItemPtr itemPtr);
 
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnRender(suic::DrawingContext * drawing);
 
-    virtual void OnTextInput(suic::KeyEventArg& e);
-    virtual void OnKeyDown(suic::KeyEventArg& e);
+    void OnTextInput(suic::KeyEventArg& e);
+    void OnKeyDown(suic::KeyEventArg& e);
 
-    virtual void OnMouseEnter(suic::MouseEventArg& e);
-    virtual void OnMouseMove(suic::MouseEventArg& e);
-    virtual void OnMouseLeave(suic::MouseEventArg& e);
-    virtual void OnMouseWheel(suic::MouseWheelEventArg& e);
+    void OnMouseEnter(suic::MouseEventArg& e);
+    void OnMouseMove(suic::MouseEventArg& e);
+    void OnMouseLeave(suic::MouseEventArg& e);
+    void OnMouseWheel(suic::MouseWheelEventArg& e);
 
-    virtual void OnGotFocus(suic::FocusEventArg& e);
-    virtual void OnLostFocus(suic::FocusEventArg& e);
+    void OnGotFocus(suic::FocusEventArg& e);
+    void OnLostFocus(suic::FocusEventArg& e);
 
-    virtual void OnSetCursor(suic::CursorEventArg& e);
+    void OnSetCursor(suic::CursorEventArg& e);
 
-    virtual void OnMouseLeftButtonDown(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
-    virtual void OnMouseLeftButtonUp(suic::MouseEventArg& e);
-    virtual void OnMouseRightButtonUp(suic::MouseEventArg& e);
-    virtual void OnTimer(int nId);
+    void OnMouseLeftButtonDown(suic::MouseEventArg& e);
+    void OnMouseLeftButtonDbclk(suic::MouseEventArg& e);
+    void OnMouseLeftButtonUp(suic::MouseEventArg& e);
+
+    void TextBox::OnMouseRightButtonDown(suic::MouseEventArg& e);
+    void OnMouseRightButtonUp(suic::MouseEventArg& e);
+
+    void OnTimer(int nId);
 
     virtual void OnTrackingMenu(ui::MenuPtr& menu);
 
@@ -124,12 +127,12 @@ protected:
 
     // ±à¼­¿òÎ¯ÍÐÊµÏÖ
     ui::TextBoxDoc _eDoc;
-    bool _isSingle;
-    int _eStyle;
-
     TextBoxPanel _panel;
     ScrollViewer _view;
     suic::CaretElement _caret;
+
+    bool _isSingle;
+    int _eStyle;
 
     friend class TextBoxPanel;
 };

@@ -50,11 +50,11 @@ public:
 
     ResourceDictionaryPtr GetResources() const;
     void SetResources(ResourceDictionary* resources);
-    void SetResources(String strRes);
+    void SetResources(const AsciiStr& res);
 
     ObjectPtr FindResource(const String& name);
 
-    static ObjectPtr LoadComponent(ObjectPtr parent, const String& resLocater);
+    static ObjectPtr LoadComponent(ObjectPtr parent, const AsciiStr& res);
 
 protected:
 

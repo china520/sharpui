@@ -1,7 +1,7 @@
 // 华勤科技版权所有 2010-2011
 // 
 // 文件名：ActiveXControl.h
-// 功  能：实现ActiveX控件的封装
+// 功  能：实现ActiveXHost控件的封装
 // 
 // 作  者：汪荣
 // 时  间：2010-08-31
@@ -12,23 +12,28 @@
 # define _UIACTIVEX_H_
 
 #include <sui/sharpuiconfig.h>
-#include <suicore/uicontrol.h>
+#include <sui/HwndHost.h>
 
 namespace ui
 {
 
-// ============================================================================
-// ActiveX，封装ActiveX控件。
-// ============================================================================
-
-class SHARPUI_API ActiveX : public suic::Control
+/// <summary>
+///  ActiveXHost，封装ActiveXHost控件。
+/// </summary>
+class SHARPUI_API ActiveXHost : public ui::HwndHost
 {
 public:
 
-    ActiveX();
-    virtual ~ActiveX();
+    ActiveXHost();
+    virtual ~ActiveXHost();
 
-    DECLAREBUILD(ActiveX)
+    DECLAREBUILD(ActiveXHost);
+
+    suic::Handle GetControlHandle() const;
+
+protected:
+
+    bool DoVerb(int verb);
 
 protected:
 
@@ -51,9 +56,21 @@ protected:
     virtual void OnMouseLeftButtonUp(suic::MouseEventArg& e);
 
 protected:
+
+    // 组件class id
+    //CLSID _clsid;
+
+    suic::Handle _hwndParent;
+    suic::Handle _axWindow;
+    suic::Rect _boundRect;
+
+    // 控件对象
+    /*IOleObject* _axOleObject;
+    IOleInPlaceObject* _axOleInPlaceObject;
+    IOleInPlaceActiveObject* _axOleInPlaceActiveObject;*/
 };
 
-typedef suic::shared<ActiveX> ActiveXPtr;
+typedef suic::shared<ActiveXHost> ActiveXPtr;
 
 };
 

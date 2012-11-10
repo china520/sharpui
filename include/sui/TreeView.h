@@ -30,6 +30,9 @@ public:
 
     DECLAREBUILD(TreeView)
 
+    bool RemoveItem(TreeViewItem* pItem);
+    TreeViewItemPtr HitTreeItem(suic::Point pt);
+
     void ExpandSubtrees();
 
     suic::ObjectPtr SelectedItem();
@@ -39,18 +42,21 @@ public:
 
 protected:
 
+    void CheckAddingItem(suic::ObjectPtr& itemObj);
+
     void OnItemsChanged(suic::NotifyCollectionChangedArg& e);
 
-    virtual void OnInitialized();
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnInitialized();
+    void OnRender(suic::DrawingContext * drawing);
 
-    virtual void OnMouseWheel(suic::MouseWheelEventArg& e);
+    void OnMouseWheel(suic::MouseWheelEventArg& e);
+    void OnMouseRightButtonDown(suic::MouseEventArg& e);
 
-    virtual void OnTextInput(suic::KeyEventArg& e);
-    virtual void OnKeyDown(suic::KeyEventArg& e);
+    void OnTextInput(suic::KeyEventArg& e);
+    void OnKeyDown(suic::KeyEventArg& e);
 
-    virtual void OnGotFocus(suic::FocusEventArg& e);
-    virtual void OnLostFocus(suic::FocusEventArg& e);
+    void OnGotFocus(suic::FocusEventArg& e);
+    void OnLostFocus(suic::FocusEventArg& e);
 
 protected:
     

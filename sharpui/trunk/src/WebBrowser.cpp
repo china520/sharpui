@@ -10,6 +10,7 @@
 // WebBrowser.cpp
 
 #include <sui/WebBrowser.h>
+#include "WebWrapper.h"
 
 namespace ui
 {
@@ -17,17 +18,53 @@ namespace ui
 WebBrowser::WebBrowser()
 {
     SetClassName(_T("WebBrowser"));
+    _webHost = new WebWrapper();
 }
 
 WebBrowser::~WebBrowser()
 {
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////
+bool WebBrowser::OpenUri(const suic::String& uri)
+{
+    WebWrapper* pWeb = (WebWrapper*)_webHost;
+
+    pWeb->OpenURL(uri.c_str());
+
+    return true;
+}
+
+//============================================================
+//
+suic::Size WebBrowser::ArrangeOverride(const suic::Size& size)
+{
+    suic::Size finalRect = __super::ArrangeOverride(size);
+    suic::Point point = PointToScreen(suic::Point());
+    suic::Rect rect(point.x, point.y, size.cx, size.cy);
+
+    WebWrapper* pWeb = (WebWrapper*)_webHost;
+
+    if (_webHost && !pWeb->GetHandle())
+    {
+        pWeb->SetWebRect(&rect);
+
+        pWeb->SetHandle(suic::HwndHelper::GetHandle(this));
+        pWeb->OpenWebBrowser();
+
+        OpenUri(_T("http://www.baidu.com"));
+    }
+
+    return finalRect;
+}
 
 void WebBrowser::OnInitialized()
 {
     __super::OnInitialized();
+}
+
+void WebBrowser::OnLoaded(suic::LoadedEventArg& e)
+{
+    __super::OnLoaded(e);
 }
 
 void WebBrowser::OnRender(suic::DrawingContext * drawing)

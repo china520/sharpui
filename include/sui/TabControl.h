@@ -19,9 +19,9 @@
 namespace ui
 {
 
-///==================================================
-/// Tab控件，表头可以任意定制元素进行组合.
-///
+/// <summary>
+///  Tab控件，表头可以任意定制元素进行组合.
+/// </summary>
 class SHARPUI_API TabControl : public Selector
 {
 public:

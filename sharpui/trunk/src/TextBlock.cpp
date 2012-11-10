@@ -21,6 +21,7 @@ namespace ui
 // TextBlock
 
 TextBlock::TextBlock()
+    : _single(true)
 {
     SetClassName(_T("TextBlock"));
 
@@ -66,7 +67,7 @@ void TextBlock::OnRender(suic::DrawingContext * drawing)
 {
     // 绘制背景
     suic::Render::DrawBackground(drawing, this);
-    suic::Render::DrawText(drawing, this, GetText());
+    suic::Render::DrawText(drawing, this, GetText(), _single);
 
     //
     // 如果拥有焦点则绘制焦点虚线
@@ -77,6 +78,21 @@ void TextBlock::OnRender(suic::DrawingContext * drawing)
 
         rect.Deflate(GetBorderThickness());
         drawing->DrawFocusedRectangle(&rect);
+    }
+}
+
+void TextBlock::OnSetterChanged(suic::SetterChangedEventArg& e)
+{
+    if (e.GetName().Equals(_T("IsSingle")))
+    {
+        SetSingle(e.GetSetter()->ToBool());
+    }
+    else
+    {
+        //
+        // 必须调用基类初始化基本数据
+        //
+        __super::OnSetterChanged(e);
     }
 }
 

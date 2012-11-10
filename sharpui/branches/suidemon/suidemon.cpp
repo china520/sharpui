@@ -54,10 +54,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
     // 可以通过此对象来创建我们需要的类
     suic::Builder build;
 
+    AsciiStr resStr(strApp.c_str());
+
     // 读取Application资源
     // 主窗体为MainFrame对象，读取成功后Application::Current()
     // 会被自动赋值
-    build.Build(new MainFrame(), strApp);
+    build.Build(new MainFrame(), resStr);
 
     suic::ApplicationPtr pApp = suic::Application::Current();
 

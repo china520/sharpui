@@ -185,6 +185,7 @@ TreeViewItem::TreeViewItem(const suic::String& text)
 
 TreeViewItem::TreeViewItem()
     : _showDotLine(false)
+    , _internalIndent(0)
 {
     SetIndent(20);
 
@@ -212,7 +213,7 @@ void TreeViewItem::Select()
 
         OnSelected(e);
 
-        pTree->OnSelectTreeItem(this);
+        //pTree->OnSelectTreeItem(this);
     }
 }
 
@@ -226,8 +227,55 @@ void TreeViewItem::Unselect()
 
         OnUnselected(e);
 
-        pTree->OnUnselectTreeItem(this);
+        //pTree->OnUnselectTreeItem(this);
     }
+}
+
+bool TreeViewItem::RemoveItem(TreeViewItem* pItem)
+{
+    bool bRet = false;
+    int count = GetItems()->GetCount();
+
+    for (int i = 0; i < count; ++i)
+    {
+        TreeViewItemPtr item(GetItems()->GetItem(i));
+
+        if (item.get() == pItem)
+        {
+            RemoveChild(pItem);
+            bRet = true;
+
+            break;
+        }
+        else if (bRet=item->RemoveItem(pItem))
+        {
+            break;
+        }
+    }
+
+    return bRet;
+}
+
+TreeViewItemPtr TreeViewItem::HitTreeItem(suic::Point pt)
+{
+    int count = GetItems()->GetCount();
+
+    for (int i = 0; i < count; ++i)
+    {
+        TreeViewItemPtr item(GetItems()->GetItem(i));
+
+        if (item.get() && item->GetHeader())
+        {
+            suic::Rect rect = suic::VisualHelper::GetRenderRect(item->GetHeader().get());
+
+            if (rect.PointIn(pt))
+            {
+                return item;
+            }
+        }
+    }
+
+    return TreeViewItemPtr();
 }
 
 void TreeViewItem::Expand()
@@ -417,9 +465,9 @@ suic::Size TreeViewItem::ArrangeOverride(const suic::Size& finalSize)
 
     const int ITEMSPACE = 2;
 
-    suic::Rect finalRect(0, 0, finalSize.cx, 0);
+    suic::Rect finalRect(_internalIndent, 0, finalSize.cx, 0);
 
-    // 布局扩展按钮
+    // 扩展按钮
     if (_expand->IsVisible())
     {
         finalRect.right = finalRect.left + _expand->GetDesiredSize().cx;
@@ -429,10 +477,10 @@ suic::Size TreeViewItem::ArrangeOverride(const suic::Size& finalSize)
         AddVisualChild(_expand.get());
         _expand->Arrange(finalRect);
 
-        finalRect.left = finalRect.right + 12;
+        finalRect.left = finalRect.right + 8;
     }
 
-    // 布局选择按钮
+    // 选择按钮
     if (_check.IsVisible())
     {
         finalRect.right = finalRect.left + _check.GetDesiredSize().cx;
@@ -466,15 +514,17 @@ suic::Size TreeViewItem::ArrangeOverride(const suic::Size& finalSize)
     _header->Arrange(finalRect);
 
     finalRect.top = finalRect.bottom;
-    finalRect.left = GetIndent();
 
     if (!IsCollapsed())
     {
+        finalRect.left = 0;
+        finalRect.right = finalSize.cx;
+
         for (int i = 0; i < GetItems()->GetCount(); ++i)
         {
             TreeViewItemPtr item(GetItems()->GetItem(i));
 
-            finalRect.right = finalRect.left + item->GetDesiredSize().cx;
+            item->_internalIndent = _internalIndent + item->GetIndent();
             finalRect.bottom = finalRect.top + item->GetDesiredSize().cy;
 
             AddVisualChild(item.get());

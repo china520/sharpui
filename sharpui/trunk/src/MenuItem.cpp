@@ -191,7 +191,7 @@ void MenuItem::OnRender(suic::DrawingContext * drawing)
     {
         suic::Render::DrawBackground(drawing, trg, &rect);
         rect.left += MENUITEM_ICONSIZE;
-        suic::Render::DrawText(drawing, this, GetText(), trg, &rect);
+        suic::Render::DrawText(drawing, this, GetText(), trg, &rect, true);
     }
 }
 

@@ -35,7 +35,33 @@ void HwndHost::OnInitialized()
 void HwndHost::OnRender(suic::DrawingContext * drawing)
 {
     //__super::OnRender(drawing);
+    //if (!PrintWindow(HandleRef hWnd, HandleRef hDC, 0))
+    // {SendMessage(_hwnd.Handle, WindowMessage.WM_PRINT, hdcBitmap.Handle, (IntPtr) (NativeMethods.PRF_CHILDREN | NativeMethods.PRF_CLIENT | NativeMethods.PRF_ERASEBKGND | NativeMethods.PRF_NONCLIENT));
+    //}
+    // elseRedrawWindow(_hwnd, IntPtr.Zero, IntPtr.Zero, NativeMethods.RDW_INVALIDATE | NativeMethods.RDW_ALLCHILDREN);
 }
+
+/*
+void OnWindowPositionChanged(Rect rcBoundingBox)
+        { 
+            if (_isDisposed)
+            {
+                return;
+            } 
+
+            UnsafeNativeMethods.SetWindowPos(_hwnd, 
+                                           new HandleRef(null, IntPtr.Zero), 
+                                           (int)rcBoundingBox.X,
+                                           (int)rcBoundingBox.Y, 
+                                           (int)rcBoundingBox.Width,
+                                           (int)rcBoundingBox.Height,
+                                           NativeMethods.SWP_ASYNCWINDOWPOS
+                                           | NativeMethods.SWP_NOZORDER 
+                                           | NativeMethods.SWP_NOCOPYBITS
+                                           | NativeMethods.SWP_NOACTIVATE); 
+        } 
+
+*/
 
 suic::Size HwndHost::MeasureOverride(const suic::Size& size)
 {
