@@ -593,6 +593,7 @@ public:
     /// <returns>нч</returns>
     virtual void OnStateChanged(StateChangedEventArg& e);
     virtual void OnValueChanged(ValueChangedEventArg& e);
+    virtual void OnVisibilityChanged(bool visible);
 
     virtual void OnHitTest(HitResultEventArg& e);
 

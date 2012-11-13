@@ -432,11 +432,11 @@ BOOL WebWrapper::SetWebRect(LPRECT lprc)
         size.cy = RECTHEIGHT(*lprc);
 
         IOleObject* pOleObj;
-        NULLTEST( pOleObj= _GetOleObject());
-        HRTEST_E( pOleObj->SetExtent(  1,&size ),L"SetExtent 错误");
+        NULLTEST(pOleObj = _GetOleObject());
+        HRTEST_E(pOleObj->SetExtent(1,&size), L"SetExtent 错误");
 
         IOleInPlaceObject* pInPlace;
-        NULLTEST( pInPlace = _GetInPlaceObject());
+        NULLTEST(pInPlace = _GetInPlaceObject());
         HRTEST_E(pInPlace->SetObjectRects(lprc,lprc), L"SetObjectRects 错误");
         _rcWebWnd = *lprc;
     }
@@ -463,7 +463,7 @@ BOOL WebWrapper::OpenWebBrowser()
         _bExternalPlace = 0;//lParam;
 
         HRTEST_E(_GetOleObject()->DoVerb(OLEIVERB_INPLACEACTIVATE,0,this,0, HandleToHwnd(GetHandle()), &_rcWebWnd), L"关于INPLACE的DoVerb错误");
-        _bInPlaced = true;
+        //_bInPlaced = false;
 
         //* 挂接DWebBrwoser2Event
         IConnectionPointContainer* pCPC = NULL;

@@ -90,6 +90,15 @@ void MainFrame::OnInitialized()
     {
         pBtn->Click += ui::ClickEventHandler(this, &MainFrame::OnStopAni);
     }
+
+    // ´ò¿ªÍøÖ·
+    pBtn = ui::ButtonPtr::cast(FindName(_T("OpenUri")));
+
+    if (pBtn)
+    {
+        pBtn->Click += ui::ClickEventHandler(this, &MainFrame::OnOpenUri);
+    }
+    
     
     ui::ListViewPtr listPtr(FindName(_T("ListView01")));
 
@@ -242,6 +251,14 @@ void MainFrame::OnStartAni(suic::ElementPtr pElem)
     {
         aniPtr->Start();
     }
+}
+
+void MainFrame::OnOpenUri(suic::ElementPtr pElem)
+{
+    ui::WebBrowserPtr web(FindName(_T("webBrowser")));
+    ui::TextBoxPtr addr(FindName(_T("UriAddr")));
+
+    web->Navigate(addr->GetText());
 }
 
 void MainFrame::OnStopAni(suic::ElementPtr pElem)

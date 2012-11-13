@@ -11,16 +11,15 @@
 # ifndef _UIHWNDHOST_H_
 # define _UIHWNDHOST_H_
 
-#include <sui/sharpuiconfig.h>
-#include <suicore/uicontrol.h>
+#include <suicore/uiframeworkelement.h>
 
-namespace ui
+namespace suic
 {
 
 /// <summary>
 /// 适配真实窗口句柄，在排列时放大或缩小窗口。
 /// </summary>
-class SHARPUI_API HwndHost : public suic::FrameworkElement
+class SUICORE_API HwndHost : public suic::FrameworkElement
 {
 public:
 
@@ -36,15 +35,18 @@ protected:
 
     void OnInitialized();
 
+    void OnLoaded(LoadedEventArg& e);
+    void OnUnloaded(LoadedEventArg& e);
+
     void OnRender(suic::DrawingContext * drawing);
 
     suic::Size MeasureOverride(const suic::Size& size);
     suic::Size ArrangeOverride(const suic::Size& size);
 
-private:
+protected:
 
-    void BuildOrReparentWindow();
-    void BuildWindow(suic::Handle hwndParent);
+    void BuildWindow(Handle hwndParent);
+    void UpdateWindowPos();
 
 protected:
 

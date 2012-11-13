@@ -79,6 +79,7 @@
 #include <sui/tabcontrol.h>
 #include <sui/tabitem.h>
 
+#include <sui/WebBrowser.h>
 #include <sui/filewindow.h>
 
 void SHARPUI_API CoreInitialize(const suic::String& resPath);

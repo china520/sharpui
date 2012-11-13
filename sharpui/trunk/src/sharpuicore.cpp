@@ -45,7 +45,6 @@
 #include <sui/PasswordBox.h>
 #include <sui/AnimateBox.h>
 
-#include <sui/HwndHost.h>
 #include <sui/MessageBox.h>
 
 namespace ui
@@ -121,8 +120,6 @@ void SHARPUI_API CoreInitialize(const suic::String& resPath)
     suic::Builder::RegisterElement(_T("WebBrowser"), &ui::WebBrowser::Create);
     suic::Builder::RegisterElement(_T("RichTextBox"), &ui::RichTextBox::Create);
     suic::Builder::RegisterElement(_T("ActiveXHost"), &ui::ActiveXHost::Create);
-
-    suic::Builder::RegisterElement(_T("HwndHost"), &ui::HwndHost::Create);
 
     suic::SystemHelper::ReadResource(resPath);
     //suic::SystemHelper::RegisterContent(__CreateContent);

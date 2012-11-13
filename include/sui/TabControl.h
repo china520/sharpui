@@ -54,6 +54,8 @@ protected:
     void OnItemsChanged(suic::NotifyCollectionChangedArg& e);    
     void OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e);
 
+    void OnItemFocusChanged(suic::Element* newFocus, suic::Element* oldFocus);
+
     void OnPreviewMouseLeftButtonDown(suic::MouseEventArg& e);
     void OnPreviewMouseLeftButtonUp(suic::MouseEventArg& e);
     void OnMouseEnter(suic::MouseEventArg& e);

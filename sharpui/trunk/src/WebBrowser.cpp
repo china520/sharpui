@@ -25,13 +25,38 @@ WebBrowser::~WebBrowser()
 {
 }
 
-bool WebBrowser::OpenUri(const suic::String& uri)
+bool WebBrowser::CanGoBack() const
+{
+    return false;
+}
+
+bool WebBrowser::CanGoForward() const
+{
+    return false;
+}
+
+void WebBrowser::GoBack()
+{
+}
+
+void WebBrowser::GoForward()
+{
+}
+
+suic::ObjectPtr WebBrowser::InvokeScript(suic::String scriptName)
+{
+    return suic::ObjectPtr();
+}
+
+void WebBrowser::Navigate(const suic::String& uri)
 {
     WebWrapper* pWeb = (WebWrapper*)_webHost;
 
     pWeb->OpenURL(uri.c_str());
+}
 
-    return true;
+void WebBrowser::Refresh()
+{
 }
 
 //============================================================
@@ -39,19 +64,16 @@ bool WebBrowser::OpenUri(const suic::String& uri)
 suic::Size WebBrowser::ArrangeOverride(const suic::Size& size)
 {
     suic::Size finalRect = __super::ArrangeOverride(size);
+
     suic::Point point = PointToScreen(suic::Point());
     suic::Rect rect(point.x, point.y, size.cx, size.cy);
 
     WebWrapper* pWeb = (WebWrapper*)_webHost;
 
-    if (_webHost && !pWeb->GetHandle())
+    if (_webHost)
     {
         pWeb->SetWebRect(&rect);
-
-        pWeb->SetHandle(suic::HwndHelper::GetHandle(this));
         pWeb->OpenWebBrowser();
-
-        OpenUri(_T("http://www.baidu.com"));
     }
 
     return finalRect;
@@ -64,7 +86,34 @@ void WebBrowser::OnInitialized()
 
 void WebBrowser::OnLoaded(suic::LoadedEventArg& e)
 {
-    __super::OnLoaded(e);
+    suic::FrameworkElement::OnLoaded(e);
+
+    WebWrapper* pWeb = (WebWrapper*)_webHost;
+    suic::VisualHostPtr pHost(e.GetTarget());
+
+    if (_webHost)
+    {
+        pWeb->SetHandle(pHost->GetHandle());
+    }
+}
+
+void WebBrowser::OnVisibilityChanged(bool visible)
+{
+    suic::Point point = PointToScreen(suic::Point());
+    suic::Rect rect(point.x, point.y, RenderSize().cx, RenderSize().cy);
+
+    WebWrapper* pWeb = (WebWrapper*)_webHost;
+
+    if (visible)
+    {
+        pWeb->SetWebRect(&rect);
+    }
+    else
+    {
+        suic::Rect rc;
+
+        pWeb->SetWebRect(&rc);
+    }
 }
 
 void WebBrowser::OnRender(suic::DrawingContext * drawing)
@@ -122,4 +171,4 @@ void WebBrowser::OnMouseLeftButtonUp(suic::MouseEventArg& e)
     __super::OnMouseLeftButtonUp(e);
 }
 
-};
+}

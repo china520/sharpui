@@ -95,6 +95,7 @@
 #include <suicore/uiapplication.h>
 #include <suicore/uipanel.h>
 #include <suicore/uiobject.h>
+#include <suicore/HwndHost.h>
 
 #include <suicore/caretelement.h>
 

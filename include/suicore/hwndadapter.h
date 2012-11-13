@@ -19,6 +19,8 @@ namespace suic
 
 typedef struct SUICORE_API tagHwndParameter
 {
+    Handle parent;
+
     Uint32 style;
     Uint32 styleEx;
     Uint32 state;

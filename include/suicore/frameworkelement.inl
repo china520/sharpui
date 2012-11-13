@@ -31,7 +31,11 @@ inline suic::Int32 FrameworkElement::GetWidth() const
 
 inline void FrameworkElement::SetWidth(suic::Int32 value)
 {
-    if (value < 0 || value <= GetMinWidth())
+    if (value < 0)
+    {
+        _width = NonInt;
+    }
+    else if (value <= GetMinWidth())
     {
         _width = GetMinWidth();
     }
@@ -48,7 +52,11 @@ inline suic::Int32 FrameworkElement::GetHeight() const
 
 inline void FrameworkElement::SetHeight(suic::Int32 value)
 {
-    if (value < 0 || value <= GetMinHeight())
+    if (value < 0)
+    {
+        _height = NonInt;
+    }
+    else if (value <= GetMinHeight())
     {
         _height = GetMinHeight();
     }

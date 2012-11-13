@@ -12,7 +12,7 @@
 # define _UIACTIVEX_H_
 
 #include <sui/sharpuiconfig.h>
-#include <sui/HwndHost.h>
+#include <suicore/HwndHost.h>
 
 namespace ui
 {
@@ -20,7 +20,7 @@ namespace ui
 /// <summary>
 ///  ActiveXHost£¬·â×°ActiveXHost¿Ø¼þ¡£
 /// </summary>
-class SHARPUI_API ActiveXHost : public ui::HwndHost
+class SHARPUI_API ActiveXHost : public suic::HwndHost
 {
 public:
 

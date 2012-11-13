@@ -481,10 +481,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\include\sui\HwndHost.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\include\sui\ImageBox.h"
 				>
 			</File>
@@ -694,10 +690,6 @@
 			</File>
 			<File
 				RelativePath=".\src\HeaderItemsControl.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\HwndHost.cpp"
 				>
 			</File>
 			<File

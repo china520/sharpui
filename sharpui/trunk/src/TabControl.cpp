@@ -242,7 +242,7 @@ void TabControl::OnItemsChanged(suic::NotifyCollectionChangedArg& e)
 
     if (e.NewItems()->GetCount() > 0)
     {        
-        TabItemPtr itemPtr = TabItemPtr::cast(e.NewItems()->GetAt(0));
+        TabItemPtr itemPtr(e.NewItems()->GetAt(0));
         suic::ElementPtr focused;
 
         //
@@ -270,6 +270,29 @@ void TabControl::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
     InvalidateMeasure();
     InvalidateArrange();
     InvalidateVisual();
+}
+
+void TabControl::OnItemFocusChanged(suic::Element* newFocus, suic::Element* oldFocus)
+{
+    if (oldFocus)
+    {
+        TabItemPtr itemPtr(oldFocus);
+        
+        if (oldFocus && itemPtr->GetTabContent())
+        {
+            itemPtr->GetTabContent()->SetVisible(false);
+        }
+    }
+
+    if (newFocus)
+    {
+        TabItemPtr itemPtr(newFocus);
+        
+        if (itemPtr && itemPtr->GetTabContent())
+        {
+            itemPtr->GetTabContent()->SetVisible(true);
+        }
+    }
 }
 
 void TabControl::OnPreviewMouseLeftButtonDown(suic::MouseEventArg& e)

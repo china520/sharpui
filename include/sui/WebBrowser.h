@@ -40,11 +40,8 @@ public:
 
     suic::ObjectPtr InvokeScript(suic::String scriptName);
 
-    void Navigate(suic::String source);
-
+    void Navigate(const suic::String& source);
     void Refresh();
-
-    bool OpenUri(const suic::String& uri);
 
 protected:
 
@@ -52,6 +49,8 @@ protected:
 
     void OnInitialized();
     void OnLoaded(suic::LoadedEventArg& e);
+
+    void OnVisibilityChanged(bool visible);
 
     void OnRender(suic::DrawingContext * drawing);
 
@@ -73,9 +72,20 @@ protected:
 protected:
 
     void* _webHost;
+    suic::String _uri;
 };
 
 typedef suic::shared<WebBrowser> WebBrowserPtr;
+
+inline suic::String WebBrowser::GetSource() const
+{
+    return _uri;
+}
+
+inline void WebBrowser::SetSource(suic::String uri)
+{
+    _uri = uri;
+}
 
 };
 

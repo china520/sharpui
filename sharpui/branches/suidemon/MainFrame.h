@@ -34,6 +34,8 @@ public:
     void OnStartAni(suic::ElementPtr pElem);
     void OnStopAni(suic::ElementPtr pElem);
 
+    void OnOpenUri(suic::ElementPtr pElem);
+
     void SelectTabItem(suic::Element* sender);
     void OnValueChanged(suic::Element* sender, double o, double n);
 

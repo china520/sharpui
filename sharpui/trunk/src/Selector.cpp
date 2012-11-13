@@ -177,6 +177,8 @@ void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
     {
         if (_focusedItem != pItem)
         {
+            OnItemFocusChanged(pItem, dynamic_cast<suic::Element*>(_focusedItem.get()));
+
             _focusedItem = pItem;
         }
 

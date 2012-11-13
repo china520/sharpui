@@ -30,10 +30,6 @@ class SUICORE_API FrameworkElement : public Element
 {
 public:
 
-    ContextMenuEventHandler ContextMenuClosing;
-    ContextMenuEventHandler ContextMenu;
-    ContextMenuEventHandler ContextMenuOpening;
-
     FrameworkElement();
 
     virtual ~FrameworkElement();
@@ -187,13 +183,11 @@ public:
 
 public:
 
-    virtual void OnContextMenuClosing(ContextMenuEventArg& e);
-    virtual void OnContextMenu(ContextMenuEventArg& e);
-    virtual void OnContextMenuOpening(ContextMenuEventArg& e);
-
     virtual bool OnReadingChild(ObjectPtr& pChild, IMarkupNode* pNode);
 
     virtual void ArrangeVisual();
+
+    void OnVisibilityChanged(bool visible);
 
     Size MeasureCore(const Size & availableSize);
     Size MeasureOverride(const Size& availableSize);
