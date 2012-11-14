@@ -28,16 +28,6 @@ public:
     virtual ~ContentControl();
 
     /// <summary>
-    ///     获取内容对象
-    /// </summary>
-    /// <remarks>
-    ///     内容对象必须派生至FrameworkElement
-    /// </remarks>
-    /// <returns>内容对象</returns> 
-    ObjectPtr GetContent();
-    void SetContent(ObjectPtr contentPtr);
-
-    /// <summary>
     ///     设置内容文本
     /// </summary>
     /// <remarks>
@@ -46,6 +36,18 @@ public:
     /// <param name="text">文本</param>
     /// <returns>内容对象</returns> 
     void SetText(const String & text);
+
+// 属性访问定义
+public:
+
+    /// <summary>
+    ///     获取内容对象
+    /// </summary>
+    /// <remarks>
+    ///     内容对象必须派生至FrameworkElement
+    /// </remarks>
+    /// <returns>内容对象</returns> 
+    DEFINE_PROPERTY(ObjectPtr, Content, contentPtr);
 
 public:
 

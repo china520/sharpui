@@ -118,7 +118,7 @@ void PasswordBox::SetText(const suic::String & text)
 void PasswordBox::OnRender(suic::DrawingContext * drawing)
 {
     suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));        
-    suic::Rect rcdraw(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect rcdraw(0, 0, RenderSize.cx, RenderSize.cy);
 
     // ÏÈÌî³ä±³¾°
     suic::Render::DrawBackground(drawing, trg, &rcdraw);
@@ -274,13 +274,13 @@ void PasswordBox::ResetCaretPos()
     suic::Size size(suic::Render::MeasureTextSize(suic::String(_passwordChar, 1), GetStyle()->GetTrigger()));
     suic::Point pt = PointToScreen(suic::Point());
     suic::Rect rc(GetVisualOffset().x, GetVisualOffset().y
-        , RenderSize().cx, RenderSize().cy);
+        , RenderSize.cx, RenderSize.cy);
 
     int iCaretPos = (_caretPos - _horizontalOffset) * size.cx 
         + GetBorderThickness().left + GetPadding().left;
-    suic::Rect rcCaret(iCaretPos, 0, 1, RenderSize().cy);
+    suic::Rect rcCaret(iCaretPos, 0, 1, RenderSize.cy);
 
-    rcCaret.top = (RenderSize().cy - size.cy) / 2;
+    rcCaret.top = (RenderSize.cy - size.cy) / 2;
     rcCaret.bottom = rcCaret.top + size.cy;
 
     rcCaret.Offset(pt.x, pt.y);
@@ -342,7 +342,7 @@ void PasswordBox::InternalSetCaret(int iOff)
 
     suic::String strChar(_passwordChar, 1);
     suic::Size size(suic::Render::MeasureTextSize(strChar, GetStyle()->GetTrigger()));
-    int iSize = RenderSize().cx - GetPadding().left - GetPadding().right
+    int iSize = RenderSize.cx - GetPadding().left - GetPadding().right
         - GetBorderThickness().left - GetBorderThickness().right;
     // ¼ÆËã¹ö¶¯Î»ÖÃ
     int iCaretPos = (_caretPos - _horizontalOffset) * size.cx;
@@ -625,7 +625,7 @@ void PasswordBox::OnMouseMove(suic::MouseEventArg& e)
 
 void PasswordBox::OnSetCursor(suic::CursorEventArg& e)
 {
-    suic::Rect rc(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect rc(0, 0, RenderSize.cx, RenderSize.cy);
 
     rc.Deflate(GetBorderThickness());
     rc.Deflate(GetPadding());

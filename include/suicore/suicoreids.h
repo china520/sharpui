@@ -192,7 +192,7 @@ static String SETTER_VALUE = _T("Setter.Value");
 static String SETTER = _T("Setter");
 static String TRIGGERS = _T("Triggers");
 static String TRIGGER = _T("Trigger");
-static String STYLE = _T("Style");
+static String STYLE = _T("UIStyle");
 static String TARGETTYPE = _T("TargetType");
 
 static String STATE = _T("");

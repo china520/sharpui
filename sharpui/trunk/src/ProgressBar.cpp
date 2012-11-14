@@ -63,7 +63,7 @@ void ProgressBar::OnTimer(int id)
 void ProgressBar::OnRender(suic::DrawingContext * drawing)
 {
     // œ»ªÊ÷∆±≥æ∞
-    suic::Rect elemrect(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect elemrect(0, 0, RenderSize.cx, RenderSize.cy);
 
     suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));
     suic::Render::DrawBackground(drawing, trg, &elemrect);

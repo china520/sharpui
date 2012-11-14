@@ -283,8 +283,14 @@ STDMETHODIMP WebWrapper::OnPosRectChange(LPCRECT)
 
 STDMETHODIMP WebWrapper::GetBorder(LPRECT l)
 {
-    ::GetClientRect(  HandleToHwnd(GetHandle()) ,&_rcWebWnd );
-    *l = _rcWebWnd;
+    //::GetClientRect(HandleToHwnd(GetHandle()), &_rcWebWnd);
+    //*l = _rcWebWnd;
+
+    l->left = 0;
+    l->top = 0;
+    l->right = 0;
+    l->bottom = 0;
+
     return S_OK;
 }
 

@@ -68,9 +68,9 @@ public:
                     newPos = 0;
                 }
 
-                if (newPos > _slider->RenderSize().cx - GetDesiredSize().cx)
+                if (newPos > _slider->RenderSize.cx - DesiredSize.cx)
                 {
-                    newPos = _slider->RenderSize().cx - GetDesiredSize().cx;
+                    newPos = _slider->RenderSize.cx - DesiredSize.cx;
                 }
 
                 iHorz = newPos - _trackPos;
@@ -84,9 +84,9 @@ public:
                     newPos = 0;
                 }
 
-                if (newPos > _slider->RenderSize().cy - GetDesiredSize().cy)
+                if (newPos > _slider->RenderSize.cy - DesiredSize.cy)
                 {
-                    newPos = _slider->RenderSize().cy - GetDesiredSize().cy;
+                    newPos = _slider->RenderSize.cy - DesiredSize.cy;
                 }
 
                 iVert = newPos - _trackPos;
@@ -187,7 +187,7 @@ void Slider::OnInitialized()
 void Slider::OnRender(suic::DrawingContext * drawing)
 {
     // ÏÈ»æÖÆ±³¾°
-    suic::Rect rcdraw(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect rcdraw(0, 0, RenderSize.cx, RenderSize.cy);
     suic::TriggerPtr trg(GetStyle()->GetTrigger());
     suic::ImageBrushPtr bkgnd(trg->GetValue(suic::BACKGROUND));
 
@@ -195,12 +195,12 @@ void Slider::OnRender(suic::DrawingContext * drawing)
     {
         if (GetOrientation() == CoreFlags::Horizontal)
         {
-            rcdraw.top = (RenderSize().cy - GetDesiredSize().cy) / 2;
+            rcdraw.top = (RenderSize.cy - GetDesiredSize().cy) / 2;
             rcdraw.bottom = rcdraw.top + GetDesiredSize().cy;
         }
         else
         {
-            rcdraw.left = (RenderSize().cx - GetDesiredSize().cx) / 2;
+            rcdraw.left = (RenderSize.cx - GetDesiredSize().cx) / 2;
             rcdraw.right = rcdraw.left + GetDesiredSize().cx;
         }
 
@@ -212,12 +212,12 @@ void Slider::OnRender(suic::DrawingContext * drawing)
 
         if (GetOrientation() == CoreFlags::Horizontal)
         {
-            rcdraw.top = (RenderSize().cy - rect.Height()) / 2;
+            rcdraw.top = (RenderSize.cy - rect.Height()) / 2;
             rcdraw.bottom = rcdraw.top + rect.Height();
         }
         else
         {
-            rcdraw.left = (RenderSize().cx - rect.Width()) / 2;
+            rcdraw.left = (RenderSize.cx - rect.Width()) / 2;
             rcdraw.right = rcdraw.left + rect.Width();
         }
 
@@ -282,7 +282,7 @@ void Slider::OnThumbDragCompleted(DragCompletedEventArg& e)
 
 void Slider::HandleHorizontal(int pos)
 {
-    suic::Rect rcItem(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect rcItem(0, 0, RenderSize.cx, RenderSize.cy);
     const suic::Size& thumbSize = _thumbBtn->GetDesiredSize();
 
     if (pos >= rcItem.right - thumbSize.cx) 
@@ -301,7 +301,7 @@ void Slider::HandleHorizontal(int pos)
 
 void Slider::HandleVertical(int pos)
 {
-    suic::Rect rcItem(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect rcItem(0, 0, RenderSize.cx, RenderSize.cy);
     const suic::Size& thumbSize = _thumbBtn->GetDesiredSize();
 
     if (pos <= rcItem.top ) 

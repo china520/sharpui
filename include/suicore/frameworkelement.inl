@@ -4,7 +4,7 @@ inline void FrameworkElement::SetOwner(FrameworkElementPtr elemPtr)
 	_owerElem = elemPtr;
 }
 
-inline CursorPtr FrameworkElement::GetCursor()
+inline CursorPtr FrameworkElement::GetCursor() const
 {
     return _cursor;
 }
@@ -102,7 +102,7 @@ inline void FrameworkElement::SetPadding(Rect rc)
 	_rectPadding = rc;
 }
 
-inline const Rect & FrameworkElement::GetMargin() const
+inline Rect FrameworkElement::GetMargin() const
 {
     return _rectMargin;
 }

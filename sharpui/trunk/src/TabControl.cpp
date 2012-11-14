@@ -217,7 +217,7 @@ void TabControl::OnStyleUpdated()
 
 void TabControl::OnRender(suic::DrawingContext * drawing)
 {
-    suic::Rect rect(0, _headerHeight, RenderSize().cx, RenderSize().cy - _headerHeight);
+    suic::Rect rect(0, _headerHeight, RenderSize.cx, RenderSize.cy - _headerHeight);
     suic::Render::DrawBackground(drawing, GetStyle()->GetTrigger(), &rect);
 }
 

@@ -14,11 +14,45 @@
 #include <suicore/uicoreconfig.h>
 #include <suicore/uitypes.h>
 
+// 定义句柄转换
 #define HandleToHwnd(h) ((HWND)(LONG_PTR)h)
 #define HwndToHandle(h) ((ULONG)(LONG_PTR)h)
 
 #define HandleToHdc(dc) ((HDC)(ULONG_PTR)dc)
 #define HdcToHandle(dc) ((suic::Handle)(ULONG_PTR)dc)
+
+// 定义属性访问
+#define UIPROPERTY(t,n)  __declspec(property(put=Set##n, get=Get##n)) t n;
+
+#define UIPROPERTY_READONLY(t,n) __declspec(property(get=Get##n)) t n;
+#define UIPROPERTY_WRITEONLY(t,n) __declspec(property(put=Set##n)) t n;
+
+#define DEFINE_PROPERTY_R(t,n) UIPROPERTY_READONLY(t,n)\
+    t Get##n() const\
+
+#define DEFINE_PROPERTY_R_C(t,n) UIPROPERTY_READONLY(t,n)\
+    const t& Get##n() const\
+
+#define DEFINE_PROPERTY_R_V(t,n) UIPROPERTY_READONLY(t,n)\
+    virtual t Get##n()\
+
+#define DEFINE_PROPERTY_W(t,n,v) UIPROPERTY_WRITEONLY(t,n)\
+    void Set##n(t v)\
+
+#define DEFINE_PROPERTY_W_C(t,n,v) UIPROPERTY_WRITEONLY(t,n)\
+    void Set##n(const t& v)\
+
+#define DEFINE_PROPERTY_W_P(t,n,v) UIPROPERTY_WRITEONLY(t,n)\
+    void Set##n(const t* v)\
+
+#define DEFINE_PROPERTY(t,n,v) DEFINE_PROPERTY_R(t,n);\
+    DEFINE_PROPERTY_W(t,n,v);\
+
+#define DEFINE_PROPERTY_C(t,n,v) DEFINE_PROPERTY_R(t,n);\
+    DEFINE_PROPERTY_W_C(t,n,v);\
+
+#define DEFINE_PROPERTY_P(t,n,v) DEFINE_PROPERTY_R(t,n);\
+    DEFINE_PROPERTY_W_P(t,n,v);\
 
 #define UIGetAlpha(clr) (LOBYTE((clr)>>24))
 #define UIGetRed(clr) (LOBYTE((clr)>>16))

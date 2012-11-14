@@ -27,11 +27,11 @@ void GridSplitter::OnRender(suic::DrawingContext * drawing)
     if (bkgnd)
     {
         suic::Rect rectBk = bkgnd->GetContentBrounds();
-        suic::Rect drawrect(0, 0, RenderSize().cx, RenderSize().cy);
+        suic::Rect drawrect(0, 0, RenderSize.cx, RenderSize.cy);
 
-        drawrect.left = (RenderSize().cx - rectBk.Width()) / 2;
+        drawrect.left = (RenderSize.cx - rectBk.Width()) / 2;
         drawrect.right = drawrect.left + rectBk.Width();
-        drawrect.top = (RenderSize().cy - rectBk.Height()) / 2;
+        drawrect.top = (RenderSize.cy - rectBk.Height()) / 2;
         drawrect.bottom = drawrect.top + rectBk.Height();
 
         bkgnd->Draw(drawing, &drawrect);

@@ -23,7 +23,6 @@ namespace ui
 ItemCollection::ItemCollection(suic::Element* itemControl)
     : _itemControl(itemControl)
 {
-
 }
 
 ItemCollection::~ItemCollection()

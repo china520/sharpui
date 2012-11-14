@@ -36,13 +36,13 @@ void ThumbButton::OnRender(suic::DrawingContext * drawing)
         suic::Rect rect = bkgnd->GetContentBrounds();
         suic::Rect rc;
 
-        if (rect.Width() <= RenderSize().cx 
-            && rect.Height() <= RenderSize().cy)
+        if (rect.Width() <= RenderSize.cx 
+            && rect.Height() <= RenderSize.cy)
         {
-            rc.left = (RenderSize().cx - rect.Width()) / 2;
+            rc.left = (RenderSize.cx - rect.Width()) / 2;
             rc.right = rc.left + rect.Width();
 
-            rc.top = (RenderSize().cy - rect.Height()) / 2;
+            rc.top = (RenderSize.cy - rect.Height()) / 2;
             rc.bottom = rc.top + rect.Height();
 
             bkgnd->Draw(drawing, &rc);
@@ -240,7 +240,7 @@ void ScrollBar::UpdateScrollInfo(int iVisual, int iLogic, bool bCalc)
 
     if (bCalc)
     {
-        GetScrollThumbRect(RenderSize());
+        GetScrollThumbRect(RenderSize);
     }
 }
 
@@ -697,8 +697,7 @@ void ScrollBar::OnBeginTrack(suic::Element* pSender, suic::MouseEventArg& e)
 {
     suic::Point pt = PointToScreen(suic::Point());
 
-    _rcTrackStart = GetScrollThumbRect(RenderSize(), false);
-
+    _rcTrackStart = GetScrollThumbRect(RenderSize, false);
     _rcTrackStart.Offset(pt.x, pt.y);
 
     _rcTrack = _rcTrackStart;
@@ -720,7 +719,7 @@ void ScrollBar::OnHorzTrack(suic::Element* pSender, suic::MouseEventArg& e)
         suic::Point ptWindow = e.MousePoint();
         suic::Point ptSelf = PointToScreen(suic::Point());
 
-        suic::Rect rect(ptSelf.x, ptSelf.y, RenderSize().cx, RenderSize().cy);
+        suic::Rect rect(ptSelf.x, ptSelf.y, RenderSize.cx, RenderSize.cy);
  
         suic::Size szClamp(0, 0);
 		int nThumbLength = 0;
@@ -803,7 +802,7 @@ void ScrollBar::OnVertTrack(suic::Element* pSender, suic::MouseEventArg& e)
         suic::Point ptWindow = e.MousePoint();
         suic::Point ptSelf = PointToScreen(suic::Point());
 
-        suic::Rect rect(ptSelf.x, ptSelf.y, RenderSize().cx, RenderSize().cy);
+        suic::Rect rect(ptSelf.x, ptSelf.y, RenderSize.cx, RenderSize.cy);
  
         suic::Size szClamp(0, 0);
 		int nThumbLength = 0;

@@ -197,8 +197,8 @@ void Splitter::OnMouseMove(suic::MouseEventArg& e)
         {
             int ixOff = e.MousePoint().x - _trackingPt.x;
             int iMinWid = eCurr->GetMinWidth();
-            int iFinalWid = eCurr->RenderSize().cx + ixOff;
-            int iFinal2Wid = eNext->RenderSize().cx - ixOff;
+            int iFinalWid = eCurr->RenderSize.cx + ixOff;
+            int iFinal2Wid = eNext->RenderSize.cx - ixOff;
 
             if (ixOff != 0 && iFinalWid > iMinWid && iFinal2Wid > eNext->GetMinWidth())
             {
@@ -224,8 +224,8 @@ void Splitter::OnMouseMove(suic::MouseEventArg& e)
         {
             int iyOff = e.MousePoint().y - _trackingPt.y;
             int iMinHei = eCurr->GetMinHeight();
-            int iFinalHei = eCurr->RenderSize().cy + iyOff;
-            int iFinal2Hei= eNext->RenderSize().cy - iyOff;
+            int iFinalHei = eCurr->RenderSize.cy + iyOff;
+            int iFinal2Hei= eNext->RenderSize.cy - iyOff;
 
             if (iyOff != 0 && iFinalHei > iMinHei && iFinal2Hei > eNext->GetMinHeight())
             {

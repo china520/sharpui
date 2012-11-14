@@ -155,7 +155,7 @@ bool HwndSourceHookMenuPopup::IsMouseOverOwer()
 
     if (ower)
     {
-        suic::Rect rect(0, 0, ower->RenderSize().cx, ower->RenderSize().cy);
+        suic::Rect rect(0, 0, ower->RenderSize.cx, ower->RenderSize.cy);
         suic::Point point = suic::SystemHelper::GetCursorPoint(ower.get());
 
         point = ower->PointFromScreen(point);
@@ -239,7 +239,7 @@ MenuPtr HwndSourceHookMenuPopup::HitTestPopup()
     for (int i = 0; i < _popups->GetCount(); ++i)
     {
         suic::PopupPtr pop = suic::PopupPtr::cast(_popups->GetAt(i));
-        suic::Rect rcpop(0, 0, pop->RenderSize().cx, pop->RenderSize().cy);
+        suic::Rect rcpop(0, 0, pop->RenderSize.cx, pop->RenderSize.cy);
         suic::Point pt = suic::SystemHelper::GetCursorPoint(pop.get());
 
         if (rcpop.PointIn(pt))

@@ -355,7 +355,7 @@ void ComboBox::OnRender(suic::DrawingContext * drawing)
     suic::StylePtr styleArrow = FindResource(_T("ComboBox.Down"));
 
     suic::Point pt;
-    suic::Rect drawrect(pt.x, pt.y, RenderSize().cx, RenderSize().cy);
+    suic::Rect drawrect(pt.x, pt.y, RenderSize.cx, RenderSize.cy);
 
     // 
     // ÏÈ»æÖÆ±³¾°
@@ -461,7 +461,7 @@ void ComboBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
         suic::Point point = suic::SystemHelper::CalcScreenElementPoint(this, CoreFlags::eLeftBottom);
 
         suic::Size availableSize;
-        int iWid = RenderSize().cx;
+        int iWid = RenderSize.cx;
 
         _list->Measure(availableSize);
         _popup->SetWidth(iWid);

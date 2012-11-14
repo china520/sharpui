@@ -16,9 +16,9 @@
 namespace ui
 {
 
-// ============================================================
-// HeaderContentControl所有标题类基类。
-// ============================================================
+/// <summary>
+/// HeaderContentControl所有标题类基类。
+/// </summary>
 class SHARPUI_API HeaderedContentControl : public suic::ContentControl
 {
 public:

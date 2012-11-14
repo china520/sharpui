@@ -17,10 +17,10 @@
 namespace suic
 {
 
-class Style;
-typedef shared<Style> StylePtr;
+class UIStyle;
+typedef shared<UIStyle> StylePtr;
 
-class SUICORE_API Style : public RefObject
+class SUICORE_API UIStyle : public RefObject
 {
 public:
 
@@ -39,8 +39,8 @@ public:
 
 public:
 
-    Style();
-    virtual ~Style();
+    UIStyle();
+    virtual ~UIStyle();
 
     StylePtr Clone();
 

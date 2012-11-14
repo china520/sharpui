@@ -100,7 +100,7 @@ void GridViewHeaderRow::OnInitialized()
 
 void GridViewHeaderRow::OnRender(suic::DrawingContext * drawing)
 {
-    suic::Rect drawrect(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect drawrect(0, 0, RenderSize.cx, RenderSize.cy);
 
     // 
     // œ»ªÊ÷∆±≥æ∞

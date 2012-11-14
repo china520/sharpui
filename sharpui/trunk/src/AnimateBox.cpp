@@ -202,7 +202,7 @@ void AnimateBox::OnRender(suic::DrawingContext * drawing)
 
     if (_frames.size() > 1)
     {
-        suic::Rect rc(0, 0, RenderSize().cx, RenderSize().cy);
+        suic::Rect rc(0, 0, RenderSize.cx, RenderSize.cy);
         flag = _frames[_curframe].flag;
 
         // ÏÈ»Ö¸´±³¾°É«
@@ -229,7 +229,7 @@ void AnimateBox::OnRender(suic::DrawingContext * drawing)
 
     if (img)
     {
-        suic::Rect rect(0, 0, RenderSize().cx, RenderSize().cy);
+        suic::Rect rect(0, 0, RenderSize.cx, RenderSize.cy);
         suic::Rect rcimg(0, 0, img->Width(), img->Height());
 
         drawing->DrawImage(img.get(), &rect, &rcimg, CurrentTransparent());

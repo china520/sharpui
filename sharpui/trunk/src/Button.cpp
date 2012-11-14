@@ -255,7 +255,7 @@ void SystemMaxButton::OnRender(suic::DrawingContext * drawing)
         SetToolTip(new suic::UString(_T("×î´ó»¯")));
     }
 
-    suic::Rect drawrect(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect drawrect(0, 0, RenderSize.cx, RenderSize.cy);
     suic::TriggerPtr trigger(suic::Render::GetTriggerByStatus(this, GetStyle()));
     suic::BrushPtr bkgnd(trigger->GetValue(strName));
 

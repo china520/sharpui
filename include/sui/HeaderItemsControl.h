@@ -17,9 +17,9 @@
 namespace ui
 {
 
-// ============================================================
-// HeaderItemsControl所有选择项的基类。
-// ============================================================
+/// <summary>
+/// HeaderItemsControl所有选择项的基类。
+/// </summary>
 class SHARPUI_API HeaderedItemsControl : public ItemsControl
 {
 public:
@@ -27,14 +27,14 @@ public:
     HeaderedItemsControl();
     virtual ~HeaderedItemsControl();
 
-    suic::ElementPtr GetHeader() const;
-    void SetHeader(suic::ElementPtr val);
-
-    int GetIndent() const;
-    void SetIndent(int val);
-
     void SetText(const suic::String & text);
     suic::String GetText();
+
+// 属性访问定义
+public:
+
+    DEFINE_PROPERTY(suic::ElementPtr, Header, val);
+    DEFINE_PROPERTY(int, Indent, val);
 
 public:
 

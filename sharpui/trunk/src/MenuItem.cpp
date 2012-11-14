@@ -169,7 +169,7 @@ void MenuItem::OnStyleUpdated()
 
 void MenuItem::OnRender(suic::DrawingContext * drawing)
 {
-    suic::Rect rect(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect rect(0, 0, RenderSize.cx, RenderSize.cy);
     suic::StylePtr sty(GetStyle());
     suic::TriggerPtr trg;
 

@@ -74,7 +74,7 @@ void TextBlock::OnRender(suic::DrawingContext * drawing)
     //
     if (IsFocused())
     {
-        suic::Rect rect(0, 0, RenderSize().cx, RenderSize().cy);
+        suic::Rect rect(0, 0, RenderSize.cx, RenderSize.cy);
 
         rect.Deflate(GetBorderThickness());
         drawing->DrawFocusedRectangle(&rect);

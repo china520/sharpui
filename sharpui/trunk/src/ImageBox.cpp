@@ -118,10 +118,10 @@ void ImageBox::OnRender(suic::DrawingContext * drawing)
         suic::Rect elemrect;
         suic::Rect rcImg(0, 0, _source->Width(), _source->Height());
 
-        elemrect.left = (RenderSize().cx - _source->Width()) / 2;
-        elemrect.top = (RenderSize().cy - _source->Height()) / 2;
-        elemrect.right = elemrect.left + RenderSize().cx;
-        elemrect.bottom = elemrect.top + RenderSize().cy;
+        elemrect.left = (RenderSize.cx - _source->Width()) / 2;
+        elemrect.top = (RenderSize.cy - _source->Height()) / 2;
+        elemrect.right = elemrect.left + RenderSize.cx;
+        elemrect.bottom = elemrect.top + RenderSize.cy;
 
         drawing->DrawImage(_source, &elemrect, &rcImg, GetOpacity() * 255);
     }

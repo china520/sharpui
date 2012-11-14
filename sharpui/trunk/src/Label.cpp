@@ -50,7 +50,7 @@ void Label::OnInitialized()
 
 void Label::OnRender(suic::DrawingContext * drawing)
 {
-    suic::Rect drawrect(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect drawrect(0, 0, RenderSize.cx, RenderSize.cy);
 
     // 
     // œ»ªÊ÷∆±≥æ∞

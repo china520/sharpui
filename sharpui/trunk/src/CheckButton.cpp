@@ -139,7 +139,7 @@ void CheckButton::OnRender(suic::DrawingContext * drawing)
     // 先绘制背景
     //
     suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));
-    suic::Rect drawrect(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect drawrect(0, 0, RenderSize.cx, RenderSize.cy);
     suic::ImageBrushPtr bkgnd(trg->GetValue(InternalBackgrount()));
 
     if (NULL != bkgnd)
@@ -157,9 +157,9 @@ void CheckButton::OnRender(suic::DrawingContext * drawing)
     // 绘制文字
     //
     drawrect.top = 0;
-    drawrect.bottom = RenderSize().cy;
+    drawrect.bottom = RenderSize.cy;
     drawrect.left = drawrect.right + GetPadding().left;
-    drawrect.right = RenderSize().cx;
+    drawrect.right = RenderSize.cx;
 
     suic::Render::DrawText(drawing, this, GetText(), trg, &drawrect, true);
 }

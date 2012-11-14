@@ -35,26 +35,6 @@ public:
     virtual ~FrameworkElement();
 
     /// <summary>
-    ///     取得界面元素的样式对象
-    /// </summary>
-    /// <returns>样式对象</returns> 
-    StylePtr GetStyle();
-
-    /// <summary>
-    ///     设置界面元素的样式对象
-    /// </summary>
-    /// <remarks>
-    ///     设置界面样式将会影响元素的呈现，如果bStyle为true，
-    ///     则将会使用样式初始化元素的宽度、高度等固有属性。
-    ///     而且会触发OnSetterChanged()事件调用。
-    /// </remarks>
-    /// <param name="thePtr">
-    ///     样式对象
-    /// </param>
-    /// <returns>无</returns> 
-    void SetStyle(StylePtr thePtr);
-
-    /// <summary>
     ///     更新界面资源，触发OnStyleUpdated事件
     /// </summary>
     /// <returns>无</returns> 
@@ -63,12 +43,12 @@ public:
     void UpdateUnloaded(ObjectPtr target);
 
     /// <summary>
-    ///     查找界面元素的资源
+    /// 查找界面元素的资源
     /// </summary>
     /// <remarks>
-    ///     资源是可以继承的，系统将从本元素搜索指定资源，
-    ///     然后向上搜索，直到找到一个资源，
-    ///     最后将会搜索系统资源（Application定义）。
+    /// 资源是可以继承的，系统将从本元素搜索指定资源，
+    /// 然后向上搜索，直到找到一个资源，
+    /// 最后将会搜索系统资源（Application定义）。
     /// </remarks>
     /// <param name="strName">
     ///     资源名称
@@ -77,14 +57,14 @@ public:
     ObjectPtr FindResource(const String& strName);
 
     /// <summary>
-    ///     设置界面元素本身的资源对象
+    /// 设置界面元素本身的资源对象
     /// </summary>
     /// <param name="resources">资源对象</param>
     /// <returns>无</returns> 
     void SetResources(ResourceDictionaryPtr resources);
 
     /// <summary>
-    ///     获得界面元素本身的资源对象
+    /// 获得界面元素本身的资源对象
     /// </summary>
     /// <returns>资源对象</returns> 
     ResourceDictionaryPtr& GetResources();
@@ -93,23 +73,20 @@ public:
     ///     设置界面元素的拥有者
     /// </summary>
     /// <remarks>
-    ///     当一个对象被另外的对象拥有后，其自身的一些
-    ///     行为将会受拥有者的限制和影响
+    /// 当一个对象被另外的对象拥有后，其自身的一些
+    /// 行为将会受拥有者的限制和影响
     /// </remarks>
     /// <param name="elemPtr">
-    ///     拥有的界面元素
+    /// 拥有的界面元素
     /// </param>
     /// <returns>无</returns> 
     void SetOwner(FrameworkElementPtr elemPtr);
 
     /// <summary>
-    ///     获得界面元素的拥有者
+    /// 获得界面元素的拥有者
     /// </summary>
     /// <returns>界面元素的拥有者</returns> 
     FrameworkElementPtr& GetOwner();
-
-    void SetToolTip(ObjectPtr tip);
-    ObjectPtr GetToolTip() const;
 
     void ShowToolTip(Point pt);
 
@@ -117,10 +94,10 @@ public:
     void SetCommand(Uint16 iCmd);
 
     /// <summary>
-    ///     设置界面元素的文本。
+    /// 设置界面元素的文本。
     /// </summary>
     /// <param name="text">
-    ///     界面元素文本
+    /// 界面元素文本
     /// </param>
     /// <returns>无</returns>
     virtual void SetText(const String & text);
@@ -128,58 +105,71 @@ public:
 
     bool IsRender() const;
 
-    CursorPtr GetCursor();
-
     /// <summary>
-    ///     判断界面元素是否被压下。
+    /// 判断界面元素是否被压下。
     /// </summary>
     /// <returns>true: 元素被压下</returns>
     bool IsSelected() const;
 
     virtual String ToString();
 
-    suic::Int32 GetWidth() const;
-    void SetWidth(suic::Int32 value);
-    suic::Int32 GetHeight() const;
-    void SetHeight(suic::Int32 value);
-
-    int GetActrualWidth() const;
-    void SetActrualWidth(int value);
-    int GetActrualHeight() const;
-    void SetActrualHeight(int value);
+// 属性访问定义
+public:
 
     /// <summary>
-    ///     设置元素边距
+    /// 设置界面元素的样式对象
     /// </summary>
     /// <remarks>
-    ///     元素边距永远相对其父窗口偏移
+    /// 设置界面样式将会影响元素的呈现，如果bStyle为true，
+    /// 则将会使用样式初始化元素的宽度、高度等固有属性。
+    /// 而且会触发OnSetterChanged()事件调用。
     /// </remarks>
-    /// <returns>元素边距</returns> 
-    const Rect& GetMargin() const;
-    void SetMargin(Rect rc);
+    /// <param name="thePtr">
+    ///     样式对象
+    /// </param>
+    /// <returns>无</returns> 
+    DEFINE_PROPERTY(StylePtr, Style, thePtr);
 
-    Rect GetPadding() const;
-    void SetPadding(Rect rc);
+    UIPROPERTY(FrameworkElementPtr, Owner);
+    UIPROPERTY(String, Text);
 
-    Int32 GetMaxHeight() const;
-    void SetMaxHeight(Int32 value);
-    Int32 GetMaxWidth() const;
-    void SetMaxWidth(Int32 value);
+    DEFINE_PROPERTY_R(CursorPtr, Cursor);
 
     /// <summary>
-    ///     设置元素最小高度
+    /// 设置元素提示信息
     /// </summary>
     /// <remarks>
-    ///     元素边距永远相对其父窗口偏移
+    /// 鼠标进入元素时触发提示，离开时关闭
+    /// 提示信息可以为文本，也可以为Content对象
+    /// </remarks>
+    /// <returns>提示信息</returns> 
+    DEFINE_PROPERTY(ObjectPtr, ToolTip, tip);
+
+    DEFINE_PROPERTY(int, ActrualWidth, value);
+    DEFINE_PROPERTY(int, ActrualHeight, value);
+
+    DEFINE_PROPERTY(Int32, Width, value);
+    DEFINE_PROPERTY(Int32, Height, value);
+    DEFINE_PROPERTY(Rect, Padding, rc);
+
+    /// <summary>
+    /// 设置元素边距
+    /// </summary>
+    /// <remarks>
+    /// 元素边距永远相对其父窗口偏移
     /// </remarks>
     /// <returns>元素边距</returns> 
-    Int32 GetMinHeight() const;
-    void SetMinHeight(Int32 value);
-    Int32 GetMinWidth() const;
-    void SetMinWidth(Int32 value);
+    DEFINE_PROPERTY(Rect, Margin, rc);
 
-    Rect GetBorderThickness() const;
-    void SetBorderThickness(Rect border);
+    /// <summary>
+    /// 设置元素最小高度
+    /// </summary>
+    /// <returns>最小高度</returns> 
+    DEFINE_PROPERTY(Int32, MinHeight, value);
+    DEFINE_PROPERTY(Int32, MinWidth, value);
+    DEFINE_PROPERTY(Rect, BorderThickness, border);
+    DEFINE_PROPERTY(Int32, MaxHeight, value);
+    DEFINE_PROPERTY(Int32, MaxWidth, value);
 
 public:
 
@@ -256,7 +246,7 @@ inline String FrameworkElement::ToString()
     return GetText();
 }
 
-inline StylePtr FrameworkElement::GetStyle()
+inline StylePtr FrameworkElement::GetStyle() const
 {
     return _style;
 }

@@ -151,12 +151,12 @@ inline void TileBrush::SetViewport(Rect val)
     _viewbox = val;
 }
 
-class SUICORE_API Cursor : public Resource
+class SUICORE_API UICursor : public Resource
 {
 public:
 
-    Cursor();
-    ~Cursor();
+    UICursor();
+    ~UICursor();
 
     bool Load(const suic::String& source);
     suic::Handle GetHandle() const;
@@ -168,7 +168,7 @@ protected:
     suic::Handle _handle;
 };
 
-typedef shared<Cursor> CursorPtr;
+typedef shared<UICursor> CursorPtr;
 
 }
 

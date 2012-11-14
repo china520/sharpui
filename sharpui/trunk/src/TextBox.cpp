@@ -77,7 +77,7 @@ void TextBoxPanel::OnRenderSizeChanged(suic::RenderSizeChangedEventArg& e)
 void TextBoxPanel::OnRender(suic::DrawingContext * drawing)
 {
     suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));        
-    suic::Rect rcdraw(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect rcdraw(0, 0, RenderSize.cx, RenderSize.cy);
 
     // 绘制文本
 
@@ -193,7 +193,7 @@ void TextBox::SetReadOnly(bool bReadOnly)
 suic::Rect TextBox::DocumentRect(suic::Point pt)
 {
     suic::Rect rc(_panel.GetVisualOffset().x, _panel.GetVisualOffset().y
-        , _panel.RenderSize().cx, _panel.RenderSize().cy);
+        , _panel.RenderSize.cx, _panel.RenderSize.cy);
 
     rc.Deflate(GetPadding());
     rc.Offset(GetBorderThickness().left, GetBorderThickness().top);
@@ -333,7 +333,7 @@ void TextBox::OnRender(suic::DrawingContext * drawing)
     }
 
     suic::TriggerPtr trg(suic::Render::GetTriggerByStatus(this, GetStyle()));        
-    suic::Rect rcdraw(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect rcdraw(0, 0, RenderSize.cx, RenderSize.cy);
 
     // 先填充背景
     suic::Render::DrawBackground(drawing, trg, &rcdraw);
@@ -711,7 +711,7 @@ void TextBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 void TextBox::OnMouseLeftButtonDbclk(suic::MouseEventArg& e)
 {
     suic::Point pt(PointToScreen(suic::Point()));
-    suic::Rect rc(pt.x, pt.y, RenderSize().cx, RenderSize().cy);
+    suic::Rect rc(pt.x, pt.y, RenderSize.cx, RenderSize.cy);
 
     suic::Point tmPt(e.MousePoint());
 
@@ -734,7 +734,7 @@ void TextBox::OnMouseLeftButtonDbclk(suic::MouseEventArg& e)
 void TextBox::OnMouseLeftButtonUp(suic::MouseEventArg& e)
 {
     suic::Point pt(PointToScreen(suic::Point()));
-    suic::Rect rc(pt.x, pt.y, RenderSize().cx, RenderSize().cy);
+    suic::Rect rc(pt.x, pt.y, RenderSize.cx, RenderSize.cy);
 
     if (!rc.PointIn(e.MousePoint()))
     {
@@ -757,7 +757,7 @@ void TextBox::OnMouseRightButtonDown(suic::MouseEventArg& e)
 void TextBox::OnMouseRightButtonUp(suic::MouseEventArg& e)
 {
     suic::Point pt(PointToScreen(suic::Point()));
-    suic::Rect rc(pt.x, pt.y, RenderSize().cx, RenderSize().cy);
+    suic::Rect rc(pt.x, pt.y, RenderSize.cx, RenderSize.cy);
 
     if (rc.PointIn(e.MousePoint()))
     {
@@ -908,7 +908,7 @@ void TextBox::ResetCaretPos(bool bUpDown)
             int iClientHei = _eDoc.GetVisualRect().Height();
 
             rcCaret.top = GetPadding().top + GetBorderThickness().top + 2;
-            rcCaret.bottom = RenderSize().cy - GetPadding().bottom - GetBorderThickness().bottom - 2;
+            rcCaret.bottom = RenderSize.cy - GetPadding().bottom - GetBorderThickness().bottom - 2;
         }
         else
         {

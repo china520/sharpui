@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,1,2,5
- PRODUCTVERSION 0,1,2,5
+ FILEVERSION 0,1,2,6
+ PRODUCTVERSION 0,1,2,6
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -70,12 +70,12 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "FileDescription", "Sharpui界面(汪荣)"
-            VALUE "FileVersion", "0, 1, 2, 5"
+            VALUE "FileVersion", "0, 1, 2, 6"
             VALUE "InternalName", "sharpui"
             VALUE "LegalCopyright", "Sharpui界面(汪荣) 版权所有 (C) 2010-2012"
             VALUE "OriginalFilename", "sharpui.dll"
             VALUE "ProductName", "Sharpui界面(汪荣)"
-            VALUE "ProductVersion", "0, 1, 2, 5"
+            VALUE "ProductVersion", "0, 1, 2, 6"
         END
     END
     BLOCK "VarFileInfo"

@@ -57,7 +57,7 @@ public:
 
     void OnRender(suic::DrawingContext * drawing)
     {
-        suic::Rect rect(0, 0, RenderSize().cx, RenderSize().cy);
+        suic::Rect rect(0, 0, RenderSize.cx, RenderSize.cy);
 
         if (_expanded)
         {

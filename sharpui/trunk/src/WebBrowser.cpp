@@ -100,7 +100,7 @@ void WebBrowser::OnLoaded(suic::LoadedEventArg& e)
 void WebBrowser::OnVisibilityChanged(bool visible)
 {
     suic::Point point = PointToScreen(suic::Point());
-    suic::Rect rect(point.x, point.y, RenderSize().cx, RenderSize().cy);
+    suic::Rect rect(point.x, point.y, RenderSize.cx, RenderSize.cy);
 
     WebWrapper* pWeb = (WebWrapper*)_webHost;
 

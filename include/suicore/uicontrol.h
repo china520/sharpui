@@ -34,6 +34,11 @@ public:
 
 public:
 
+    UIPROPERTY(bool, TabStop);
+    UIPROPERTY(int, TabIndex);
+
+public:
+
     virtual void OnRender(DrawingContext * drawing);
 
     virtual void OnGotFocus(suic::FocusEventArg& e);

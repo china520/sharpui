@@ -34,7 +34,7 @@ suic::Size Separator::MeasureOverride(const suic::Size& size)
 
 void Separator::OnRender(suic::DrawingContext * drawing)
 {
-    suic::Rect rect(0, 0, RenderSize().cx, RenderSize().cy);
+    suic::Rect rect(0, 0, RenderSize.cx, RenderSize.cy);
 
     rect.top += (rect.Height() / 2);
     rect.bottom = rect.top + 1;
