@@ -310,6 +310,8 @@ void ItemsControl::OnInitialized()
 
     _scrollHost->SetMargin(GetMargin());
     _scrollHost->SetFocusable(false);
+
+    _itemsHost->SetFocusable(false);
 }
 
 suic::Element* ItemsControl::GetChild(int index)

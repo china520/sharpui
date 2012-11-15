@@ -98,6 +98,9 @@ void TextBoxLine::DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Re
 {
     if (_buff.Length() > 0)
     {
+        suic::Color oldBk = att->bkcolor;
+        suic::Color oldTxt = att->color;
+
         suic::Size sz;
 
         if (end == -1)
@@ -106,6 +109,9 @@ void TextBoxLine::DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Re
             att->color = bActive ? DefSelTextColor : DefInactivateSelTextColor;
 
             drawing->DrawText(_buff.c_str(), _buff.Length(), lprc, att);
+
+            att->bkcolor = oldBk;
+            att->color = oldTxt;
 
             return;
         }
@@ -125,7 +131,6 @@ void TextBoxLine::DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Re
 
         sz = drawing->CalculateText(_buff.c_str() + beg, end - beg, att);
 
-        suic::Color oldClr = att->color;
         int nRight = lprc->right;
         lprc->right = lprc->left + sz.cx;
 
@@ -134,16 +139,19 @@ void TextBoxLine::DrawSel(suic::DrawingContext * drawing, bool bActive, suic::Re
 
         drawing->DrawText(_buff.c_str() + beg, (int)(end - beg), lprc, att);
 
+        att->bkcolor = oldBk;
+        att->color = oldTxt;
+
         lprc->left = lprc->right;
         lprc->right = nRight;
 
         if (end < (suic::Uint32)_buff.Length())
         {
-            att->bkcolor = -1;
-            att->color = oldClr;
+            //att->bkcolor = -1;
+            ///att->color = oldTxt;
 
             sz = drawing->CalculateText(_buff.c_str() + end, (int)_buff.Length() - end, att);
-            drawing->DrawText(_buff.c_str() + end, (int)(_buff.Length() - end), lprc, att);
+            drawing->DrawText(_buff.c_str() + end, (int)(_buff.Length() - end), lprc, att);  
         }
     }
 }
@@ -581,6 +589,11 @@ void TextBoxDoc::DrawSingleLine(suic::DrawingContext * drawing, bool bActive
 void TextBoxDoc::Draw(suic::DrawingContext * drawing, bool bActive
                       , suic::Rect * lprc, suic::FormattedText* att)
 {
+    if (bActive)
+    {
+        int iiiii = 0;
+    }
+
     suic::Rect rc;
     rc.top = 0;
     int by = _vertScroll * _aveCharHei;
@@ -929,6 +942,7 @@ void TextBoxDoc::TrackCaret(suic::Point * lppt)
     for (i = 0; i < (int)_lines.size(); ++i)
     {
         rc.bottom = rc.top + _lines[i]->GetLineHei();
+
         if (pt.y <= rc.bottom && pt.y >= rc.top)
         {
             break;

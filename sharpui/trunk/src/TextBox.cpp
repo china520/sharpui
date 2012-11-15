@@ -845,6 +845,9 @@ void TextBox::OnInitialized()
     AddVisualChild(&_view);
     _view.SetContent(&_panel);
 
+    _view.SetFocusable(false);
+    _panel.SetFocusable(false);
+
     _panel.WriteFlag(CoreFlags::IsComposition, true);
     _view.WriteFlag(CoreFlags::IsComposition, true);
 

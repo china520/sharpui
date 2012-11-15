@@ -40,18 +40,18 @@ public:
 
 public:
 
-    virtual suic::Size MeasureOverride(const suic::Size& size);
-    virtual suic::Size ArrangeOverride(const suic::Size& size);
+    suic::Size MeasureOverride(const suic::Size& size);
+    suic::Size ArrangeOverride(const suic::Size& size);
 
-    virtual void OnInitialized();
-    virtual void OnRender(suic::DrawingContext * drawing);
+    void OnInitialized();
+    void OnRender(suic::DrawingContext * drawing);
 
-    virtual void OnMaximizeValue();
-    virtual void OnMaximumChanged(double oldMaximum, double newMaximum);
-    virtual void OnMinimizeValue();
-    virtual void OnMinimumChanged(double oldMinimum, double newMinimum);
+    void OnMaximizeValue();
+    void OnMaximumChanged(double oldMaximum, double newMaximum);
+    void OnMinimizeValue();
+    void OnMinimumChanged(double oldMinimum, double newMinimum);
 
-    virtual void OnValueChanged(double oldValue, double newValue);
+    void OnValueChanged(double oldValue, double newValue);
 
     virtual void OnThumbDragCompleted(DragCompletedEventArg& e);
     virtual void OnThumbDragDelta(DragDeltaEventArg& e);

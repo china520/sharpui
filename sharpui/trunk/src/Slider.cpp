@@ -26,6 +26,8 @@ public:
 
     SliderButton(Slider* slider)
         : _slider(slider)
+        , _trackPos(0)
+        , _trackStart(0)
     {
         SetClassName(_T("SliderButton"));
     }
