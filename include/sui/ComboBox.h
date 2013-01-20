@@ -148,7 +148,7 @@ public:
     void OnGotFocus(suic::FocusEventArg& e);
     void OnLostFocus(suic::FocusEventArg& e);
 
-    void OnSelectionChanged(SelectionChangedEventArg& e);
+    void OnSelectionChanged(suic::Element* sender, SelectionChangedEventArg& e);
 
 protected:
 

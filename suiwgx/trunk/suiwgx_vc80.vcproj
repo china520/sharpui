@@ -387,6 +387,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\include\sui\SelectorPanel.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\include\sui\Separator.h"
 				>
 			</File>
@@ -632,6 +636,10 @@
 			</File>
 			<File
 				RelativePath=".\src\Selector.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\SelectorPanel.cpp"
 				>
 			</File>
 			<File

@@ -643,6 +643,7 @@ void TextBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
 {
     SetCaptureMouse();
     e.SetHandled(true);
+    SetFocus();
 
     suic::Rect rcClnt(DocumentRect(PointToScreen(suic::Point())));
     if (!rcClnt.PointIn(e.MousePoint()))
@@ -651,7 +652,6 @@ void TextBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
         return;
     }
 
-    SetFocus();
     _caret.Hide();
 
     int code = e.State();

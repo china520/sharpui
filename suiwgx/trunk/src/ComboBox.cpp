@@ -289,7 +289,7 @@ void ComboBox::OnInitialized()
     _list->SetMaxHeight(_downHeight);
     _textBox->Enable(IsEnabled());
     _textBox->AddHandler(suic::Element::CursorSetEvent, new suic::CursorEventHandler(this, &ComboBox::OnTextBoxCursor));
-    _list->SelectionChanged += SelectionChangedHandler(this, &ComboBox::OnSelectionChanged);
+    _list->AddHandler(SelectionChangedEvent, new SelectionChangedHandler(this, &ComboBox::OnSelectionChanged));
 
     suic::ObjectPtr selObj = _list->SelectedItem();
 
@@ -462,27 +462,11 @@ void ComboBox::OnMouseLeftButtonDown(suic::MouseEventArg& e)
         DropDownEventArg eo(_popup, _list);
 
         OnDropDownOpened(eo);
-
         _popup->TrackingPopup(point.x, point.y, false, 0, 0, new ComboListHookPopup(_popup));
 
         suic::ObjectPtr selObj = _list->SelectedItem();
-
-        if (selObj)
-        {
-            SelectionChangedEventArg e;
-
-            e.AddedItems()->Add(selObj);
-            OnSelectionChanged(e);
-        }
-
         _list->UnselectAllItems();
-
         OnDropDownClosed(eo);
-
-        if (!_textBox->IsReadOnly() && _textBox->IsEnabled())
-        {
-            //_textBox->Focus();
-        }
     }
 }
 
@@ -535,7 +519,7 @@ void ComboBox::OnLostFocus(suic::FocusEventArg& e)
     _textBox->OnLostFocus(e);
 }
 
-void ComboBox::OnSelectionChanged(SelectionChangedEventArg& e)
+void ComboBox::OnSelectionChanged(suic::Element* sender, SelectionChangedEventArg& e)
 {
     if (e.AddedItems()->GetCount() > 0)
     {
@@ -554,10 +538,9 @@ void ComboBox::OnSelectionChanged(SelectionChangedEventArg& e)
                 _textBox->SetFocus();
             }
 
-            if (ItemSelected)
-            {
-                ItemSelected(this);
-            }
+            suic::SelectedEventArg se(selPtr, true, 0);
+            se.SetRoutedEvent(IsSelectedEvent);
+            RaisedEvent(&se);
         }
     }
 }

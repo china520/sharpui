@@ -113,6 +113,8 @@ public:
     static RoutedEventEntity PreDragLeaveEvent;
     static RoutedEventEntity PreDragOverEvent;
 
+    static RoutedEventEntity IsSelectedEvent;
+
 public:
 
     static DpPropertyEntity NameProperty;

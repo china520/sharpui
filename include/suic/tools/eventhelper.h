@@ -21,7 +21,7 @@ class SUICORE_API EventHelper : public Object
 {
 public:
 
-    static RoutedEventEntity RegisterRoutedEvent(String name, RoutingStrategy routingStrategy, String handlerType,TypeofInfo* ownerType);
+    static RoutedEventEntity RegisterRoutedEvent(String name, RoutingStrategy routingStrategy, TypeofInfo* handlerType,TypeofInfo* ownerType);
     static void RegisterClassHandler(TypeofInfo* ownerType, RoutedEventEntity routedEvent, ObjectPtr handler,bool handledEventsToo);
     static void RegisterAttachedHandler(TypeofInfo* ownerType, RoutedEventEntity routedEvent, ObjectPtr handler,bool handledEventsToo);
 

@@ -32,7 +32,7 @@ class RoutedEvent : public RefObject
 {
 public:
 
-    RoutedEvent(String name, RoutingStrategy routingStrategy, String handlerType, TypeofInfo* ownerType);
+    RoutedEvent(String name, RoutingStrategy routingStrategy, TypeofInfo* handlerType, TypeofInfo* ownerType);
     RoutingStrategy GetRoutingStrategy() const;
     TypeofInfo* GetOwnerType() const;
     String GetName() const;

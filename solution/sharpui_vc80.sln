@@ -8,6 +8,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "suidemon", "..\suiwgx\branc
 		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C} = {54CA4CE7-94BE-4E5E-ADA1-39110D26898C}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "suidesign", "..\suidesign\suidesign_vc80.vcproj", "{91697014-FC88-4EDB-B549-CF320D0E715A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C} = {54CA4CE7-94BE-4E5E-ADA1-39110D26898C}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -32,6 +37,14 @@ Global
 		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.Release|Win32.Build.0 = Release|Win32
 		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.ReleaseStatic|Win32.ActiveCfg = ReleaseStatic|Win32
 		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.ReleaseStatic|Win32.Build.0 = ReleaseStatic|Win32
+		{91697014-FC88-4EDB-B549-CF320D0E715A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{91697014-FC88-4EDB-B549-CF320D0E715A}.Debug|Win32.Build.0 = Debug|Win32
+		{91697014-FC88-4EDB-B549-CF320D0E715A}.DebugStatic|Win32.ActiveCfg = Debug|Win32
+		{91697014-FC88-4EDB-B549-CF320D0E715A}.DebugStatic|Win32.Build.0 = Debug|Win32
+		{91697014-FC88-4EDB-B549-CF320D0E715A}.Release|Win32.ActiveCfg = Release|Win32
+		{91697014-FC88-4EDB-B549-CF320D0E715A}.Release|Win32.Build.0 = Release|Win32
+		{91697014-FC88-4EDB-B549-CF320D0E715A}.ReleaseStatic|Win32.ActiveCfg = Release|Win32
+		{91697014-FC88-4EDB-B549-CF320D0E715A}.ReleaseStatic|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

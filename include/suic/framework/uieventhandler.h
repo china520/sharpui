@@ -34,6 +34,8 @@ typedef delegate<void(Element*, HitResultEventArg&), RefObject> HitTestEventHand
 typedef delegate<void(Element*, RoutedEventArg&), RefObject> InitializedEventHandler;
 typedef delegate<void(Element*, DataTransferEventArg&), RefObject> TargetUpdatedEventHandler;
 
+typedef delegate<void(Element*, SelectedEventArg&), RefObject> IsSelectedEventHandler;
+
 }
 
 # endif

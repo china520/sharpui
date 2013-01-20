@@ -166,6 +166,33 @@ protected:
     double _cursorTop;
 };
 
+class SUICORE_API SelectedEventArg : public RoutedEventArg
+{
+public:
+
+    SelectedEventArg(ObjectPtr source, bool val, int from)
+        : RoutedEventArg(source)
+        , _isSelected(val)
+        , _isSelectFrom(from) {}
+
+    bool IsSelected() const
+    {
+        return _isSelected;
+    }
+
+    int IsSelectFrom() const
+    {
+        return _isSelectFrom;
+    }
+
+    void CallEventHandler(ObjectPtr& handler, ObjectPtr& target);
+
+protected:
+
+    bool _isSelected;
+    int _isSelectFrom;
+};
+
 /// <summary>
 /// 定义鼠标测试结果结构，当鼠标在某一个界面元素上时会返回一个测试码。
 /// </summary>

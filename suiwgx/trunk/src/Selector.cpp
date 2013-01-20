@@ -46,6 +46,18 @@ suic::ItemContentList* SelectionChangedEventArg::RemovedItems()
 {
     return &_removeItems;
 }
+
+suic::RoutedEventEntity Selector::SelectionChangedEvent;
+
+static bool InitData()
+{
+    Selector::SelectionChangedEvent = suic::EventHelper::RegisterRoutedEvent(_T("SelectionChanged"), suic::Direct, Selector::ThisType(), Selector::ThisType());
+    suic::EventHelper::RegisterClassHandler(Selector::ThisType(), Selector::SelectionChangedEvent, new SelectionChangedHandler(&Selector::SelectionChangedThunk), false);
+    return true;
+}
+
+static bool init_data = InitData();
+
 // ============================================================================
 // Selector£¬ItemµÄ»ùÀà¡£
 // ============================================================================
@@ -176,6 +188,17 @@ void Selector::UnselectAllItems()
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //
+void SelectionChangedEventArg::CallEventHandler(suic::ObjectPtr& handler, suic::ObjectPtr& target)
+{
+    InternalCall<suic::Element, SelectionChangedHandler, SelectionChangedEventArg>(handler, target);
+}
+
+void Selector::SelectionChangedThunk(suic::Element* sender, SelectionChangedEventArg& e)
+{
+    SelectorPtr selPtr(sender);
+    selPtr->OnSelectionChanged(e);
+}
+
 void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
 {
     suic::ElementPtr oldFocus(_focusedItem);
@@ -185,19 +208,11 @@ void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
     if (e.IsSelected())
     {
         suic::ElementPtr tmpPtr(_focusedItem.get());
-
         if (_focusedItem != pItem)
         {
             ItemFocusChangedEventArg eifc(tmpPtr.get(), pItem);
-
             OnItemFocusChanged(eifc);
-
             _focusedItem = pItem;
-        }
-
-        if (ItemSelected)
-        {
-            ItemSelected(pItem);
         }
     }
     else
@@ -206,15 +221,11 @@ void Selector::OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e)
         {
             _focusedItem = NULL;
         }
-
-        if (ItemUnselected)
-        {
-            ItemUnselected(pItem);
-        }
     }
 
     ec.AddItem(item, e.IsSelected());
-    OnSelectionChanged(ec);
+    ec.SetRoutedEvent(SelectionChangedEvent);
+    RaisedEvent(&ec);
 
     suic::FrameworkElementPtr frame(_focusedItem);
 
@@ -241,8 +252,8 @@ void Selector::OnSelectionChanged(SelectionChangedEventArg& e)
     {
         if (_selectMode == SelectionMode::Single)
         {
-            if (_selectedItems.GetCount() > 0
-                && _selectedItems.GetAt(0) != e.AddedItems()->GetAt(0))
+            if (_selectedItems.GetCount() > 0 && 
+                _selectedItems.GetAt(0) != e.AddedItems()->GetAt(0))
             {
                 suic::FrameworkElementPtr pElem(_selectedItems.GetAt(0));
 
@@ -258,14 +269,8 @@ void Selector::OnSelectionChanged(SelectionChangedEventArg& e)
         for (int i = 0; i < e.AddedItems()->GetCount(); ++i)
         {
             suic::ObjectPtr itemPtr = e.AddedItems()->GetAt(i);
-
             _selectedItems.Add(itemPtr);
         }
-    }
-
-    if (SelectionChanged)
-    {
-        SelectionChanged(e);
     }
 }
 

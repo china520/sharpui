@@ -30,6 +30,10 @@ public:
 
 protected:
 
+    void CallEventHandler(suic::ObjectPtr& handler, suic::ObjectPtr& target);
+
+protected:
+
     suic::ItemContentList _addItems;
     suic::ItemContentList _removeItems;
 };
@@ -49,11 +53,8 @@ protected:
     suic::Element* _newFocus;
 };
 
-class Selector;
-typedef delegate<void(SelectionChangedEventArg&)> SelectionChangedHandler;
-typedef delegate<void(suic::Element*)> ItemSelectedHandler;
-typedef delegate<void(suic::Element*)> ItemUnselectedHandler;
-typedef delegate<void(Selector*,ItemFocusChangedEventArg&)> ItemFocusChangedHandler;
+typedef delegate<void(suic::Element*,SelectionChangedEventArg&),suic::RefObject> SelectionChangedHandler;
+typedef delegate<void(suic::Element*,ItemFocusChangedEventArg&)> ItemFocusChangedHandler;
 
 class SelectionMode
 {
@@ -74,9 +75,7 @@ class SHARPUI_API Selector : public ItemsControl
 {
 public:
 
-    SelectionChangedHandler SelectionChanged;
-    ItemUnselectedHandler ItemUnselected;
-    ItemSelectedHandler ItemSelected;
+    static suic::RoutedEventEntity SelectionChangedEvent;
     ItemFocusChangedHandler ItemFocusChanged;
 
     Selector();
@@ -126,6 +125,8 @@ public:
 
 public:
 
+    static void SelectionChangedThunk(suic::Element* sender, SelectionChangedEventArg& e);
+
     virtual void OnItemSelected(suic::ObjectPtr item, ItemSelectionEventArg& e);
     virtual void OnSelectionChanged(SelectionChangedEventArg& e);
     virtual void OnItemFocusChanged(ItemFocusChangedEventArg& e);
@@ -150,6 +151,8 @@ protected:
     // Ñ¡ÔñÄ£Ê½
     SelectionMode::eSelectionMode _selectMode;
 };
+
+typedef suic::shared<Selector> SelectorPtr;
 
 inline SelectionMode::eSelectionMode Selector::GetSelectionMode() const
 {
