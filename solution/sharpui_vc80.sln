@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "suiwgx", "..\suiwgx\trunk\suiwgx_vc80.vcproj", "{54CA4CE7-94BE-4E5E-ADA1-39110D26898C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "suidemon", "..\suiwgx\branches\suidemon\suidemon_vc80.vcproj", "{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}"
+	ProjectSection(ProjectDependencies) = postProject
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C} = {54CA4CE7-94BE-4E5E-ADA1-39110D26898C}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DebugStatic|Win32 = DebugStatic|Win32
+		Release|Win32 = Release|Win32
+		ReleaseStatic|Win32 = ReleaseStatic|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C}.Debug|Win32.Build.0 = Debug|Win32
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C}.DebugStatic|Win32.ActiveCfg = Debug|Win32
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C}.DebugStatic|Win32.Build.0 = Debug|Win32
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C}.Release|Win32.ActiveCfg = Release|Win32
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C}.Release|Win32.Build.0 = Release|Win32
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C}.ReleaseStatic|Win32.ActiveCfg = Release|Win32
+		{54CA4CE7-94BE-4E5E-ADA1-39110D26898C}.ReleaseStatic|Win32.Build.0 = Release|Win32
+		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.Debug|Win32.Build.0 = Debug|Win32
+		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.DebugStatic|Win32.ActiveCfg = DebugStatic|Win32
+		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.DebugStatic|Win32.Build.0 = DebugStatic|Win32
+		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.Release|Win32.ActiveCfg = Release|Win32
+		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.Release|Win32.Build.0 = Release|Win32
+		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.ReleaseStatic|Win32.ActiveCfg = ReleaseStatic|Win32
+		{D690F3F5-3BC4-4CD1-8B7D-C954A5496E71}.ReleaseStatic|Win32.Build.0 = ReleaseStatic|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
